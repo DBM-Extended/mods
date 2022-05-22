@@ -72,6 +72,7 @@ All the developers who made different Libraries, Packages, Tools & APIs. Special
 - [DBM Mods](https://github.com/dbm-network/mods)
 - [DBM Enhanced](https://github.com/AshTheDeveloper/DBM-Enhanced)
 - [DBM Canvas](https://github.com/LeonZ2019/dbm-canvas)
+- [DBM JMods](https://github.com/ContentJeka/JMODS)
 
 ## Disclaimers
 <p>
