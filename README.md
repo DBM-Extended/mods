@@ -11,7 +11,7 @@
   <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/DBM-Extended/mods/e350fb636fd5b9d1afc548f6f79b2e7f3ab6c87f/logo/DBMExtended_LoopDarkMode.svg" width="400" alt="DBM Extended Loop">
   <img alt="DBM Extended Loop" src="https://raw.githubusercontent.com/DBM-Extended/mods/e350fb636fd5b9d1afc548f6f79b2e7f3ab6c87f/logo/DBMExtended_LoopWhiteMode.svg" width="400">
 </picture>
-</p></a>
+</p></a> 
 <p align="center">
   <a title="Contributors" href="https://github.com/DBM-Extended/mods/contributors" target="_blank">
     <img src="https://img.shields.io/github/contributors/DBM-Extended/mods.svg?style=flat-square" alt="Contributors" />
