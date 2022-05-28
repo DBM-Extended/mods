@@ -34,9 +34,15 @@ module.exports = {
   // It's highly recommended "preciseCheck" is set to false for third-party mods.
   // This will make it so the patch version (0.0.X) is not checked.
   //---------------------------------------------------------------------
-
-  meta: { version: "2.1.2", preciseCheck: true, author: null, authorUrl: null, downloadUrl: null },
-
+  
+  meta: {
+    version: '2.1.3',
+    preciseCheck: true,
+    author: 'DBM Extended',
+    authorUrl: 'https://github.com/Giingu/DBM-Extended',
+    downloadURL: 'https://github.com/Giingu/DBM-Extended/tree/main/actions/anchor_create_MOD.js',
+  },
+  
   //---------------------------------------------------------------------
   // Action Fields
   //
