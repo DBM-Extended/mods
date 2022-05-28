@@ -5,6 +5,7 @@
  - [x] node-fetch
  - [x] chalk
  - [x] chart.js
+ - [x] axios
 - GIF Section
  - [x] pixel-gif
 - Font Section
@@ -20,6 +21,11 @@
 - [x] gifski https://github.com/ImageOptim/gifski/releases
 - [x] dwebp https://developers.google.com/speed/webp/download
 - [x] palette.js https://github.com/google/palette.js/blob/master/palette.js
+
+## Preparation
+
+> Use **Npm i axios** since that's a required library by **DBM-E**
+![image](https://cdn.discordapp.com/attachments/886234967338786896/933278405363900426/index.png)
 
 ## Documentation
 ### Basic Image Manipulate
