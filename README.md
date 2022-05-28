@@ -38,6 +38,7 @@ This repository is not meant to be downloaded or cloned. Please follow the insta
 | Package    |                                                        Download Link                                                         |
 | ---------- | :--------------------------------------------------------------------------------------------------------------------------: |
 | Actions    |  [Download](https://minhaskamal.github.io/DownGit/#/home?url=https:%2F%2Fgithub.com%2FDBM-Extended%2Fmods%2Ftree%2Fmain%2Factions&fileName=DBMExtended-Actions&rootDirectory=actions)   |
+| Client     |   [Download](https://minhaskamal.github.io/DownGit/#/home?url=https:%2F%2Fgithub.com%2FDBM-Extended%2Fmods%2Ftree%2Fmain%2Fclient%2Fbot.js&fileName=DBMExtended-Client)   |
 | Events     |   <a href="https://www.repostatus.org/#wip"><img src="https://www.repostatus.org/badges/latest/wip.svg" alt="Project Status: WIP – Initial development is in progress, but there has not yet been a stable, usable release suitable for the public." /></a>   |
 | Extensions | <a href="https://www.repostatus.org/#wip"><img src="https://www.repostatus.org/badges/latest/wip.svg" alt="Project Status: WIP – Initial development is in progress, but there has not yet been a stable, usable release suitable for the public." /></a> |
 | Themes | <a href="https://www.repostatus.org/#wip"><img src="https://www.repostatus.org/badges/latest/wip.svg" alt="Project Status: WIP – Initial development is in progress, but there has not yet been a stable, usable release suitable for the public." /></a> |
