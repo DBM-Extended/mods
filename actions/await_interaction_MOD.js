@@ -13,7 +13,7 @@ module.exports = {
   // This is the section the action will fall into.
   //---------------------------------------------------------------------
 
-  section: "DBM-Enhanced",
+  section: "DBM-Extended",
 
   //---------------------------------------------------------------------
   // Action Subtitle
@@ -52,7 +52,7 @@ module.exports = {
   //---------------------------------------------------------------------
 
   
-	meta: { version: "2.1.2", preciseCheck: true, author: "DBM Extended", authorUrl: "https://github.com/DBM-Extended/mods", downloadURL: "https://github.com/DBM-Extended/mods/tree/main/actions/await_interaction_MOD.js" },
+	meta: { version: "2.1.3", preciseCheck: true, author: "DBM Extended", authorUrl: "https://github.com/DBM-Extended/mods", downloadURL: "https://github.com/DBM-Extended/mods/tree/main/actions/end_if_ended.js" },
 
   //---------------------------------------------------------------------
   // Action Fields
