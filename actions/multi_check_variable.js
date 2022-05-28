@@ -34,8 +34,9 @@ module.exports = {
   // It's highly recommended "preciseCheck" is set to false for third-party mods.
   // This will make it so the patch version (0.0.X) is not checked.
   //---------------------------------------------------------------------
-  
-  meta: { version: '2.1.3',
+
+  meta: {
+    version: '2.1.3',
     preciseCheck: true,
     author: 'DBM Extended',
     authorUrl: 'https://github.com/Giingu/DBM-Extended',
@@ -164,8 +165,6 @@ module.exports = {
 		case "14":
 		  result += ">= " + data.value;
 		  break;
-    }
-
       }
       result += "</div><span>Call " + data.actions.length + " Actions</span>";
       return result;
