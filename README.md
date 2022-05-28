@@ -47,7 +47,7 @@ This repository is not meant to be downloaded or cloned. Please follow the insta
 
 2.  In the top bar of Discord Bot Maker, click Project → Open Directory of your corresponding package (e.g. Open Actions Directory)
 3.  Extract the contents of the .zip file into the folder you just opened (Overwrite existing files if asked)
-4.  Read the mods [guides and dependencies](https://github.com/DBM-Extended/mods/blob/main/docs/canvas-guide.md) and make sure to install all of them
+4.  Read the mods [guides and dependencies](https://github.com/DBM-Extended/mods/blob/main/docs/INSTRUCTIONS.md) and make sure to install all of them
 
 **You will need to repeat this process for all of your projects**
 
