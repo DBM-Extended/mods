@@ -76,6 +76,7 @@ All the developers who made different Libraries, Packages, Tools & APIs. Special
 - [DBM Canvas](https://github.com/LeonZ2019/dbm-canvas)
 - [DBM JMods](https://github.com/ContentJeka/JMODS)
 - [DBM Gotowka](https://github.com/Gotowka/autorskieakcje)
+- [DBM Mody](https://github.com/Gotowka/dbmmody)
 
 ## Disclaimers
 <p>
