@@ -69,7 +69,7 @@ I will be open to any contribution. If you have any idea, please let me know. Pl
 <p><a href="https://github.com/DBM-Extended/mods/blob/main/CONTRIBUTING.md"><img src="https://badges.pufler.dev/contributors/DBM-Extended/mods?size=50&amp;padding=5&amp;bots=true" alt="Contributors Display"></a></p>
 
 ## Thanks
-All the developers who made different Libraries, Packages, Tools & APIs. Specially 
+All the developers who made different Mods, Packages, Tools & APIs. Specially 
 - [Discord Bot Maker](https://store.steampowered.com/app/682130/Discord_Bot_Maker/)
 - [DBM Mods](https://github.com/dbm-network/mods)
 - [DBM Enhanced](https://github.com/AshTheDeveloper/DBM-Enhanced)
