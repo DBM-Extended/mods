@@ -16,6 +16,7 @@ Modules you **must** install since they are required by **DBM-Extended**
  - [x] chalk
  - [x] chart.js
  - [x] axios
+ - [x] fs-extra
 - GIF Section
  - [x] pixel-gif
 - Font Section
