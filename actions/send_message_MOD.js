@@ -33,9 +33,7 @@ module.exports = {
       text = `${data.buttons.length} Buttons and ${data.selectMenus.length} Select Menus`;
     } else if (data.editMessage && data.editMessage !== "0") {
       text = `Message Options - ${presets.getVariableText(data.editMessage, data.editMessageVarName)}`;
-    } else {
-      text = `Nothing (might cause error)`;
-    }
+    } 
     if (data.dontSend) {
       return `Store Data: ${text}`;
     }
@@ -64,7 +62,7 @@ module.exports = {
   // This will make it so the patch version (0.0.X) is not checked.
   //---------------------------------------------------------------------
 
-	meta: { version: "2.1.3", preciseCheck: true, author: "DBM Extended", authorUrl: "https://github.com/DBM-Extended/mods", downloadURL: "https://github.com/DBM-Extended/mods/tree/main/actions/end_if_ended.js" },
+  meta: { version: "2.1.4", preciseCheck: true, author: null, authorUrl: null, downloadUrl: null },
 
   //---------------------------------------------------------------------
   // Action Fields
@@ -83,7 +81,6 @@ module.exports = {
     "attachments",
     "embeds",
     "reply",
-    "nointeraction",
     "ephemeral",
     "tts",
     "overwrite",
@@ -244,7 +241,7 @@ module.exports = {
   <tab label="Buttons" icon="clone">
     <div style="padding: 8px;">
 
-      <dialog-list id="buttons" fields='["name", "type", "id", "row", "url", "emoji", "disabled", "mode", "time", "appear_or_not", "color_overwrite", "disabled_or_not", "actions"]' dialogTitle="Button Info" dialogWidth="600" dialogHeight="800" listLabel="Buttons" listStyle="height: calc(100vh - 300px);" itemName="Button" itemCols="4" itemHeight="40px;" itemTextFunction="data.name" itemStyle="text-align: center; line-height: 40px;">
+      <dialog-list id="buttons" fields='["name", "type", "id", "row", "url", "emoji", "disabled", "mode", "time", "actions"]' dialogTitle="Button Info" dialogWidth="600" dialogHeight="700" listLabel="Buttons" listStyle="height: calc(100vh - 350px);" itemName="Button" itemCols="4" itemHeight="40px;" itemTextFunction="data.name" itemStyle="text-align: center; line-height: 40px;">
         <div style="padding: 16px;">
           <div style="width: calc(50% - 12px); float: left;">
             <span class="dbminputlabel">Name</span>
@@ -279,19 +276,6 @@ module.exports = {
               <option value="MULTI" selected>Multi, Anyone Can Use</option>
               <option value="PERSISTENT">Persistent</option>
             </select>
-			
-			<br>
-			
-			<span class="dbminputlabel"><a href="https://pastebin.com/raw/NJeMhNTq?refer=DBME" target=”_blank”>Appear Options</a></span>
-
-            <input id="appear_or_not" placeholder="Leave blank for true" class="round" type="text">
-			
-			<br>
-			
-            <span class="dbminputlabel"><a href="https://pastebin.com/raw/NJeMhNTq?refer=DBME" target=”_blank”>Color Options</a></span>
-            <input id="color_overwrite" placeholder="Leave blank for no changes." class="round" type="text">
-			
-
           </div>
           <div style="width: calc(50% - 12px); float: right;">
             <span class="dbminputlabel">Unique ID</span>
@@ -311,17 +295,11 @@ module.exports = {
 
             <span class="dbminputlabel">Temporary Time-Limit (Miliseconds)</span>
             <input id="time" placeholder="60000" class="round" type="text">
-			
-			<br>
-			
-			<span class="dbminputlabel"><a href="https://pastebin.com/raw/NJeMhNTq?refer=DBME" target=”_blank”>Disable Options</a></span>
-            <input id="disabled_or_not" placeholder="Leave blank for false" class="round" type="text">
-			
           </div>
 
-          <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+          <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 
-          <action-list-input mode="BUTTON" id="actions" height="calc(100vh - 520px)"></action-list-input>
+          <action-list-input mode="BUTTON" id="actions" height="calc(100vh - 460px)"></action-list-input>
 
         </div>
       </dialog-list>
@@ -460,12 +438,10 @@ module.exports = {
 
   <tab label="Settings" icon="cogs">
     <div style="padding: 8px;">
-    <dbm-checkbox style="float: left;" id="reply" label="Reply to Interact" checked></dbm-checkbox>
-	  
-	  <dbm-checkbox style="float: left;" id="nointeraction" label="No Interactions"></dbm-checkbox>
-	  
-      <dbm-checkbox style="float: left;" id="ephemeral" label="Private Reply"></dbm-checkbox>
-      
+      <dbm-checkbox style="float: left;" id="reply" label="Reply to Interaction if Possible" checked></dbm-checkbox>
+
+      <dbm-checkbox style="float: right;" id="ephemeral" label="Make Reply Private (Ephemeral)"></dbm-checkbox>
+
       <br><br>
 
       <div style="display: flex; justify-content: space-between;">
@@ -618,7 +594,7 @@ module.exports = {
     }
 
 
-    const content = this.evalMessage(message, cache);
+    const content = this.evalMessage(message|| '\u200B', cache);
     if (content) {
       if (messageOptions.content && !overwrite) {
         messageOptions.content += content;
@@ -646,13 +622,13 @@ module.exports = {
         if (embedData.imageUrl) embed.setImage(this.evalMessage(embedData.imageUrl, cache));
         if (embedData.thumbUrl) embed.setThumbnail(this.evalMessage(embedData.thumbUrl, cache));
 
-        if (embedData.description) embed.setDescription(this.evalMessage(embedData.description, cache));
+        if (embedData.description) embed.setDescription(this.evalMessage(embedData.description || '\u200B', cache));
 
         if (embedData.fields?.length > 0) {
           const fields = embedData.fields;
           for (let i = 0; i < fields.length; i++) {
             const f = fields[i];
-            embed.addField(this.evalMessage(f.name, cache), this.evalMessage(f.value, cache), f.inline === "true");
+            embed.addField(this.evalMessage(f.name || '\u200B', cache), this.evalMessage(f.value || '\u200B', cache), f.inline === "true");
           }
         }
 
@@ -689,73 +665,8 @@ module.exports = {
     if (Array.isArray(data.buttons)) {
       for (let i = 0; i < data.buttons.length; i++) {
         const button = data.buttons[i];
-        var buttonData = this.generateButton(button, cache);
-        var btn_appear_or_not = this.evalMessage(button["appear_or_not"],cache)
-        var btn_disabled_or_not = this.evalMessage(button["disabled_or_not"],cache)
-        var btn_color_overwrite = this.evalMessage(button["color_overwrite"],cache)
-
-        if (btn_appear_or_not) {
-          if (btn_appear_or_not.toString() !== '1' || btn_appear_or_not.toString().toLowerCase() !== 'yes' || btn_appear_or_not.toString().toLowerCase() !== 'true') continue
-        }
-
-        if (btn_disabled_or_not) {
-          if (btn_disabled_or_not.toString() === '1' || btn_disabled_or_not.toString().toLowerCase() === 'yes' || btn_disabled_or_not.toString().toLowerCase() === 'true') {
-              finalstep(1)
-            } else {
-              finalstep(0)
-            }
-        } else if (!btn_disabled_or_not) {
-          if (button.id.includes("disabled") === true) {
-            finalstep(1)
-          } else {
-            finalstep(0)
-          }
-        }
-
-		function finalstep(string) {
-			if (btn_color_overwrite) {
-				if (Number(btn_color_overwrite) > 0 && Number(btn_color_overwrite) < 6) {
-					switch (Number(btn_color_overwrite)) {
-						case 1: 
-								buttonData.style = 'PRIMARY'
-								break;
-						case 2: 
-								buttonData.style = 'SECONDARY'
-								break;
-						case 3: 
-								buttonData.style = 'SUCCESS'
-								break;
-						case 4: 
-								buttonData.style = 'DANGER'
-								break;
-						case 5: 
-								buttonData.style = 'LINK'
-								break;
-					}
-				}
-			}
-			if (string) {
-				if (Number(string) === 1) {
-          buttonData.disabled = true
-         }
-			}
-		}
-
-    if (buttonData) {
-      if (!buttonData["custom_id"] && buttonData.style !== 'LINK') {
-        buttonData.custom_id = button.id
-        delete buttonData.url
-      } else if (buttonData.style === 'LINK') {
-        delete buttonData.custom_id
-        if (!buttonData.url) {
-          button.actions = '[Object object]'
-          var showbtn = {}
-          console.error(`-------------------------------------------`, `\n[DBME] SEND MESSAGE ERROR: URL Missing On Button!\n\nButton: `, button);
-          return
-        }
-      }
-    }
-    this.addButtonToActionRowArray(componentsArr, this.evalMessage(button.row, cache), buttonData, cache);
+        const buttonData = this.generateButton(button, cache);
+        this.addButtonToActionRowArray(componentsArr, this.evalMessage(button.row, cache), buttonData, cache);
 
         if (button.mode !== "PERSISTENT") {
           awaitResponses.push({
@@ -903,9 +814,6 @@ module.exports = {
     }
 
     else if (isEdit === 1 && target?.edit) {
-      if (data.nointeraction === true) {
-        messageOptions["components"] = [];
-      }
       target
         .edit(messageOptions)
         .then(onComplete)
@@ -990,4 +898,3 @@ module.exports = {
 
   mod() {},
 };
-
