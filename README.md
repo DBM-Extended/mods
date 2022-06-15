@@ -79,6 +79,7 @@ All the developers who made different Mods, Packages, Tools & APIs. Specially
 - [DBM Mody](https://github.com/Gotowka/dbmmody)
 - [DBM Poland](https://github.com/DiscordBotsPoland/beta-mods)
 - [DBM XinXyla](https://github.com/XinXyla/DBM-MODS-v2)
+- [DBM Brazil](https://github.com/DBM-Brazil/mods)
 
 ## Disclaimers
 <p>
