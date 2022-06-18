@@ -45,7 +45,7 @@ module.exports = {
   //---------------------------------------------------------------------
 
   
-	meta: { version: "2.1.2", preciseCheck: true, author: "DBM Extended", authorUrl: "https://github.com/DBM-Extended/mods", downloadURL: "https://github.com/DBM-Extended/mods/tree/main/actions/store_voice_channel_info_MOD.js" },
+	meta: { version: "2.1.4", preciseCheck: true, author: "DBM Extended", authorUrl: "https://github.com/DBM-Extended/mods", downloadURL: "https://github.com/DBM-Extended/mods/tree/main/actions/store_voice_channel_info_MOD.js" },
 
   //---------------------------------------------------------------------
   // Action Storage Function
