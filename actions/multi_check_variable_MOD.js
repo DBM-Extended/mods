@@ -36,11 +36,11 @@ module.exports = {
   //---------------------------------------------------------------------
 
   meta: {
-    version: '2.1.3',
+    version: '2.1.4',
     preciseCheck: true,
     author: 'DBM Extended',
-    authorUrl: 'https://github.com/Giingu/DBM-Extended',
-    downloadURL: 'https://github.com/Giingu/DBM-Extended/tree/main/actions/anchor_create_MOD.js',
+    authorUrl: 'https://github.com/DBM-Extended/mods',
+    downloadURL: 'https://github.com/DBM-Extended/mods/tree/main/actions/anchor_create_MOD.js',
   },
   
   //---------------------------------------------------------------------
