@@ -66,7 +66,7 @@ This repository is not meant to be downloaded or cloned. Please follow the insta
 
 ## Contribution
 I will be open to any contribution. If you have any idea, please let me know. Please follow this steps to [Contribute](https://github.com/DBM-Extended/mods/blob/main/CONTRIBUTING.md)
-<p><a href="https://github.com/DBM-Extended/mods/blob/main/CONTRIBUTING.md"><img src="https://badges.pufler.dev/contributors/DBM-Extended/mods?size=50&amp;padding=5&amp;bots=true" alt="Contributors Display"></a></p>
+<p><a href="https://github.com/DBM-Extended/mods/blob/main/CONTRIBUTING.md"><img src="https://badges.pufler.dev/contributors/DBM-Extended/mods?size=50&amp;padding=5&amp;bots=true" alt="Contributors Display"></a></p> 
 
 ## Thanks
 All the developers who made different Mods, Packages, Tools & APIs. Specially 
@@ -78,6 +78,10 @@ All the developers who made different Mods, Packages, Tools & APIs. Specially
 - [DBM Gotowka](https://github.com/Gotowka/autorskieakcje)
 - [DBM Mody](https://github.com/Gotowka/dbmmody)
 - [DBM Poland](https://github.com/DiscordBotsPoland/beta-mods)
+- [DBM XinXyla](https://github.com/XinXyla/DBM-MODS-v2)
+- [DBM Brazil](https://github.com/DBM-Brazil/mods)
+- [DBM BlackFire](https://github.com/BLACKFIRE228/Mods)
+- [DBM Gotowka Slash](https://github.com/Gotowka/poradniki)
 
 ## Disclaimers
 <p>
