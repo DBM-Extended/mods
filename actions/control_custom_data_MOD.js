@@ -13,7 +13,7 @@
     
       // Metadata(useless)
 
-  meta: { version: "2.1.3", preciseCheck: true, author: "DBM Extended", authorUrl: "https://github.com/DBM-Extended/mods", downloadURL: "https://github.com/DBM-Extended/mods/tree/main/actions/control_custom_data.js" },
+  meta: { version: "2.1.4", preciseCheck: true, author: "DBM Extended", authorUrl: "https://github.com/DBM-Extended/mods", downloadURL: "https://github.com/DBM-Extended/mods/tree/main/actions/control_custom_data.js" },
 
       // субтайтлы
       subtitle(data) {
@@ -258,8 +258,8 @@
   
           let csversion = document.getElementById("info").getAttribute("version")
           document.getElementById("current").innerHTML = csversion
-          let serversion = "2.1.3"
-          document.getElementById("serv").innerHTML = "2.1.3"
+          let serversion = "2.1.4"
+          document.getElementById("serv").innerHTML = "2.1.4"
           if(csversion !== serversion) {
             document.getElementById("upds").style.display = null;
           } else {
