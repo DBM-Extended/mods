@@ -1,237 +1,205 @@
 module.exports = {
 
-  name: 'Canvas Send Image',
+//---------------------------------------------------------------------
+// Action Name
+//
+// This is the name of the action displayed in the editor.
+//---------------------------------------------------------------------
 
-  section: 'Image Editing',
+name: "Canvas Send Image",
 
-  subtitle (data) {
-    const channels = ['Same Channel', 'Command Author', 'Mentioned User', 'Mentioned Channel', 'Default Channel', 'Temp Variable', 'Server Variable', 'Global Variable']
-    return `${channels[parseInt(data.channel)]}`
-  },
+//---------------------------------------------------------------------
+// Action Section
+//
+// This is the section the action will fall into.
+//---------------------------------------------------------------------
 
-  variableStorage (data, varType) {
-    const type = parseInt(data.storage2)
-    if (type !== varType) return
-    return ([data.varName3, 'Message Object'])
-  },
+section: "Image Editing",
 
-  fields: ['storage', 'varName', 'channel', 'varName2', 'sendOrReply', 'pingingAuthor', 'replyingMessage', 'replyingVarName', 'message', 'spoiler', 'storage2', 'varName3', 'imgName'],
+//---------------------------------------------------------------------
+// Action Subtitle
+//
+// This function generates the subtitle displayed next to the name.
+//---------------------------------------------------------------------
 
-  html (isEvent, data) {
-    return `
-  <div style="width: 550px; height: 350px; overflow-y: scroll;">
-    <div>
-      <div style="float: left; width: 35%;">
-        Source Image:<br>
-        <select id="storage" class="round">
-          ${data.variables[1]}
-        </select>
-      </div>
-      <div style="float: right; width: 60%;">
-        Variable Name:<br>
-        <input id="varName" class="round" type="text" list="variableList"><br>
-      </div>
-    </div><br><br><br>
-    <div style="padding-top: 8px;">
-      <div style="float: left; width: 35%;">
-        Send To:<br>
-        <select id="channel" class="round" onchange="glob.sendTargetChange(this, 'varNameContainer')">
-          ${data.sendTargets[isEvent ? 1 : 0]}
-        </select>
-      </div>
-      <div id="varNameContainer" style="display: none; float: right; width: 60%;">
-        Variable Name:<br>
-        <input id="varName2" class="round" type="text" list="variableList"><br>
-      </div>
-    </div><br><br><br>
-    <div style="padding-top: 8px;">
-      <div id="sendReply" style="float: left; width: 60%;">
-        Action Type:<br>
-        <select id="sendOrReply" class="round" onchange="glob.pingAuthor(this)">
-          <option value="send" selected>Send</option>
-          <option value="reply">Reply</option>
-        </select>
-      </div>
-      <div id="pingAuthor" style="padding-left: 3%; float: left; width: 35%;">
-        Ping Author:<br>
-        <select id="pingingAuthor" class="round">
-          <option value="1" selected>True</option>
-          <option value="0">False</option>
-        </select>
-      </div>
-    </div><br><br><br>
-    <div id="replyMessage" style="padding-top: 8px;">
-      <div style="float: left; width: 35%;">
-        Replying Message:<br>
-        <select id="replyingMessage" class="round" onchange="glob.messageChange(this, 'replyMsgContainer')">
-          ${data.messages[isEvent ? 1 : 0]}
-        </select>
-      </div>
-      <div id="replyMsgContainer" style="display: none; float: right; width: 60%;">
-        Variable Name:<br>
-        <input id="replyingVarName" class="round" type="text" list="variableList">
-      </div><br><br><br>
-    </div>
-    <div style="padding-top: 8px;">
-      Message:<br>
-      <textarea id="message" rows="2" placeholder="Insert message here..." style="width: 94%"></textarea>
-    </div><br>
-    <div style="padding-top: 8px;">
-      <div style="float: left; width: 44%;">
-        Image Spoiler:<br>
-        <select id="spoiler" class="round">
-          <option value="0" selected>No</option>
-          <option value="1">Yes</option>
-        </select><br>
-      </div>
-      <div style="padding-left: 5%; float: left; width: 50%;">
-        Image Name (Without extension):<br>
-        <input id="imgName" class="round" type="text" value="image"><br>
-      </div>
-    </div><br><br>
-    <div>
-      <div style="float: left; width: 35%;">
-        Store In:<br>
-        <select id="storage2" class="round" onchange="glob.variableChange(this, 'varNameContainer2')">
-          ${data.variables[0]}
-        </select>
-      </div>
-      <div id="varNameContainer2" style="display: none; float: right; width: 60%;">
-        Variable Name:<br>
-        <input id="varName3" class="round" type="text">
-      </div>
-    </div>
-  </div>`
-  },
+subtitle: function(data) {
+	const channels = ['Same Channel', 'Command Author', 'Mentioned User', 'Mentioned Channel', 'Default Channel', 'Temp Variable', 'Server Variable', 'Global Variable'];
+	return `${channels[parseInt(data.channel)]}`;
+},
 
-  init () {
-    const { glob, document } = this
-    const pingAuthor = document.getElementById('pingAuthor')
-    const replyMessage = document.getElementById('replyMessage')
-    const sendOrReply = document.getElementById('sendOrReply')
+//https://github.com/LeonZ2019/
+author: "LeonZ",
+version: "1.1.0",
 
-    glob.checkDJS = function () {
-      const { version } = require('discord.js')
-      if (version.startsWith('12')) {
-        const options = sendOrReply.getElementsByTagName('option')
-        options[1].disabled = true
-      }
-    }
-    glob.checkDJS()
+//---------------------------------------------------------------------
+// Action Storage Function
+//
+// Stores the relevant variable info for the editor.
+//---------------------------------------------------------------------
 
-    glob.pingAuthor = function (select) {
-      if (select.value === 'send') {
-        pingAuthor.style.display = 'none'
-        replyMessage.style.display = 'none'
-      } else {
-        pingAuthor.style.display = null
-        replyMessage.style.display = null
-      }
-    }
-    glob.pingAuthor(sendOrReply)
+variableStorage: function(data, varType) {
+	const type = parseInt(data.storage2);
+	if(type !== varType) return;
+	return ([data.varName3, 'Message']);
+},
 
-    glob.variableChange(document.getElementById('storage2'), 'varNameContainer2')
-    glob.messageChange(document.getElementById('replyingMessage'), 'replyMsgContainer')
-    glob.variableChange(document.getElementById('storage2'), 'varNameContainer2')
-  },
+//---------------------------------------------------------------------
+// Action Fields
+//
+// These are the fields for the action. These fields are customized
+// by creating elements with corresponding IDs in the HTML. These
+// are also the names of the fields stored in the action's JSON data.
+//---------------------------------------------------------------------
 
-  async action (cache) {
-    const data = cache.actions[cache.index]
-    const storage = parseInt(data.storage)
-    const varName = this.evalMessage(data.varName, cache)
-    const sourceImage = this.getVariable(storage, varName, cache)
-    if (!sourceImage) {
-      this.Canvas.onError(data, cache, 'Image not exist!')
-      this.callNextAction(cache)
-      return
-    }
-    const content = this.evalMessage(data.message, cache)
-    const channel = parseInt(data.channel)
-    const varName2 = this.evalMessage(data.varName2, cache)
-    const targetChannel = this.getSendTarget(channel, varName2, cache)
-    let name = this.evalMessage(data.imgName, cache)
-    if (sourceImage.animated) {
-      name += '.gif'
-    } else {
-      name += '.png'
-    }
-    if (parseInt(data.spoiler) === 1) name = `SPOILER_${name}`
-    try {
-      const attachment = await this.Canvas.toAttachment(sourceImage, name)
-      let message
-      if (this.getDBM().DiscordJS.version.startsWith('12')) data.sendOrReply = 'send'
-      if (data.sendOrReply === 'send') {
-        if (targetChannel && targetChannel.send) message = await targetChannel.send(content === '' ? '' : content, attachment)
-      } else if (data.sendOrReply === 'reply') {
-        const msg = parseInt(data.replyingMessage)
-        const varName2 = this.evalMessage(data.replyingVarName, cache)
-        const replyMessage = this.getMessage(msg, varName2, cache)
-        const messageOptions = { files: [attachment] }
-        if (!parseInt(data.pingingAuthor)) messageOptions.allowedMentions = { repliedUser: false }
-        if (targetChannel && replyMessage && replyMessage.reply) {
-          if (replyMessage.channel.id === targetChannel.id) {
-            message = await replyMessage.reply(content === '' ? '' : content, messageOptions)
-          } else {
-            this.Canvas.onError(data, cache, 'Reply message must be same channel as the target channel!')
-          }
-        }
-      }
-      if (message) {
-        const storage2 = parseInt(data.storage2)
-        if (storage2 !== 0) {
-          const varName3 = this.evalMessage(data.varName3, cache)
-          this.storeValue(message, storage2, varName3, cache)
-        }
-      }
-      this.callNextAction(cache)
-    } catch (err) {
-      this.Canvas.onError(data, cache, err)
-    }
-  },
+fields: ["storage", "varName", "channel", "varName2", "message", "Spoiler", "storage2", "varName3"],
 
-  mod (DBM) {
-    DBM.Actions.Canvas.toBuffer = function (sourceImage) {
-      const image = this.loadImage(sourceImage)
-      if (sourceImage.animated) {
-        const fs = require('fs')
-        const path = require('path')
-        const temp = fs.mkdtempSync(require('os').tmpdir() + path.sep)
-        const canvas = this.CanvasJS.createCanvas(sourceImage.width, sourceImage.height)
-        const ctx = canvas.getContext('2d')
-        const frameLength = sourceImage.totalFrames.toString().length
-        for (let i = 0; i < image.length; i++) {
-          ctx.clearRect(0, 0, canvas.width, canvas.height)
-          ctx.drawImage(image[i], 0, 0)
-          const buffer = canvas.toBuffer('image/png', { compressionLevel: 9 })
-          let frameName = i.toString()
-          while (frameName.length !== frameLength) frameName = '0' + frameName
-          fs.writeFileSync(`${temp}${path.sep}image_${frameName}.png`, buffer)
-        }
-        require('child_process').execSync(`"${this.dependencies.gifski}" --quiet ${(sourceImage.loop !== 0) ? '--once ' : ''}--fps ${Math.round(1000 / sourceImage.delay)} -o "${temp}${path.sep}temp.gif" "${temp}${path.sep}image_"*.png`)
-        const buffer = fs.readFileSync(`${temp}${path.sep}temp.gif`)
-        fs.rmdirSync(temp, { recursive: true })
-        return buffer
-      } else {
-        const canvas = this.CanvasJS.createCanvas(image.width, image.height)
-        const ctx = canvas.getContext('2d')
-        ctx.drawImage(image, 0, 0)
-        const buffer = canvas.toBuffer('image/png', { compressionLevel: 9 })
-        return buffer
-      }
-    }
+//---------------------------------------------------------------------
+// Command HTML
+//
+// This function returns a string containing the HTML used for
+// editting actions. 
+//
+// The "isEvent" parameter will be true if this action is being used
+// for an event. Due to their nature, events lack certain information, 
+// so edit the HTML to reflect this.
+//
+// The "data" parameter stores constants for select elements to use. 
+// Each is an array: index 0 for commands, index 1 for events.
+// The names are: sendTargets, members, roles, channels, 
+//                messages, servers, variables
+//---------------------------------------------------------------------
 
-    DBM.Actions.Canvas.toAttachment = function (sourceImage, name) {
-      const buffer = this.toBuffer(sourceImage)
-      let possibleExt = '.png'
-      if (sourceImage.animated) possibleExt = '.gif'
-      const parse = require('path').parse(name)
-      if (parse.ext === '') {
-        name += possibleExt
-      } else if (parse.ext !== possibleExt) {
-        name = parse.name + possibleExt
-      }
-      const attachment = new DBM.DiscordJS.MessageAttachment(buffer, name)
-      return attachment
-    }
-  }
+html: function(isEvent, data) {
+	return `
+<div>
+	<div style="float: left; width: 35%;">
+		Source Image:<br>
+		<select id="storage" class="round" onchange="glob.refreshVariableList(this)">
+			${data.variables[1]}
+		</select>
+	</div>
+	<div id="varNameContainer" style="float: right; width: 60%;">
+		Variable Name:<br>
+		<input id="varName" class="round" type="text" list="variableList"><br>
+	</div>
+</div><br><br><br>
+<div style="padding-top: 8px;">
+	<div style="float: left; width: 35%;">
+		Send To:<br>
+		<select id="channel" class="round" onchange="glob.sendTargetChange(this, 'varNameContainer2')">
+			${data.sendTargets[isEvent ? 1 : 0]}
+		</select>
+	</div>
+	<div id="varNameContainer2" style="display: none; float: right; width: 60%;">
+		Variable Name:<br>
+		<input id="varName2" class="round" type="text" list="variableList"><br>
+	</div>
+</div><br><br><br>
+<div style="padding-top: 8px;">
+	Message:<br>
+	<textarea id="message" rows="2" placeholder="Insert message here..." style="width: 94%"></textarea>
+</div><br>
+<div style="padding-top: 8px;">
+	<div style="float: left; width: 94%;">
+		Image Spoiler:<br>
+		<select id="Spoiler" class="round">
+			<option value="0" selected>No</option>
+			<option value="1">Yes</option>
+		</select><br>
+	</div>
+</div><br><br>
+<div>
+	<div style="float: left; width: 35%;">
+		Store In:<br>
+		<select id="storage2" class="round" onchange="glob.variableChange(this, 'varNameContainer3')">
+			${data.variables[0]}
+		</select>
+	</div>
+	<div id="varNameContainer3" style="display: none; float: right; width: 60%;">
+		Variable Name:<br>
+		<input id="varName3" class="round" type="text">
+	</div>
+</div>`
+},
+
+//---------------------------------------------------------------------
+// Action Editor Init Code
+//
+// When the HTML is first applied to the action editor, this code
+// is also run. This helps add modifications or setup reactionary
+// functions for the DOM elements.
+//---------------------------------------------------------------------
+
+init: function() {
+	const {glob, document} = this;
+
+	glob.refreshVariableList(document.getElementById('storage'));
+	glob.sendTargetChange(document.getElementById('channel'), 'varNameContainer2');
+	glob.variableChange(document.getElementById('storage2'), 'varNameContainer3');
+},
+
+//---------------------------------------------------------------------
+// Action Bot Function
+//
+// This is the function for the action within the Bot's Action class.
+// Keep in mind event calls won't have access to the "msg" parameter, 
+// so be sure to provide checks for variable existance.
+//---------------------------------------------------------------------
+
+action: function(cache) {
+	const Discord = require('discord.js');
+	const Canvas = require('canvas');
+	const data = cache.actions[cache.index];
+	const storage = parseInt(data.storage);
+	const varName = this.evalMessage(data.varName, cache);
+	const imagedata = this.getVariable(storage, varName, cache);
+	if(!imagedata) {
+		this.callNextAction(cache);
+		return;
+	}
+	const channel = parseInt(data.channel);
+	const varName2 = this.evalMessage(data.varName2, cache);
+	const target = this.getSendTarget(channel, varName2, cache);	
+	const image = new Canvas.Image();
+	image.src = imagedata;
+	const canvas = Canvas.createCanvas(image.width,image.height);
+	const ctx = canvas.getContext('2d');
+	ctx.drawImage(image, 0, 0, image.width, image.height)
+	var fs = require("fs");
+	let name;
+	const Spoiler = parseInt(data.Spoiler);
+	switch(Spoiler) {
+		case 0:
+			name = 'image.png';
+			break;
+		case 1:
+			name = 'SPOILER_image.png';
+	}
+	const buffer = canvas.toBuffer('image/png');
+	const attachment = new Discord.Attachment(buffer, name);
+	const _this = this;
+	if(target && target.send) {
+		target.send(this.evalMessage(data.message, cache), attachment).then(function(msgobject) {
+			const varName3 = _this.evalMessage(data.varName3, cache);
+			const storage2 = parseInt(data.storage2);
+			_this.storeValue(msgobject, storage2, varName3, cache);
+			_this.callNextAction(cache);
+		})
+	} else {
+		this.callNextAction(cache);
+	}
+},
+
+//---------------------------------------------------------------------
+// Action Bot Mod
+//
+// Upon initialization of the bot, this code is run. Using the bot's
+// DBM namespace, one can add/modify existing functions if necessary.
+// In order to reduce conflictions between mods, be sure to alias
+// functions you wish to overwrite.
+//---------------------------------------------------------------------
+
+mod: function(DBM) {
 }
+
+}; // End of module
