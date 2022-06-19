@@ -2,7 +2,6 @@ CURL=curl
 GREP=grep
 
 README_TMP=readme.html
-# change those for your project
 USER=DBM-Extended
 REPO=mods
 
