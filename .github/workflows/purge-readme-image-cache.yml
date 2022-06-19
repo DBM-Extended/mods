@@ -6,9 +6,5 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v2
-      - name: setup node
-        uses: actions/setup-node@v2
-        with:
-          node-version: '16'
       - name: Purge README Images
         run: make purge
