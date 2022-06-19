@@ -4,12 +4,12 @@ module.exports = {
     name: "Find Slash Image",
   
   
-    section: "Discord Bot Poland",
+    section: "DBM Extended",
   
 
   
     subtitle(data, presets) {
-      return 'Akcja stworzona przez money#6283';
+      return 'Mod made by DBM Extended';
     },
   
 
@@ -21,8 +21,7 @@ module.exports = {
     },
 
   
-    meta: { version: "2.1.4", preciseCheck: true, author: 'Gotowka', authorUrl: 'https://github.com/Gotowka/autorskieakcje/blob/main/image_slash.js', downloadUrl: 'https://github.com/Gotowka/autorskieakcje/blob/main/image_slash.js' },
-  
+	meta: { version: "2.1.4", preciseCheck: false, author: "DBM Extended", authorUrl: "https://github.com/DBM-Extended/mods", downloadURL: "https://github.com/DBM-Extended/mods/tree/main/actions/server_ban_count.js" },
 
   
     fields: ["PhotoUrl", "storage", "varName"],
@@ -33,7 +32,7 @@ module.exports = {
       return `
   <div>
       <div style="float: left; width: 100%;">
-          <span class="dbminputlabel">Nazwa parametru</span><br>
+          <span class="dbminputlabel">Parameter name</span><br>
           <input id="PhotoUrl" class="round" type="text">
       </div>
   </div>
@@ -42,7 +41,7 @@ module.exports = {
   
   <store-in-variable style="padding-top: 8px;" dropdownLabel="Store In" selectId="storage" variableContainerId="varNameContainer" variableInputId="varName" selectWidth="40%" variableInputWidth="55%"></store-in-variable>
   <br><br><br><br><br><br><br>
-  <p>Jeżeli ci nie działa napisz do mnie w wiadomośći prywatnej!</p>`
+  <p>If it doesn't work for you, write to me in a private message!</p>`
   ;
     },
   
