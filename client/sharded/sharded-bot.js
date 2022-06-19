@@ -1,6 +1,6 @@
 // Made by TheMonDon#1721
 // Some code by General Wrex
-const version = '1.3';
+const version = '1.5';
 
 // Include discord.js and original check
 const { version: djsVersion, ShardingManager } = require('discord.js');
