@@ -4,84 +4,87 @@ module.exports = {
   section: "Server Control",
   meta: {
     version: '2.1.4',
-    preciseCheck: true,
-    author: '[XinXyla - 172782058396057602]',
-    authorUrl: 'https://github.com/DBM-Brazil/mods',
-    downloadURL: 'https://github.com/DBM-Brazil/mods',
+    preciseCheck: false,
+    author: 'DBM Extended',
+    authorUrl: 'https://github.com/DBM-Extended/mods',
+    downloadURL: 'https://github.com/DBM-Extended/mods',
     },
 
   subtitle(data, presets) {
     const info = [
-      "Servidor (Objeto)",
-      "ID do servidor",
-      "Nome do servidor",
-      "Acrônimo do nome do servidor",
-      "Idioma Preferido do Servidor",
-      "URL do ícone do servidor",
-      "Nível de Verificação do Servidor",
-      "Canal padrão do servidor",
-      "Canal AFK do Servidor",
-      "Canal do sistema do servidor",
-      "Cargo padrão do servidor",
-      "Dono do Servidor (Objeto)",
-      "Bot do servidor",
-      "Lista de Canais do Servidor",
-      "Lista de Cargos do servidor",
-      "Lista de Membros do Servidor",
-      "Lista de emojis do servidor",
-      "Contagem de membros do servidor",
-      "Servidor criado em",
-      "Tempo limite do servidor AFK",
-      "Servidor disponível",
-      "Servidor Grande",
-      "Servidor conectado em",
-      "Contagem de Canais do Servidor",
-      "Contagem de emojis do servidor",
-      "Incorporação de servidor habilitada",
-      "Contagem de membros ocupados do servidor",
-      "Contagem de membros online do servidor",
-      "Contagem de membros offline do servidor",
-      "Contagem de membros ociosos do servidor",
-      "Contagem de bots do servidor",
-      "Lista de IDs de Canais do Servidor",
-      "Lista de IDs de Cargos de servidor",
-      "Lista de IDs de membros do servidor",
+      "Server (Object)",
+      "server ID",
+      "Server Name",
+      "Server name acronym",
+      "Server Preferred Language",
+      "Server icon URL",
+      "Server Verification Level",
+      "Server default channel",
+      "Server AFK channel",
+      "Server system channel",
+      "Server default role",
+      "Server Owner (Object)",
+      "Server Bot",
+      "Server Channel List",
+      "Server's Position List",
+      "Server Members List",
+      "Server emoji list",
+      "Server Member Count",
+      "Server created on",
+      "Server timeout AFK",
+      "Server available",
+      "Server Large",
+      "Server connected on",
+      "Server Channel count",
+      "Server emoji count",
+      "Server embed enabled",
+      "Server busy member count",
+      "Server online member count",
+      "Server offline member count",
+      "Server idle member count",
+      "Server bot count",
+      "List of Server Channel IDs",
+      "List of Server Positions IDs",
+      "List of Server Member IDs",
       "",
-      "Contagem Humana do Servidor",
+      "Server Human Count",
       "",
-      "Contagem de Cargos do Servidor",
-      "Contagem de canais de texto do servidor",
-      "Contagem de Canais de Voz do Servidor",
-      "Servidor verificado",
-      "Lista de banidos do servidor",
-      "Lista de convites do servidor",
-      "Filtro de conteúdo explícito do servidor",
-      "Contagem de reforços do servidor",
-      "Nível de aumento de servidor",
-      "URL do banner do servidor",
-      "Lista de recursos do servidor",
-      "ID do Dono do servidor",
-      "Código URL do Servidor Vanity",
-      "ID do canal do widget do servidor",
-      "ID do canal AFK do servidor",
-      "Ativar barra de progresso do servidor",
-      "Descrição do Servidor",
-      "Servidor parceiro",
-      "Canal de Regras do Servidor",
-      "ID do canal da regra do servidor",
-      "Canal de widget do servidor",
-      "ID do canal do sistema do servidor",
-      "Nível NSFW do Servidor",
-      "Nível MFA/2FA do Servidor",
-      "Timestamp do Servidor",
-      "URL do Template",
-      "Código do Template",
-      "Nome do Template",
-      "Descrição do Template",
-      "Vezes que o Template foi usado",
-      "ID do criador do Template",
-      "Timestamp da criação do Template",
-      "Timestamp da atualização do Template",
+      "Server Position Count",
+      "Server Text Channel Count",
+      "Server Voice Channel Count",
+      "Server Checked",
+      "Server Banned List",
+      "Server Invitation List",
+      "Server explicit content filter",
+      "Server boost count",
+      "Server boost level",
+      "Server banner URL",
+      "Server resource list",
+      "Server Owner ID",
+      "Server Vanity Server URL code",
+      "Server widget channel ID",
+      "Server AFK channel ID",
+      "Enable server progress bar",
+      "Server Description",
+      "Partner Server",
+      "Server Rule Channel",
+      "Server rule channel ID",
+      "Server widget channel",
+      "Server system channel ID",
+      "Server NSFW level",
+      "Server MFA/2FA level",
+      "Server Timestamp",
+      "Template URL",
+      "Template Code",
+      "Template Name",
+      "Template Description",
+      "Times the Template has been used",
+      "Template creator ID",
+      "Timestamp of Template creation",
+      "Timestamp of Template update",
+      "Total members in the voice channel",
+      "List of members by ID present in the voice channels",
+      "List of members present in the voice channels",
     ];
     return `${presets.getServerText(data.server, data.varName)} - ${info[parseInt(data.info, 10)]}`;
   },
@@ -260,6 +263,15 @@ module.exports = {
                       case 69:
                         dataType = "Timestamp";
                         break;
+                        case 70:
+                          dataType = "Number";
+                          break;
+                          case 71:
+                            dataType = "List";
+                            break;
+                            case 72:
+                              dataType = "List";
+                              break;
 
     }
     return [data.varName2, dataType];
@@ -279,97 +291,100 @@ module.exports = {
 
 <div>
 	<div style="padding-top: 8px; width: 100%;">
-		<span class="dbminputlabel">Informações</span><br>
+		<span class="dbminputlabel">Information</span><br>
 		<select id="info" class="round">
-      <optgroup label="Informações Gerais do Servidor">
-      <option value="0">servidor (Objeto)</options>
-      <option value="1">ID do servidor</options>
-      <option value="2">Nome do servidor</options>
-      <option value="3">Acrônimo do nome do servidor</options>
-      <option value="53">Descrição do servidor</options>
-      <option value="5">URL do ícone do servidor</options>
-      <option value="7">Canal padrão do servidor</options>
-      <option value="58">ID do canal do sistema do servidor</options>
-      <option value="9">Canal do sistema do servidor</options>
-      <option value="21">Servidor grande</options>
-      <option value="43">Filtro de conteúdo explícito do servidor</options>
-      <option value="10">Cargo padrão do servidor</options>
-      <option value="12">Bot do servidor</options>
-      <option value="20">Servidor disponível</options>
+      <optgroup label="General Server Information">
+      <option value="0">Server (Object)</options>
+      <option value="1">Server ID</options>
+      <option value="2">Server name</options>
+      <option value="3">Server name</options>
+      <option value="53">Server description</options>
+      <option value="5">URL of the server icon</options>
+      <option value="7">Server's default channel</options>
+      <option value="58">Server system channel ID</options>
+      <option value="9">Server system channel</options>
+      <option value="21">Large server</options>
+      <option value="43">Server explicit content filter</options>
+      <option value="10">Server default role</options>
+      <option value="12">Server bot</options>
+      <option value="20">Server available</options>
       </optgroup>
-      <optgroup label="Informações AFK do Servidor">
-      <option value="8">Canal AFK do servidor</options>
-      <option value="51">ID do canal AFK do servidor</options>
-      <option value="19">Tempo limite de AFK do servidor</options>
+      <optgroup label="Server AFK information">
+      <option value="8">Server AFK channel</options>
+      <option value="51">Server AFK channel ID</options>
+      <option value="19">Server AFK timeout</options>
       </optgroup>
-      <optgroup label="Informações sobre impulso do Servidor">
-      <option value="44">Contagem de reforços do servidor</options>
-      <option value="45">Nível de aumento de servidor</options>
+      <optgroup label="Server boost information">
+      <option value="44">Server boost count</options>
+      <option value="45">Server boost level</options>
       </optgroup>
-      <optgroup label="Contagens de Servidores">
-      <option value="17">Contagem de membros do servidor</options>
-      <option value="35">Contagem Humana do Servidor</options>
-      <option value="30">Contagem de bots do servidor</options>
-      <option value="24">Contagem de emojis do servidor</options>
-      <option value="37">Contagem de Cargos do servidor</options>
-      <option value="23">Contagem de canais do servidor</options>
-      <option value="38">Contagem de canais de texto do servidor</options>
-      <option value="39">Contagem de canais de voz do servidor</options>
+      <optgroup label="Server counts">
+      <option value="17">Server member count</options>
+      <option value="35">Server Human Count</options>
+      <option value="30">Server bot count</options>
+      <option value="24">Server emoji count</options>
+      <option value="37">Server Job count</options>
+      <option value="23">Server channel count</options>
+      <option value="38">Server text channel count</options>
+      <option value="39">Server voice channel count</options>
+      <option value="70">Total members on voice channels</options>
       </optgroup>
-      <optgroup label="Informações da comunidade do servidor"">
-      <option value="54">Servidor em parceria</options>
-      <option value="55">Canal de regras do servidor</options>
-      <option value="56">ID do canal da regra do servidor</options>
-      <option value="4">Idioma preferencial do servidor</options>
-      <option value="40">Servidor verificado</options>
-      <option value="52">Barra de progresso do Server Premium ativada</options>
-      <option value="46">URL do banner do servidor</options>
-      <option value="47">Lista de recursos do servidor</options>
-      <option value="49">Código de URL personalizado do servidor</options>
-      <option value="57">Canal de widget do servidor</options>
-      <option value="50">ID do canal do widget do servidor</options>
-      <option value="25">Incorporação de servidor ativada</options>
+      <optgroup label="Server community information"">
+      <option value="54">Partnered server</options>
+      <option value="55">Server rules channel</options>
+      <option value="56">Server rule channel ID</options>
+      <option value="4">Preferred server language</options>
+      <option value="40">Server checked</options>
+      <option value="52">Premium Server progress bar enabled</options>
+      <option value="46">URL of the server banner</options>
+      <option value="47">Server resource list</options>
+      <option value="49">Server custom URL code</options>
+      <option value="57">Server widget channel</options>
+      <option value="50">Server widget channel ID</options>
+      <option value="25">Server embedding enabled</options>
       </optgroup>
-      <optgroup label="Informações de datas do servidor">
-      <option value="61">Carimbo de data e hora do servidor</options>
-      <option value="18">Servidor criado em</options>
-      <option value="22">Servidor conectado em</options>
+      <optgroup label="Server date information">
+      <option value="61">Server timestamp</options>
+      <option value="18">Server created on</options>
+      <option value="22">Server connected on</options>
       </optgroup>
-      <optgroup label="Níveis do Servidor">
-      <option value="59">Nível NSFW do servidor</options>
-      <option value="6">Nível de verificação do servidor</options>
-      <option value="60">Nível MFA/2FA do servidor</options>
+      <optgroup label="Server levels">
+      <option value="59">Server NSFW level</options>
+      <option value="6">Server verification level</options>
+      <option value="60">Server MFA/2FA level</options>
       </optgroup>
-      <optgroup label="Informações da Lista de Servidores">
-      <option value="15">Lista de membros do servidor</options>
-      <option value="33">Lista de IDs de membros do servidor</options>
-      <option value="13">Lista de canais do servidor</options>
-      <option value="31">Lista de IDs de canais de servidor</options>
-      <option value="16">Lista de emojis do servidor</options>
-      <option value="14">Lista de Cargos do servidor</options>
-      <option value="32">Lista de IDs de funções de servidor</options>
-      <option value="41">Lista de banidos do servidor</options>
-      <option value="42">Lista de convites do servidor</options>
+      <optgroup label="Server List Information">
+      <option value="15">Server member list</options>
+      <option value="33">List of server member IDs</options>
+      <option value="13">List of server channels</options>
+      <option value="31">List of server channel IDs</options>
+      <option value="16">List of server emojis</options>
+      <option value="14">Server Positions list</options>
+      <option value="32">List of Server Role IDs</options>
+      <option value="41">Server Banned List</options>
+      <option value="42">Server invite list</options>
+      <option value="71">List of members by ID present on voice channels</options>
+      <option value="72">List of members present on voice channels</options>
       </optgroup>
-      <optgroup label="Informações do Dono do servidor">
-      <option value="48">ID do Dono do servidor</options>
-      <option value="11">Dono do Servidor (Objeto)</options>
+      <optgroup label="Server Owner Information">
+      <option value="48">Server Owner ID</options>
+      <option value="11">Server Owner (Object)</options>
       </optgroup>
-      <optgroup label="Contagem de Status do Servidor">
-      <option value="27">Contagem de membros online do servidor</options>
-      <option value="29">Contagem de membros inativos do servidor</options>
-      <option value="26">Contagem de membros ocupados do servidor</options>
-      <option value="28">Contagem de membros offline do servidor</options>
+      <optgroup label="Server Status Count">
+      <option value="27">Server online member count</options>
+      <option value="29">Server inactive member count</options>
+      <option value="26">Server busy member count</options>
+      <option value="28">Server offline member count</options>
       </optgroup>
-      <optgroup label="Template do Servidor">
-      <option value="62">URL do Template</options>
-      <option value="63">Código do Template</options>
-      <option value="64">Nome do Template</options>
-      <option value="65">Descrição do Template</options>
-      <option value="66">Vezes que o Template foi usado</options>
-      <option value="67">ID do criador do Template</options>
-      <option value="68">Timestamp da criação do Template</options>
-      <option value="69">Timestamp da atualização do Template</options>
+      <optgroup label="Server Template">
+      <option value="62">URL of Template</options>
+      <option value="63">Template code</options>
+      <option value="64">Template Name</options>
+      <option value="65">Description of the Template</options>
+      <option value="66">Times the Template has been used</options>
+      <option value="67">Template creator ID</options>
+      <option value="68">Timestamp of the Template creation</options>
+      <option value="69">Template update timestamp</options>
       </optgroup>
 		</select>
 	</div>
@@ -377,7 +392,7 @@ module.exports = {
 
 <br>
 
-<store-in-variable dropdownLabel="Armazenar em" selectId="storage" variableContainerId="varNameContainer2" variableInputId="varName2"></store-in-variable>`;
+<store-in-variable dropdownLabel="Store in" selectId="storage" variableContainerId="varNameContainer2" variableInputId="varName2"></store-in-variable>`;
   },
 
    init() {},
@@ -611,7 +626,17 @@ module.exports = {
           break;
           case 69:
           result = `${(await targetServer.fetchTemplates()).map(v => v.updatedAt)}`;
-          break;      
+          break; 
+          case 70:
+            result = targetServer.channels.cache.filter(c => c.type === 'GUILD_VOICE').map(c => c.members.size).reduce((s, a) => s + a, 0);
+            break; 
+            case 71:
+              const str = targetServer.channels.cache.filter(c => c.type === 'GUILD_VOICE').map(c => c.members.map(member => member.user.id + ',').join('')).join('');  
+              result = str.substring(0, str.length - 1).split(new RegExp(","));
+              break;     
+              case 72:
+                result = targetServer.channels.cache.filter(d => d.type === 'GUILD_VOICE').map(d => d.members.map(member => member.user).join('')).join('');  
+                break;                 
       default:
         break;
     }

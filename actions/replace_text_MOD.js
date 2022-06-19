@@ -4,14 +4,14 @@ module.exports = {
   meta: {
     version: '2.1.4',
     preciseCheck: false,
-    author: '[XinXyla - 172782058396057602]',
-    authorUrl: 'https://github.com/DBM-Brazil/mods',
-    downloadURL: 'https://github.com/DBM-Brazil/mods',
+    author: 'DBM Extended',
+    authorUrl: 'https://github.com/DBM-Extended/mods',
+    downloadURL: 'https://github.com/DBM-Extended/mods',
     },
 
   subtitle(data) {
-    const info = ['Substitua o primeiro resultado', 'Substitua todos os resultados'];
-    return `${info[data.info]} "${data.text2}" por "${data.text3}" de "${data.text}"`;
+    const info = ['Replace first result', 'Replace all results'];
+    return `${info[data.info]} "${data.text2}" for "${data.text3}" of "${data.text}"`;
   },
 
   variableStorage(data, varType) {
@@ -24,12 +24,12 @@ module.exports = {
   html(isEvent, data) {
     return `
     <div style="padding-top: 3px;">
-	  Texto original:
-		  <textarea id="text" rows="5" placeholder="Insira o texto aqui..." style="width: 99%; font-family: monospace; white-space: nowrap;"></textarea>
+	  <span class="dbminputlabel">Texto original</span>
+		  <textarea id="text" rows="5" placeholder="Insert the text here..." style="width: 99%; font-family: monospace; white-space: nowrap;"></textarea>
 	  </div>
 	  <div>
 		  <div style="padding-top: 8px; width: 100%;">
-		  Substituir:<br>
+		  <span class="dbminputlabel">Replace</span><br>
 			  <textarea id="text2" rows="1" class="round" style="width:100%;"></textarea>
 		  </div><div style=" padding-top: 8px; width: 100%;">
 			  Para isso:<br>
@@ -37,21 +37,21 @@ module.exports = {
 		  </div>
 	  </div>
 	  <div style="padding-top: 8px; width: 100%;">
-	  Modelo:<br>
+	  <span class="dbminputlabel">Model</span><br>
 	  <select id="info" class="round">
-		  <option value="0" selected>Substitua o primeiro resultado</option>
-		  <option value="1">Substitua todos os resultados</option>
+		  <option value="0" selected>Replace the first result</option>
+		  <option value="1">Replace all results</option>
 	  </select>
 	  </div>
 	  <div style="padding-top: 8px;">
 		  <div style="float: left; width: 35%;">
-		  Armazenar em:<br>
+		  <span class="dbminputlabel">Store in</span><br>
 			  <select id="storage" class="round">
 				  ${data.variables[1]}
 			  </select>
 		  </div>
 		  <div id="varNameContainer" style="float: right; width: 60%;">
-			  Nome da variável:<br>
+			  <span class="dbminputlabel">Variable name</span><br>
 			  <input id="varName" class="round" type="text">
 		  </div>
 	  </div>`;

@@ -2,19 +2,19 @@ module.exports = {
 
     name: "Converter",  
     section: "Other Stuff",   
-    short_description: "Converte uma informação em texto,número ou formato",
+    short_description: "Convert an Information to text, number or format",
     meta: {
         version: '2.1.4',
-        preciseCheck: true,
-        author: '[XinXyla - 172782058396057602]<br>[Tempest - 321400509326032897]',
-        authorUrl: 'https://github.com/DBM-Brazil/mods',
-        downloadURL: 'https://github.com/DBM-Brazil/mods',
+        preciseCheck: false,
+        author: 'DBM Extended',
+        authorUrl: 'https://github.com/DBM-Extended/mods',
+        downloadURL: 'https://github.com/DBM-Extended/mods',
       },
     
     subtitle: function(data) {
-        const info = ['Número inteiro (Arredondado)', 'Número inteiro (Para cima)', 'Número inteiro (Para baixo)', 'Texto', 'Texto maiúsculo', 'Texto minúsculo', 'Texto sem espaços', 'Texto (Sem espaços de ambos os lados)', 'Número com pontuações' , 'Número resumido', 'Formato de dinheiro R$', 'Formato de dinheiro U$', 'Formato de dinheiro €', 'Texto sem acentos'];
+        const info = ['Whole number (Rounded)', 'Whole number (Up)', 'Whole number (Down)', 'Text', 'Uppercase text', 'Small text', 'Text without spaces', 'Text (Without spaces on both sides)', 'Number with punctuation' , 'Short number', 'R$ money format', 'U$ money format', '€ money format', 'Text without accents', 'Text starting with capital letter', 'Spaced text'];
         const prse = parseInt(data.into);
-        return `Converter "${data.vAria}" em ${info[prse]}`;
+        return `Convert "${data.vAria}" to ${info[prse]}`;
     },
     
     
@@ -22,7 +22,7 @@ module.exports = {
     variableStorage: function(data, varType) {
         const type = parseInt(data.storage);
         const prse2 = parseInt(data.into);
-        const info2 = ['Numero', 'Numero', 'Numero', 'Texto', 'Texto', 'Texto', 'Texto', 'Texto', 'Numero', 'Numero', 'Dinheiro', 'Dinheiro', 'Dinheiro', 'Texto'];
+        const info2 = ['Number', 'Number', 'Number', 'Text', 'Text', 'Text', 'Text', 'Text', 'Number', 'Number', 'Money', 'Money', 'Money ', 'Text', 'Text', 'Text'];
         if(type !== varType) return;
         return ([data.varName2, info2[prse2]]);
     },
@@ -35,31 +35,33 @@ module.exports = {
     <div style="width: 550px; height: 350px;">
         <div style="width: 60%;">
             <div style="width: 150%;">
-            <span class="dbminputlabel">Informação</span><br>
+            <span class="dbminputlabel">Information</span><br>
                    <textarea id="vAria" rows="3" style="width:100%;"></textarea>
                </div>
             <br>
-            <span class="dbminputlabel">Converter em</span><br>
+            <span class="dbminputlabel">Convert to</span><br>
             <select id="into" class="round">
-                    <option value="0" selected>Número inteiro (Arredondado)</option>
-                    <option value="1">Número inteiro (Para cima)</option>
-                    <option value="2">Número inteiro (Para baixo)</option>
-                    <option value="8">Número com pontuações (Ex: 1.000)</option>
-                    <option value="9">Número resumido (Ex: 1k)</option>
-                    <option value="10">Formato de dinheiro R$</option>
-                    <option value="11">Formato de dinheiro U$</option>
-                    <option value="12">Formato de dinheiro €</option>
-                    <option value="3">Texto</option>
-                    <option value="4">Texto maiúsculo</option>
-                    <option value="5">Texto minúsculo</option>
-                    <option value="6">Texto sem espaços</option>
-                    <option value="7">Texto (Sem espaços de ambos os lados)</option>
-                    <option value="13">Texto sem acentos</option>
+					<option value="0" selected>Integer (Rounded)</option>
+                    <option value="1">Integer (Up)</option>
+                    <option value="2">Integer (Down)</option>
+                    <option value="8">Number with scores (Ex: 1,000)</option>
+                    <option value="9">Short number (Ex: 1k)</option>
+                    <option value="10">R$ money format</option>
+                    <option value="11">U$ money format</option>
+                    <option value="12">Money format €</option>
+                    <option value="3">Text</option>
+                    <option value="4">Uppercase text</option>
+                    <option value="5">Lower text</option>
+                    <option value="6">Text without spaces</option>
+                    <option value="7">Text (No spaces on both sides)</option>
+                    <option value="13">Text without accents</option>
+                    <option value="14">Text starting with capital letter</option>
+                    <option value="15">Spaced text</option>
             </select>
         </div><br>
         <div>
             <div style="float: left; width: 35%;">
-            <span class="dbminputlabel">Armazenar em</span><br>
+            <span class="dbminputlabel">Store in</span><br>
                 <select id="storage" class="round">
                     ${data.variables[1]}
                 </select>
@@ -67,7 +69,7 @@ module.exports = {
             <div id="varNameContainer2" style="float: right; width: 60%;">
                 <div class="col-3 input-effect" style="width: 83%;">
                     <input id="varName2" class="efeitoala" type="text" style="width: 100%;">
-                    <label><span class="dbminputlabel">Nome da variavel</span></label>
+                    <label><span class="dbminputlabel">Variable name</span></label>
                     <span class="focus-border"></span>
                 </div><br>
             </div>
@@ -203,63 +205,21 @@ module.exports = {
                             result = money3.format(theVar.toString().replace(',','.'))
                             break;
                     case 13:
-                         const acentos = [
-                            "á", "à", "â", "ã", "ä", "å", "æ",
-                            "é", "è", "ê", "ë",
-                            "í", "ì", "î", "ï",
-                            "ó", "ò", "ô", "õ", "ö", "ð", "œ", "ø",
-                            "ú", "ù", "û", "ü", "µ",
-                            "ç", "¢",
-                            "þ", "Þ", "ß",
-                            "Ð",
-                            "ñ",
-                            "ƒ",
-                            "§",
-                            "ý", "ÿ",
-                            "ŕ",
-                            "Á", "À", "Â", "Ã", "Ä", "Å", "Æ",
-                            "É", "È", "Ê", "Ë",
-                            "Í", "Ì", "Î", "Ï",
-                            "Ó", "Ò", "Ô", "Õ", "Ö", "Œ", "Ø",
-                            "Ú", "Ù", "Û", "Ü",
-                            "Ç",
-                            "Ñ",
-                            "Ƒ",
-                            "Ý", "Ÿ",
-                            "Ŕ",
-                         ]
+                        const comAcentos = "ÄÅÁÂÀÃĀĂĄāăąäáâàãÉÊËÈĖĘĚĔĒėęěĕēéêëèÍÎÏÌİĮĪıįīíîïìÖÓÔÒÕŐŌőōöóôòõÜÚÛŲŰŮŪųűůūüúûùÇĆČçćčÑŇŅŃñňņńŸÝÿýŹŻŽźżžŁĽĻĹłľļĺĶķĢĞģğĎďŚŠŞśšşŤȚŢťțţŔŘŕř";
+                        const semAcentos = "AAAAAAAAAaaaaaaaaEEEEEEEEEeeeeeeeeeIIIIIIIiiiiiiiOOOOOOOoooooooUUUUUUUuuuuuuuuCCCcccNNNNnnnnYYyyZZZzzzLLLLllllKkGGggDdSSSsssTTTtttRRrr";                           
     
-                         const acentosSubstituir = [
-                            "a", "a", "a", "a", "a", "a", "a",
-                            "e", "e", "e", "e",
-                            "i", "i", "i", "i",
-                            "o", "o", "o", "o", "o", "o", "o", "ø",
-                            "u", "u", "u", "u", "u",
-                            "c", "c",
-                            "b", "b", "b",
-                            "D",
-                            "n",
-                            "f",
-                            "s",
-                            "y", "y",
-                            "r",
-                            "A", "A", "A", "A", "A", "A", "A",
-                            "E", "E", "E", "E",
-                            "I", "I", "I", "I",
-                            "O", "O", "O", "O", "O", "O", "O",
-                            "U", "U", "U", "U",
-                            "C",
-                            "N",
-                            "F",
-                            "Y", "Y",
-                            "R",
-                         ]
+                        result = theVar.toString();
     
-                         result = theVar.toString();
-    
-                         for(var i = 0; i <= acentos.length; i++) {
-                             result = result.replaceAll(acentos[i], acentosSubstituir[i]);
-                         }
+                        for(var i = 0; i <= comAcentos.length; i++) {
+                            result = result.replaceAll(comAcentos[i], semAcentos[i]);
+                        }
+                        break;
+                    case 14:
+                        const convertor = theVar[0].toUpperCase() + theVar.substring(1);
+                        result = convertor;
+                        break;
+                    case 15:
+                        result = theVar.toString().replaceAll("", " ");
                         break;
         }
         if(result !== undefined) {

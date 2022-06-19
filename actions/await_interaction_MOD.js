@@ -40,19 +40,6 @@ module.exports = {
     if (type !== varType) return;
     return [data.varName, "Unknown Type"];
   },
-  
-  //---------------------------------------------------------------------
-  // Action Meta Data
-  //
-  // Helps check for updates and provides info if a custom mod.
-  // If this is a third-party mod, please set "author" and "authorUrl".
-  //
-  // It's highly recommended "preciseCheck" is set to false for third-party mods.
-  // This will make it so the patch version (0.0.X) is not checked.
-  //---------------------------------------------------------------------
-
-  
-	meta: { version: "2.1.4", preciseCheck: true, author: "DBM Extended", authorUrl: "https://github.com/DBM-Extended/mods", downloadURL: "https://github.com/DBM-Extended/mods/tree/main/actions/end_if_ended.js" },
 
   //---------------------------------------------------------------------
   // Action Fields
@@ -229,7 +216,7 @@ span.discord_code_blocks {
 
 
 <store-in-variable allowNone selectId="storage" variableInputId="varName" variableContainerId="varNameContainer"></store-in-variable><br><br><br><br>
-	<span class="discord_code_blocks">A DBM-E Modification | Install <a href="https://github.com/AshTheDeveloper/DBM-Enhanced/blob/main/README.md"><b>DBM-E</b></a></span>`;
+	<span class="discord_code_blocks">A DBM-E Modification | Install <a href="https://github.com/DBM-Extended/mods"><b>DBM-E</b></a></span>`;
   },
 
   //---------------------------------------------------------------------

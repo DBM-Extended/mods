@@ -4,10 +4,10 @@ module.exports = {
   section: "Messaging",
   meta: {
     version: '2.1.4',
-    preciseCheck: true,
-    author: '[XinXyla - 172782058396057602]',
-    authorUrl: 'https://github.com/DBM-Brazil/mods',
-    downloadURL: 'https://github.com/DBM-Brazil/mods',
+    preciseCheck: false,
+    author: 'DBM Extended',
+    authorUrl: 'https://github.com/DBM-Extended/mods',
+    downloadURL: 'https://github.com/DBM-Extended/mods',
   },
 
   subtitle: function(data, presets) {
@@ -15,20 +15,20 @@ module.exports = {
 type = `${data.type}`;
 switch (type) {
       case "all": {
-        selects = 'Todos os botões';
+        selects = 'All buttons';
         break;
         }
         case "sourceButton": {
-        selects = 'Botão atual';
+        selects = 'Current button';
         break;
         }
           case "findButton": {
-        selects = 'Botão específico';
+        selects = 'Specific button';
         break;
         }
       }
-    const info = ['Todos os botões', 'Botão atual', 'Botão especifico'];
-     return `Editar "${selects}" em "${presets.getMessageText(data.storage, data.varName)}"`;
+    const info = ['All buttons', 'Current button', 'Specific button'];
+     return `Edit "${selects}" in "${presets.getMessageText(data.storage, data.varName)}"`;
 },
 
   fields: ["storage", "varName", "type", "alterartype", "alterarnome", "alteraremoji", "searchValue"],
@@ -37,22 +37,22 @@ switch (type) {
   html: function(isEvent, data) {
     return `
     <div id="wrexdiv" style="height: 370px; overflow-y: scroll;padding:5px 10px">
-<message-input dropdownLabel="Mensagem de origem" selectId="storage" variableContainerId="varNameContainer" variableInputId="varName"></message-input>
+<message-input dropdownLabel="Source message" selectId="storage" variableContainerId="varNameContainer" variableInputId="varName"></message-input>
 
 <br><br><br><br>
 
 <div style="float: left; width: calc(50% - 12px);">
   <span class="dbminputlabel">Componentes para alterar</span><br>
   <select id="type" class="round" onchange="glob.onButtonSelectTypeChange(this)">
-  <option value="all" selected>Todos os botões</option>
-  <option value="sourceButton">Botão atual</option>
-  <option value="findButton">Botão específico</option>
+  <option value="all" selected>All buttons</option>
+  <option value="sourceButton">Current button</option>
+  <option value="findButton">Specific button</option>
   </select>
 </div>
 
 <div style="float: right; width: calc(50% - 12px);">
 <div id="nameContainer" style="width: 100%">
-  <span class="dbminputlabel">ID do botão</span><br>
+  <span class="dbminputlabel">Button ID</span><br>
   <input id="searchValue" class="round" type="text">
 </div>
 </div>
@@ -60,24 +60,24 @@ switch (type) {
 <br><br><br><br>
 
 
-  <span class="dbminputlabel">Alterar o nome para</span><br>
-  <input id="alterarnome" class="round" type="text" name="is-eval">
+  <span class="dbminputlabel">Change name to</span><br>
+  <input id="alterarnome" class="round" type="text">
 
   <br>
 
-  <span class="dbminputlabel">Alterar o emoji para</span><br>
-  <input id="alteraremoji" class="round" type="text" name="is-eval">
+  <span class="dbminputlabel">Change emoji to</span><br>
+  <input id="alteraremoji" class="round" type="text">
 
   <br>
 
 
-<span class="dbminputlabel">Alterar o type para</span><br>
-<input id="alterartype" value="PRIMARY" class="round" type="text" name="is-eval"><br>
-PRIMARY (Azul)<br>
-SECONDARY (Cinza)<br>
-SUCCESS (Verde)<br>
-DANGER (Vermelho)<br>
-Ou use uma variavel, exemplo \${tempVars("cor")}</div>
+<span class="dbminputlabel">Change the type to</span><br>
+<input id="alterartype" value="PRIMARY" class="round" type="text"><br>
+PRIMARY (Blue)<br>
+SECONDARY (Grey)<br>
+SUCCESS (Green)<br>
+DANGER (Red)<br>
+Or use a variable, example \${tempVars("color")}</div>
 `;
   },
 
@@ -124,7 +124,7 @@ Ou use uma variavel, exemplo \${tempVars("cor")}</div>
 
     if (message?.components) {
 
-      const { MessageActionRow } = this.getDBM().DiscordJS;
+      const { MessageActionRow } = this.getDBM().DiscolordJS;
       const oldComponents = message.components;
       const newComponents = [];
 

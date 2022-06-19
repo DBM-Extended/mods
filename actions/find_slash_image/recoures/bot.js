@@ -1,15 +1,15 @@
 /******************************************************
  * Discord Bot Maker Bot
- * Version 2.1.3
+ * Version 2.1.4
  * Robert Borghese
  ******************************************************/
 
  const DBM = {};
- DBM.version = "2.1.3";
+ DBM.version = "2.1.4";
  
  const DiscordJS = (DBM.DiscordJS = require("discord.js"));
  
- const requiredDjsVersion = "13.7.0";
+ const requiredDjsVersion = "13.8.0";
  if (DiscordJS.version < requiredDjsVersion) {
    console.log(
      `This version of Discord Bot Maker requires discord.js ${requiredDjsVersion}+.\nPlease use "Project > Module Manager" and "Project > Reinstall Node Modules" to update to discord.js ${requiredDjsVersion}.\n`,
@@ -969,19 +969,17 @@
    }
  };
  
-  Bot.onButtonInteraction = function (interaction) {
-    const interactionId = interaction.customId;
-    if (this.$button[interactionId]) {
-      Actions.preformActionsFromInteraction(interaction, this.$button[interactionId]);
-    } else {
-      const response = Actions.getInvalidButtonResponseText();
-       if (response) {
-          if (response.length > 0) {interaction.reply({ content: response, ephemeral: true })}
-          else {interaction.deferUpdate()}
-          
-        }
-    }
-  };
+ Bot.onButtonInteraction = function (interaction) {
+   const interactionId = interaction.customId;
+   if (this.$button[interactionId]) {
+     Actions.preformActionsFromInteraction(interaction, this.$button[interactionId]);
+   } else {
+     const response = Actions.getInvalidButtonResponseText();
+     if (response) {
+       interaction.reply({ content: response, ephemeral: true });
+     }
+   }
+ };
  
  Bot.onSelectMenuInteraction = function (interaction) {
    const interactionId = interaction.customId;
@@ -990,9 +988,8 @@
    } else {
      const response = Actions.getInvalidSelectResponseText();
      if (response) {
-          if (response.length > 0) {interaction.reply({ content: response, ephemeral: true })}
-          else {interaction.deferUpdate()}
-        }
+       interaction.reply({ content: response, ephemeral: true });
+     }
    }
  };
  
@@ -1032,34 +1029,23 @@
      }
    }
  
-    onMainCacheCompleted() {
-      if (this.interaction) {
-        if (!this.interaction.replied) {
-          const replyData = {
-            ephemeral: true,
-            content: Actions.getDefaultResponseText(),
-          };
-            this.interaction.user.setData('last-interaction', this.interaction.customId);
-            if (this.interaction.deferred) {
-              if (replyData.content.length > 0) {
-              this.interaction.editReply(replyData)
-                .catch((err) => Actions.displayError(null, this, err));
-              }
-              else {
-                this.interaction.deferUpdate();
-              }
-            } else {
-              if (replyData.content.length > 0) {
-                this.interaction.reply(replyData)
-                  .catch((err) => Actions.displayError(null, this, err));
-                }
-                else {
-                  this.interaction.deferUpdate();
-                }
-              }
-          }
-        }
-      }
+   onMainCacheCompleted() {
+     if (this.interaction) {
+       if (!this.interaction.replied) {
+         const replyData = {
+           ephemeral: true,
+           content: Actions.getDefaultResponseText(),
+         };
+         if (this.interaction.deferred) {
+           this.interaction.editReply(replyData)
+             .catch((err) => Actions.displayError(null, this, err));
+         } else {
+           this.interaction.reply(replyData)
+             .catch((err) => Actions.displayError(null, this, err));
+         }
+       }
+     }
+   }
  
    getUser() {
      return this.interaction?.user ?? this.msg?.author;
@@ -1532,6 +1518,12 @@
  };
  
  Actions.getParameterFromInteraction = function (interaction, name) {
+   if (interaction.__originalInteraction) {
+     const result = this.getParameterFromInteraction(interaction.__originalInteraction, name);
+     if (result !== null) {
+       return result;
+     }
+   }
    if (interaction?.options?.get) {
      const option = interaction.options.get(name.toLowerCase());
      return this.getParameterFromParameterData(option);
@@ -1559,6 +1551,9 @@
        }
        case "MENTIONABLE": {
          return option.member ?? option.channel ?? option.role ?? option.user;
+       }
+       case "ATTACHMENT": {
+         return option.attachment;
        }
      }
    }

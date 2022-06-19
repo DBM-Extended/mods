@@ -4,13 +4,13 @@ module.exports = {
   meta: {
     version: '2.1.4',
     preciseCheck: false,
-    author: '[XinXyla - 172782058396057602]',
-    authorUrl: 'https://github.com/DBM-Brazil/mods',
-    downloadURL: 'https://github.com/DBM-Brazil/mods',
+    author: 'DBM Extended',
+    authorUrl: 'https://github.com/DBM-Extended/mods',
+    downloadURL: 'https://github.com/DBM-Extended/mods',
   },
 
   subtitle(data) {
-    const storeTypes = ['', 'Temp Variable', 'Server Variable', 'Global Variable'];
+    const storeTypes = ['', 'Temp Variable', 'Server Variable', 'Global Variable', 'Command Params'];
     return `Convert Text ${storeTypes[parseInt(data.storage, 10)]} (${data.varName}) to List ${
       storeTypes[parseInt(data.storage2, 10)]
     } (${data.varName2})`;
@@ -26,32 +26,23 @@ module.exports = {
   html(isEvent, data) {
     return `
 <div>
-  <div style="float: left; width: 35%;">
-  <span class="dbminputlabel">Fonte do texto</span><br>
-    <select id="storage" class="round" onchange="glob.refreshVariableList(this)">
-      ${data.variables[1]}
-    </select><br>
-  </div>
-  <div id="varNameContainer" style="float: right; width: 60%;">
-  <span class="dbminputlabel">Nome da variave</span><br>
-    <input id="varName" class="round" type="text" list="variableList"><br>
-  </div>
+<retrieve-from-variable allowSlashParams dropdownLabel="Variavel" selectId="storage" variableContainerId="varNameContainer" variableInputId="varName"></retrieve-from-variable>
 </div><br><br><br>
 <div style="display: table; width: 105%;">
   <div style="display: table-cell;">
-  <span class="dbminputlabel">Separador</span>
+  <span class="dbminputlabel">Separator</span>
     <input id="separator" class="round" type="text">
   </div>
 </div><br>
 <div style="padding-top: 8px;">
   <div style="float: left; width: 35%;">
-  <span class="dbminputlabel">Armazenar em:</span><br>
+  <span class="dbminputlabel">Store in:</span><br>
     <select id="storage2" class="round">
       ${data.variables[1]}
     </select>
   </div>
   <div style="float: right; width: 60%;">
-  <span class="dbminputlabel">Nome da variavel</span><br>
+  <span class="dbminputlabel">Variable name</span><br>
     <input id="varName2" class="round" type="text">
   </div>
 </div>`;

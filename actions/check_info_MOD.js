@@ -4,10 +4,10 @@ module.exports = {
   section: "Conditions",
   meta: {
     version: '2.1.4',
-    preciseCheck: true,
-    author: '[XinXyla - 172782058396057602]',
-    authorUrl: 'https://github.com/DBM-Brazil/mods',
-    downloadURL: 'https://github.com/DBM-Brazil/mods',
+    preciseCheck: false,
+    author: 'DBM Extended',
+    authorUrl: 'https://github.com/DBM-Extended/mods',
+    downloadURL: 'https://github.com/DBM-Extended/mods',
   },
 
   subtitle(data, presets) {
@@ -19,38 +19,40 @@ module.exports = {
 
   html(isEvent, data) {
     return `
-    <span class="dbminputlabel">Informação</span><br>
-<textarea id="storage" rows="5" placeholder="Insira a informação aqui..." style="width: 99%; font-family: monospace; white-space: nowrap;"></textarea>
+    <span class="dbminputlabel">Information</span><br>
+<textarea id="storage" rows="5" placeholder="Enter Information here..." style="width: 99%; font-family: monospace; white-space: nowrap;"></textarea>
 
 <br>
 <div style="padding-top: 8px;">
 	<div style="float: left; width: 35%;">
 		<span class="dbminputlabel">Tipo de comparação</span><br>
-		<select id="comparison" class="round" onchange="glob.onComparisonChanged(this)">
-			<option value="0">Existe</option>
-			<option value="1" selected>Igual a</option>
-			<option value="2">Exatamente igual</option>
-			<option value="3">Menor que</option>
-      <option value="13">Menor ou igual a</option>
-			<option value="4">Maior que</option>
-      <option value="12">Maior ou igual a</option>
-			<option value="5">Inclui</option>
-			<option value="6">Matches Regex</option>
+	<select id="comparison" class="round" onchange="glob.onComparisonChanged(this)">
+	<option value="0">Exists</option>
+	<option value="1" selected>Equals</option>
+	<option value="2">Exactly the same</option>
+	<option value="3">Less than</option>
+      <option value="13">Less than or equal to</option>
+	<option value="4">Greater than</option>
+      <option value="12">Greater than or equal to</option>
+	<option value="5">Includes</option>
+	<option value="6">Matches Regex</option>
       <option value="14">Matches Full Regex</option>
-      <option value="7">O comprimento é maior que</option>
-			<option value="8">O comprimento é menor que</option>
-			<option value="9">O comprimento e igual a</option>
-			<option value="10">Começa com</option>
-			<option value="11">Termina com</option>
-      <option value="15">Entre</option>
-      <option value="16">Possui acentuações?</option>
-		</select>
-	</div>
-	<table style="float: right;width: 65%;"><tr><td style="padding:0px 8px";><div style="width: 100%" id="directValue">
-		<span class="dbminputlabel">Valor para comparar</span>
+      <option value="7">Length is greater than</option>
+	<option value="8">Length is less than</option>
+	<option value="9">Length is equal to</option>
+	<option value="10">Starts with</option>
+	<option value="11">Ends with</option>
+      <option value="15">Between</option>
+      <option value="16">Does it have accents?</option>
+      <option value="17">Includes the words ["a" , "b" , "c"]</option>
+      <option value="18">Equals the words ["a" , "b" , "c"]</option>
+</select>
+</div>
+<table style="float: right;width: 65%;"><tr><td style="padding:0px 8px";><div style="width: 100%" id="directValue">
+<span class="dbminputlabel">Value to compare</span>
 		<input id="value" class="round" type="text" name="is-eval">
 	</div></td><td style="padding:0px 3px";> <div style="width: 100%;" id="containerxin">
-  <span class="dbminputlabel">e</span><br>
+  <span class="dbminputlabel">and</span><br>
   <input id="value2" class="round" type="text" name="is-eval"></td></tr></table>
 </div>
 </div>
@@ -165,7 +167,14 @@ module.exports = {
           const conditions = ["á","à","â","ã","ä","å","æ","é","è","ê","ë","í","ì","î","ï","ó","ò","ô","õ","ö","ð","œ","ø","ú","ù","û","ü","µ","ç","¢","þ","Þ","ß","Ð","ñ","ƒ","§","ý","ÿ","ŕ","Á","À","Â","Ã","Ä","Å","Æ","É","È","Ê","Ë","Í","Ì","Î","Ï","Ó","Ò","Ô","Õ","Ö","Œ","Ø","Ú","Ù","Û","Ü","Ç","Ñ","Ƒ","Ý","Ÿ","Ŕ"]
           result = conditions.some(el => val1.includes(el));
           break;
-            
+          case 17:
+            const conditionsX = val2
+            result = conditionsX.some(els => val1.includes(els));
+          break;
+          case 18:
+            const conditionsZ = val2
+            result = conditionsZ.some(elz => val1 == (elz));
+          break;
     }
 
     this.executeResults(result, data?.branch ?? data, cache);
