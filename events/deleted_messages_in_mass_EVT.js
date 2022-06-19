@@ -4,7 +4,7 @@ name: "Bulk deleted messages",
 
 isEvent: true,
 
-fields: ["Variable name Temporaria (store the list of messages):", "Variable name Temporaria (store the number of messages):"],
+fields: ["Temporal Variable name (store the list of messages):", "Temporal Variable name (store the number of messages):"],
 
 mod: function(DBM) {
 

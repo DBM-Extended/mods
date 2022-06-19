@@ -11,55 +11,55 @@ module.exports = {
 
   subtitle(data) {
     const info = [
-      'Tempo de atividade em milissegundos',
-      'Pronto em?',
+      'Uptime in milliseconds',
+      'Ready in?',
       'Ping',
-      'Valor da Guilda',
-      'Quantia do usuário',
-      'Ping arredondado',
-      'Tempo de atividade em segundos',
-      'Tempo de atividade em minutos',
-      "Token de Bots",
-      'Valor das conexões de voz',
-      'Quantidade total de canais',
-      'Quantidade total de emojis',
-      'Esta opção foi removida',
-      'Tempo de atividade em dias',
-      'Tempo de atividade em dias (arredondado)',
-      'Uso de memória (RAM)',
-      'Objetos dos Servidores de bot',
-      'Nomes dos Servidores de bot',
+      'Guild Amount',
+      'User Amount',
+      'Rounded ping',
+      'Uptime in seconds',
+      'Uptime in minutes',
+      'Bots Token',
+      'Value of voice connections',
+      'Total amount of channels',
+      'Total amount of emojis',
+      'This option has been removed',
+      'Uptime in days',
+      'Uptime in days (rounded)', 
+      'Memory usage (RAM)',
+      'Bot Servers objects',
+      'Bot Servers Names',
       'Bot Guilds IDs',
-      'Prefixo atual do bot',
-      'ID do cliente do bot',
-      'Versão do Discord JS',
-      'Tempo de atividade em horas',
-      'Atualizando o tempo de atividade em dias',
-      'Atualizando o tempo de atividade em horas',
-      'Atualizando o tempo de atividade em minutos',
-      'Atualizando o tempo de atividade em segundos',
-      'Uso de memória (RAM) em MB',
-      "SO dos Bots (Plataforma de Processo)",
-      'Uso da CPU em MB',
-      "Diretório de Bots",
-      'Versão do Node JS',
-      'Quantidade Total de Comandos',
-      'Quantidade Total de Eventos',
-      'Pronto em? [timestamp]',
-      'Contagem de núcleos de CPU',
-      'Memória Total (GB)',
-      'Memória Total (MB)',
-      'Memória disponível (GB)',
-      'Memória disponível (MB)',
-      'Memoria disponivel (%)',
-      'Memória usada (GB)',
-      'Memória usada (MB)',
-      'Memoria usada (%)',
-      'ID do proprietário do bot',
-      'Os comandos diferenciam maiúsculas de minúsculas?',
-      'ID da última mensagem',
-      'Média de CPU (1m, 5m, 15m)',
-      'Uso atual da CPU',
+      'Current bot prefix',
+      'Bot Client ID',
+      'Discord JS Version',
+      'Uptime in hours',
+      'Updating uptime in days',
+      'Updating uptime in hours',
+      'Updating uptime in minutes',
+      'Updating uptime in seconds',
+      'Memory usage (RAM) in MB',
+      'Bots OS (Process Platform)',
+      'CPU usage in MB',
+      'Bots directory',
+      'Node JS version',
+      'Total Amount of Commands', 
+      'Total Amount of Events',
+      'Ready in? [timestamp]',
+      'CPU Core Count',
+      'Total Memory (GB)',
+      'Total Memory (MB)',
+      'Available memory (GB)',
+      'Available memory (MB)',
+      'Available memory (%)',
+      'Used memory (GB)',
+      'Used memory (MB)',
+      'Used memory (%)',
+      'Bot owner ID',
+      'Are the commands case-sensitive?',
+      'Last message ID',
+      'CPU average (1m, 5m, 15m)',
+      'Current CPU usage',
     ];
     return `Bot Client - ${info[parseInt(data.info, 10)]}`;
   },
@@ -157,74 +157,74 @@ module.exports = {
   html(_isEvent, data) {
     return `
 <div style="float: left; width: 100%; padding-top: 8px;">
-<span class="dbminputlabel">Informação</span><br>
+<span class="dbminputlabel">Information</span><br>
   <select id="info" class="round">
     <optgroup label="Uptimes">
-    <option value="23">Atualizando o tempo de atividade em dias</option>
-    <option value="24">Atualizando o tempo de atividade em horas</option>
-    <option value="25">Atualizando o tempo de atividade em minutos</option>
-    <option value="26">Atualizando o tempo de atividade em segundos</option>
-    <option value="0">Tempo de atividade em milissegundos</option>
+    <option value="23">Updating uptime in days</option>
+    <option value="24">Updating uptime in hours</option>
+    <option value="25">Updating uptime in minutes</option>
+    <option value="26">Updating the uptime in seconds</option>
+    <option value="0">Update uptime in milliseconds</option>
   </optgroup>
-  <optgroup label="Valores">
-    <option value="3">Quantidade Total de Servidores</option>
-    <option value="4">Quantidade total de usuários</option>
-    <option value="10">Quantidade total de canais</option>
-    <option value="11">Quantidade total de emojis</option>
-    <option value="32">Quantidade total de comandos</option>
-    <option value="33">Quantidade total de eventos</option>
-    <option value="9">Total de conexões de voz</option>
+  <optgroup label="Values">
+    <option value="3">Total number of Servers</option>
+    <option value="4">Total Number of Users</option>
+    <option value="10">Total number of channels</option>
+    <option value="11">Total number of emojis</option>
+    <option value="32">Total number of commands</option>
+    <option value="33">Total amount of events</option>
+    <option value="9">Total number of voice connections</option>
   </optgroup>
-  <optgroup label="Matrizes de Servidores">
-    <option value="16">Objetos de Servidores do bot</option>
-    <option value="17">Nomes dos Servidores do bot</option>
-    <option value="18">IDs dos Servidores do bot</option>
-  <optgroup label="Informações do bot">
-    <option value="19">Prefixo atual do bot</option>
-    <option value="20">ID do cliente do bot</option>
-    <option value="44">ID do proprietário do bot</option>
-    <option value="28">Bot OS (Plataforma de Processo)</option>
-    <option value="30">Diretório de bot</option>
-    <option value="8">Bot Token (cuidado)</option>
-    <option value="45">Os comandos diferenciam maiúsculas de minúsculas?</option>
-    <option value="46">ID da última mensagem</option>
+  <optgroup label="Server arrays">
+    <option value="16">Server objects of the bot</option>
+    <option value="17">Server names of the bot</option>
+    <option value="18">Bot's Server IDs</option>
+  <optgroup label="Bot information">
+    <option value="19">Current bot prefix</option>
+    <option value="20">Bot's client ID</option>
+    <option value="44">Bot owner ID</option>
+    <option value="28">Bot OS (Process Platform)</option>
+    <option value="30">Bot directory</option>
+    <option value="8">Bot Token (care)</option>
+    <option value="45">Case sensitive commands</option>
+    <option value="46">Last message ID</option>
   </optgroup>
-  <optgroup label="Medidas do Sistema">
-    <option value="29">Uso da CPU (MB)</option>
-    <option value="47">Uso médio da CPU [1m, 5m, 15m] (%)</option>
-    <option value="48">Uso da CPU (%)</option>
-    <option value="35">Contagem de núcleos de CPU</option>
-    <option value="36">Memória total (GB)</option>
-    <option value="37">Memória total (MB)</option>
-    <option value="38">Memória disponível (GB)</option>
-    <option value="39">Memória disponível (MB)</option>
-    <option value="40">Memória disponível (%)</option>
-    <option value="41">Memória usada (GB)</option>
-    <option value="42">Memória usada (MB)</option>
-    <option value="43">Memória usada (%)</option>
+  <optgroup label="System Measures">
+    <option value="29"> CPU usage (MB)</option>
+    <option value="47">Average CPU usage [1m, 5m, 15m] (%)</option>
+    <option value="48"> CPU usage (%)</option>
+    <option value="35">C CPU core count</option>
+    <option value="36">Total memory (GB)</option>
+    <option value="37">Total memory (MB)</option>
+    <option value="38">Available memory (GB)</option>
+    <option value="39">Available memory (MB)</option>
+    <option value="40">Available memory (%)</option>
+    <option value="41">Memory used (GB)</option>
+    <option value="42">Memory used (MB)</option>
+    <option value="43">Memory used (%)</option>
   </optgroup>
-  <optgroup label="Medidas do bot">
-    <option value="27">Uso de memória (RAM) em MB</option>
-    <option value="1">Bot iniciado em</option>
-    <option value="34">Bot iniciado em [timestamp unix]</option>
+  <optgroup label="Bot measurements">
+    <option value="27">Memory usage (RAM) in MB</option>
+    <option value="1">Bot started in</option>
+    <option value="34">Bot started on [timestamp unix]</option>
     <option value="2">Ping</option>
-    <option value="5">Ping arredondado</option>
+    <option value="5">Ping rounded</option>
   </optgroup>
-  <optgroup label="Versões">
-  <option value="21">Versão do Discord JS</option>
-  <option value="31">Versão do Node JS</option>
+  <optgroup label="Versions">
+  <option value="21">Discord JS version</option>
+  <option value="31">Node JS version</option>
     </optgroup>
   </select>
 </div><br><br><br>
 <div>
   <div style="float: left; width: 35%; padding-top: 8px;">
-  <span class="dbminputlabel">Armazenar em</span><br>
+  <span class="dbminputlabel">Store in</span><br>
     <select id="storage" class="round">
       ${data.variables[1]}
     </select>
   </div>
   <div id="varNameContainer2" style="float: right; width: 60%; padding-top: 8px;">
-  <span class="dbminputlabel">Nome da variavel</span><br>
+  <span class="dbminputlabel">Variable name</span><br>
     <input id="varName2" class="round" type="text"><br>
   </div>
 </div>`;

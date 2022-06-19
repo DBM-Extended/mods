@@ -62,13 +62,13 @@ module.exports = {
   // This will make it so the patch version (0.0.X) is not checked.
   //---------------------------------------------------------------------
 
-  meta: { version: "2.1.4", preciseCheck: true, author: null, authorUrl: null, downloadUrl: null },
+  meta: { version: "2.1.4", preciseCheck: false, author: null, authorUrl: null, downloadUrl: null },
 
   //---------------------------------------------------------------------
   // Action Fields
   //
   // These are the fields for the action. These fields are customized
-  // by creating elements with corresponding IDs in the HTML. These
+  // by creating elements with colorresponding IDs in the HTML. These
   // are also the names of the fields stored in the action's JSON data.
   //---------------------------------------------------------------------
 
@@ -89,6 +89,8 @@ module.exports = {
     "editMessageVarName",
     "storage",
     "varName2",
+    "iffalse",
+    "iffalseVal",
   ],
 
   //---------------------------------------------------------------------
@@ -452,9 +454,7 @@ module.exports = {
         <dbm-checkbox id="dontSend" label="Don't Send Message"></dbm-checkbox>
       </div>
 
-      <br>
-
-      <hr class="subtlebar" style="margin-top: 4px; margin-bottom: 4px;">
+ 
 
       <br>
 
@@ -470,9 +470,20 @@ module.exports = {
         <store-in-variable allowNone selectId="storage" variableInputId="varName2" variableContainerId="varNameContainer2"></store-in-variable>
       </div>
 
-      <br><br>
-
-      <div></div>
+      <br><br><br>
+      <div>
+      <div style="float: left; width: 35%;">
+      <span class="dbminputlabel">If Message Delivery Fails</span><br>
+      <select id="iffalse" class="round" onchange="glob.onComparisonChanged(this)">
+      <option value="0">Continue Actions</option>
+      <option value="1" selected>Stop Action Sequence</option>
+      <option value="2">Jump to action</option>
+      <option value="3">Skip Next Actions</option>
+      <option value="4">Go to Action Anchor</option>
+    </select>
+    </div>
+    <div id="iffalseContainer" style="display: none; float: right; width: 60%;"><span id="ifName" class="dbminputlabel">For</span><br><input id="iffalseVal" class="round" type="text"></div>
+      <br><br><br>
     </div>
   </tab>
 </tab-system>`;
@@ -486,8 +497,19 @@ module.exports = {
   // functions for the DOM elements.
   //---------------------------------------------------------------------
 
-  init() {},
+  init: function() {
+    const {glob, document} = this;
+  
 
+    glob.onComparisonChanged = function (event) {
+      if (event.value > "1") {
+        document.getElementById("iffalseContainer").style.display = null;
+      } else {
+        document.getElementById("iffalseContainer").style.display = "none";
+      }}
+      glob.onComparisonChanged(document.getElementById("iffalse"));
+
+  },
   //---------------------------------------------------------------------
   // Action Editor On Save
   //
@@ -581,7 +603,7 @@ module.exports = {
       if (typeof editMessage === "number" && editMessage >= 0) {
         const editVarName = this.evalMessage(data.editMessageVarName, cache);
         const editObject = this.getVariable(editMessage, editVarName, cache);
-        const { Message } = this.getDBM().DiscordJS;
+        const { Message } = this.getDBM().DiscolordJS;
         if (editObject) {
           if (editObject instanceof Message) {
             target = editObject;
@@ -604,7 +626,7 @@ module.exports = {
     }
 
     if (data.embeds?.length > 0) {
-      const { MessageEmbed } = this.getDBM().DiscordJS;
+      const { MessageEmbed } = this.getDBM().DiscolordJS;
 
       if (!Array.isArray(messageOptions.embeds) || overwrite) {
         messageOptions.embeds = [];
@@ -726,7 +748,7 @@ module.exports = {
     }
 
     if (data.attachments?.length > 0) {
-      const { Util, MessageAttachment } = this.getDBM().DiscordJS;
+      const { Util, MessageAttachment } = this.getDBM().DiscolordJS;
       if (!Array.isArray(messageOptions.files) || overwrite) {
         messageOptions.files = [];
       }
@@ -777,7 +799,7 @@ module.exports = {
       }
     };
 
-    const isMessageTarget = target instanceof this.getDBM().DiscordJS.Message;
+    const isMessageTarget = target instanceof this.getDBM().DiscolordJS.Message;
 
     const sameId = target?.id?.length > 0 && (target?.id ?? "") === cache?.interaction?.channel?.id;
     const sameChannel = channel === 0 || sameId;
@@ -809,7 +831,7 @@ module.exports = {
       if (promise) {
         promise
           .then(onComplete)
-          .catch((err) => this.displayError(data, cache, err));
+          .catch((err) => this.displayError(data, cache, err) || this.executeResults(false, data, cache));
       }
     }
 
@@ -817,14 +839,14 @@ module.exports = {
       target
         .edit(messageOptions)
         .then(onComplete)
-        .catch((err) => this.displayError(data, cache, err));
+        .catch((err) => this.displayError(data, cache, err) || this.executeResults(false, data, cache));;
     }
 
     else if (isMessageTarget && target?.reply) {
       target
         .reply(messageOptions)
         .then(onComplete)
-        .catch((err) => this.displayError(data, cache, err));
+        .catch((err) => this.displayError(data, cache, err) || this.executeResults(false, data, cache));
     }
 
     else if (data.reply === true && canReply) {
@@ -845,7 +867,7 @@ module.exports = {
       target
         .send(messageOptions)
         .then(onComplete)
-        .catch((err) => this.displayError(data, cache, err));
+        .catch((err) => this.displayError(data, cache, err) || this.executeResults(false, data, cache));
     }
 
     else {
