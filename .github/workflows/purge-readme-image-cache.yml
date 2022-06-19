@@ -6,5 +6,5 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v2
-      - name: Purge README Images
+      - name: Purge Cached Images on Readme
         run: make purge
