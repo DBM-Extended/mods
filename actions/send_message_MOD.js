@@ -62,13 +62,14 @@ module.exports = {
   // This will make it so the patch version (0.0.X) is not checked.
   //---------------------------------------------------------------------
 
-  meta: { version: "2.1.4", preciseCheck: false, author: null, authorUrl: null, downloadUrl: null },
+	meta: { version: "2.1.4", preciseCheck: false, author: "DBM Extended", authorUrl: "https://github.com/DBM-Extended/mods", downloadURL: "https://github.com/DBM-Extended/mods/tree/main/actions/server_ban_count.js" },
+
 
   //---------------------------------------------------------------------
   // Action Fields
   //
   // These are the fields for the action. These fields are customized
-  // by creating elements with colorresponding IDs in the HTML. These
+  // by creating elements with corresponding IDs in the HTML. These
   // are also the names of the fields stored in the action's JSON data.
   //---------------------------------------------------------------------
 
@@ -603,7 +604,7 @@ module.exports = {
       if (typeof editMessage === "number" && editMessage >= 0) {
         const editVarName = this.evalMessage(data.editMessageVarName, cache);
         const editObject = this.getVariable(editMessage, editVarName, cache);
-        const { Message } = this.getDBM().DiscolordJS;
+        const { Message } = this.getDBM().DiscordJS;
         if (editObject) {
           if (editObject instanceof Message) {
             target = editObject;
@@ -626,7 +627,7 @@ module.exports = {
     }
 
     if (data.embeds?.length > 0) {
-      const { MessageEmbed } = this.getDBM().DiscolordJS;
+      const { MessageEmbed } = this.getDBM().DiscordJS;
 
       if (!Array.isArray(messageOptions.embeds) || overwrite) {
         messageOptions.embeds = [];
@@ -748,7 +749,7 @@ module.exports = {
     }
 
     if (data.attachments?.length > 0) {
-      const { Util, MessageAttachment } = this.getDBM().DiscolordJS;
+      const { Util, MessageAttachment } = this.getDBM().DiscordJS;
       if (!Array.isArray(messageOptions.files) || overwrite) {
         messageOptions.files = [];
       }
@@ -799,7 +800,7 @@ module.exports = {
       }
     };
 
-    const isMessageTarget = target instanceof this.getDBM().DiscolordJS.Message;
+    const isMessageTarget = target instanceof this.getDBM().DiscordJS.Message;
 
     const sameId = target?.id?.length > 0 && (target?.id ?? "") === cache?.interaction?.channel?.id;
     const sameChannel = channel === 0 || sameId;
