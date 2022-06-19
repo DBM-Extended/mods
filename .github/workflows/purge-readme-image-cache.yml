@@ -1,17 +1,17 @@
-name: Purge image cache
-
-on:
-  schedule:
-    - cron: '38 16 * * */1'
-  workflow_dispatch:
-
+name: Build and test
+on: [push]
 jobs:
-  purge:
-    runs-on: ubuntu-18.04
+  build:
+    runs-on: ubuntu-latest
     steps:
-
-    - run: >
-        curl -sL https://github.com/${GITHUB_REPOSITORY} |
-        grep -oE '<img src="https?://camo.githubusercontent.com/[^"]+' |
-        sed -e 's/<img src="//' |
-        xargs -I % curl -sX PURGE %
+      - name: checkout
+        uses: actions/checkout@v2
+      - name: setup node
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+      - run: npm ci
+      - run: make
+      - run: make test
+      - name: Purge README Images
+        run: make purge
