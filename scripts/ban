@@ -1,0 +1,27 @@
+(() => {
+	const p = (server && server.tag) || Actions.getDBM().Files.data.settings.tag || "!";
+	const args = msg.content.slice(p.length).trim().split(/ +/g); 
+	const cmd = args[0]; args.shift();
+	
+	const selfperms = [ "BAN_MEMBERS" ];
+	const botperms = [ "BAN_MEMBERS" ];
+	
+	const str = args.join(' ');
+	
+	const mention_regex = /<@!?\d+>/g
+	const id_regex = /\b\d+\b/g
+	
+	const users = (mention_regex.test(str) ? str.match(mention_regex) : (id_regex.test(str)) ? str.match(id_regex) : []).map(u => u.match(id_regex)[0])
+	
+	const nickname = msg.member.displayName;
+	
+	if (!selfperms.every(perm => msg.member.hasPermission(perm))) return msg.channel.send(`${nickname}, you don't have permission to ban members.`);
+	if (!botperms.every(perm => me.hasPermission(perm))) return msg.channel.send(`${nickname}, I don't have permission to ban members.`);
+	if (!str) return msg.channel.send(`${nickname}, you didn't provide anyone to ban.`);
+	if (!users || users.length === 0) return msg.channel.send(`${nickname}, you didn't mention anyone or provide their user IDs. Example:\n**\`${p}${cmd} <@${msg.member.id}>\`**`);
+	
+	// If invalid member, move on to the next id.
+	users.forEach(usr => msg.guild.members.ban(usr).catch(() => null));
+	
+	return msg.channel.send(`${nickname}, banned all listed members.`);
+})();

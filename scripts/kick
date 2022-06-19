@@ -1,0 +1,27 @@
+(() => {
+	const p = (server && server.tag) || Actions.getDBM().Files.data.settings.tag || "!";
+	const args = msg.content.slice(p.length).trim().split(/ +/g); 
+	const cmd = args[0]; args.shift();
+	
+	const selfperms = [ "KICK_MEMBERS" ];
+	const botperms = [ "KICK_MEMBERS" ];
+	
+	const str = args.join(' ');
+	
+	const id_regex = /\b\d+\b/g
+	
+	const users = (msg.mentions.members.size !== 0) ? msg.mentions.members : (id_regex.test(str)) ? str.match(id_regex) : []
+	
+	const nickname = msg.member.displayName;
+	
+	if (!selfperms.every(perm => msg.member.hasPermission(perm))) return msg.channel.send(`${nickname}, you don't have permission to kick members.`);
+	if (!botperms.every(perm => me.hasPermission(perm))) return msg.channel.send(`${nickname}, I don't have permission to kick members.`);
+	if (!str) return msg.channel.send(`${nickname}, you didn't provide anyone to kick.`);
+	if (!users || users.length === 0) return msg.channel.send(`${nickname}, you didn't mention anyone or provide their user IDs. Example:\n**\`${p}${cmd} <@${msg.member.id}>\`**`);
+	
+	for (usr of users) {
+		if (usr[1].guild) { usr[1].kick(); } else { msg.guild.members.fetch(usr).catch(() => null).then(mem => mem.kick().catch(() => null)); }
+	}
+	
+	return msg.channel.send(`${nickname}, kicked all available listed members.`);
+})();

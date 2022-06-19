@@ -1,0 +1,43 @@
+// Javascript code here. Editing this will prevent you from receiving any support.
+if (!global.CGsDBMBadWordSystemVersions) global.CGsDBMBadWordSystemVersions = {};
+global.CGsDBMBadWordSystemVersions.Reset = "1.0.1";
+(() => {
+	const ensure = this.getMods().require;
+	const db = ensure('quick.db');
+	
+	const prefix = (server && server.tag) || this.getDBM().Files.data.settings.tag || "!";
+	
+	if (!member.hasPermission("ADMINISTRATOR")) {
+		msg.reply("You must have the Administrator permission to perform this command.");
+		cache.index++; return Actions.callNextAction(cache);
+	}
+	msg.reply(`WARNING! This will reset the entire Bad Word System for this server. This means all words and settings will be erased. This is only useful if something is messed up beyond repair. You should use **\`${prefix}badwordsetup transferto\`** first to download a settings file containing all words and settings. __**THIS ACTION IS IRREVERSIBLE!!!**__\n\nAre you sure you wish to do this? Reply **\`yes\`** to proceed.`).then(warningmsg => {
+		
+		const collector = msg.channel.createMessageCollector(message => message.author.id === msg.author.id, {max:1, time:15000});
+		
+		collector.on('end', collected => {
+			warningmsg.delete();
+			let message = collected.map(mes => mes.content);
+			if (message[0] && message[0].toLowerCase().includes("yes")) {
+				msg.reply("This is your only confirmation message. Are you sure you wish to perform this action? Reply **`yes`** to proceed.").then(confirmationreply => {
+					const confirmcollector = msg.channel.createMessageCollector(message => message.author.id === msg.author.id, {max:1, time:15000});
+					
+					confirmcollector.on('end', confirmcollected => {
+						confirmationreply.delete();
+						message = confirmcollected.map(mes => mes.content);
+						if (message[0] && message[0].toLowerCase().includes("yes")) {
+							db.delete(`servers.${msg.guild.id}`);
+							msg.reply("Confirmed! Bad Word System has been reset for this server.");
+						} else {
+							msg.reply("Cancelled the reset command.");
+							cache.index++; return Actions.callNextAction(cache);
+						}
+					});
+				});
+			} else {
+				msg.reply("Cancelled the reset command.");
+				cache.index++; return Actions.callNextAction(cache);
+			}
+		});
+	});
+})();

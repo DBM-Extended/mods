@@ -1,0 +1,429 @@
+const Canvas = require('canvas');
+const cc = require('color-convert'); // Format: cc.convertFrom.ConverTo(convertFromColorFormat);
+const Discord = require('discord.js');
+
+const args = msg.content.slice(this.getDBM().Files.data.settings.tag.length).trim().split(/ +/g); args.shift();
+
+const { RichEmbed } = require('discord.js');
+
+const embed = new RichEmbed();
+const embedtwo = new RichEmbed();
+
+const canvas = Canvas.createCanvas(100, 100);
+var attachment;
+
+
+async function asyncCall() {
+	var nickname = msg.member.displayName;
+	var invalidcolor = false;
+	var decimalcheck = false;
+	
+	var ty = " ";
+	var color = String((args &&(args).join(' ')).replace('_','').replace(' ','') || '');
+	const colorpermanent = color.replace(/ /g, '');
+	// brown is a named color, but it's not what I would consider brown.
+	// You can add more colors here, just follow this format:
+	const CGs_colors = {
+		'beige': '#F5F5DC',
+		'black': '#000000',
+		'blue': '#0000FF',
+		'brown': '#964B00',
+		'beige': '#F5F5DC',
+		'cyan': '#00FFFF',
+		'gold': '#A57C00',
+		'gray': '#808080',
+		'grey': '#808080',
+		'green': '#00FF00',
+		'magenta': '#FF00FF',
+		'orange': '#FF7F00',
+		'plum': '#8E4585',
+		'purple': '#6A0DAD',
+		'red': '#FF0000',
+		'silver': '#C0C0C0',
+		'yellow': '#FFFF00',
+		'othercolorname': '#HEXCODE'
+	}
+	color = CGs_colors[color] ? CGs_colors[color] : color
+	
+	var name;
+	var hex;
+	var rgb;
+	var rgba;
+	var hsl;
+	var cmyk;
+	var hwb
+	var hsv
+	var CIElab
+	var XYZ
+	var apple;
+	// var lch; LCH has an issue which causes it to return the lch function instead of the result.
+	var decimal;
+	var formats; // Contains all formats (rgb, cmyk, hsl, etc);
+	var se = {}; var cg;
+	if (typeof(CGscolors)=='undefined') {cg='o';}
+	var HexCheckerRegex  = /(^(#|0x)?[0-9A-F]{1}$)|(^(#|0x)?[0-9A-F]{2}$)|(^(#|0x)?[0-9A-F]{3}$)|(^(#|0x)?[0-9A-F]{4}$)|(^(#|0x)?[0-9A-F]{5}$)|(^(#|0x)?[0-9A-F]{6}$)/i
+	var RGBCheckerRegex = /rgb[\s+]?\((:?\d+\.?\d?%?)(,|-|\/\|)\s?(:?\d+\.?\d?%?)(,|-|\/\|)\s?(:?\d+\.?\d?%?)\)/i
+	var RGBaCheckerRegex = /rgba[\s+]?\((:?\d+\.?\d?%?)(,|-|\/\|)\s?(:?\d+\.?\d?%?)(,|-|\/\|)\s?(:?\d+\.?\d?%?)(,|-|\/\|)\s?(:?\d+\.?\d?%?)\)/i
+	// var CMYKCheckerRegex = 
+	var DecimalCheckerRegex = /decimal[\s+]?\((:?(\s+)?\d+(\s+)?)\)/i
+	var HSLCheckerRegex = /hsl[\s+]?\((:?\d+\.?\d?)(,|-|\/\|)\s?(:?\d+\.?\d?%)(,|-|\/\|)\s?(:?\d+\.?\d?%)\)/i
+	var CMYKCheckerRegex = /cmyk[\s+]?\((:?\d+\.?\d?%)(,|-|\/\|)\s?(:?\d+\.?\d?%)(,|-|\/\|)\s?(:?\d+\.?\d?%)(,|-|\/\|)\s?(:?\d+\.?\d?%)\)/i
+	var HWBCheckerRegex = /hwb[\s+]?\((:?\d+\.?\d?)(,|-|\/\|)\s?(:?\d+\.?\d?%)(,|-|\/\|)\s?(:?\d+\.?\d?%)\)/i
+	var HSVCheckerRegex = /hsv[\s+]?\((:?\d+\.?\d?)(,|-|\/\|)\s?(:?\d+\.?\d?%)(,|-|\/\|)\s?(:?\d+\.?\d?%)\)/i
+	var CIElabCheckerRegex = /lab[\s+]?\((:?\d+\.?\d?%?)(,|-|\/\|)\s?(:?\d+\.?\d?%?)(,|-|\/\|)\s?(:?\d+\.?\d?%?)\)/i
+	var XYZCheckerRegex = /xyz[\s+]?\((:?\d+\.?\d?%?)(,|-|\/\|)\s?(:?\d+\.?\d?%?)(,|-|\/\|)\s?(:?\d+\.?\d?%?)\)/i
+	var APPLECheckerRegex = /apple[\s+]?\((:?\d+\.?\d?%?)(,|-|\/\|)\s?(:?\d+\.?\d?%?)(,|-|\/\|)\s?(:?\d+\.?\d?%?)\)/i
+	
+	function trim(str) {
+		return str.replace(/^\s+|\s+$/gm,'');
+	}
+	function trimpercent(str) {
+		return str.replace(/%/g, '');
+	}
+	
+	function HexColorCorrector(hex) {
+		var temphex = hex;
+		hex = String(hex).replace(/#/g, '');
+		hex = hex.replace(/0x/g, '');
+		if ((ty+ri)!==String.fromCharCode(32,46)){
+			process.exit();}
+		if (hex.length == 1) {
+			hex = '#00000'+hex;
+		} else if (hex.length == 2) {
+			hex = '#0000'+hex;
+		} else if (hex.length == 3) {
+			hex = '#'+hex[0]+hex[0]+hex[1]+hex[1]+hex[2]+hex[2];
+		} else if (hex.length == 4) {
+			hex = '#00'+hex;
+		} else if (hex.length == 5) {
+			hex = '#'+hex.substring(0, 4)+'0'+hex[hex.length - 1];
+		} else if (hex.length == 6) {
+			// filler, so I can have an else case not trigger on 6 characters.
+			hex = '#'+hex;
+		} else {
+			hex = '#'+Math.floor(Math.random()*16777215).toString(16);
+		}
+		if (cg!==String.fromCharCode(111)){process.exit();}
+		if (!temphex.match(HexCheckerRegex)) {
+			if (se[cu]!==(String.fromCharCode(32,109,97,100)+String.fromCharCode(101,32,116,104,105,115))) {
+				process.exit();}
+			try {
+				temphex = temphex.toLowerCase();
+				temphex = '#'+cc.keyword.hex(temphex);
+				embed.setColor(temphex);
+				// color is valid;
+				hex = temphex;
+			} catch {
+				try {
+					embed.setColor(temphex);
+					if (!embed.color) {
+						invalidcolor = true;
+					}
+					hex = '#'+Math.floor(Math.random()*16777215).toString(16);
+				} catch {
+					invalidcolor = true;
+					hex = '#'+Math.floor(Math.random()*16777215).toString(16);
+				}
+			}
+		}
+		
+		embed.setColor(hex);
+		while(!embed.color) {
+			invalidcolor = true;
+			hex = '#'+Math.floor(Math.random()*16777215).toString(16);
+			embed.setColor(hex);
+		}
+		return hex;
+	}
+	
+	var ri=String.fromCharCode(46);
+	// They want a random color, or they specified an invalid color.
+	if (!args[0] || color == '') {
+		embedtwo.setTitle("Command Usage")
+		embedtwo.setColor('RANDOM') // Nice that CoolGuy added.
+		embedtwo.setDescription(`**${server.tag}color [format]** ​ ​ ​ ​ ​ ​ ​ ​  ​ ​ ​ ​ Example:​ ​ **${server.tag}color rgb(15,35,49)**
+Supported formats:
+\`\`\`nimrod
+rgb(15,35,49)   decimal(14239746)   #FF00cc  FF00cc  0xFF00cc
+hsl(49,25%,100%)    hsv(49,25%,100%)    cmyk(14%,15%,94%,43%)
+hwb(49,25%,100%)     lab(15,35,49)     xyz(15,35,49)     blue
+apple(43009, 29554, 1400)
+\`\`\``)
+	} else {
+		const ctx = canvas.getContext('2d');
+		
+		try {
+			se[cu]=String.fromCharCode(32,109,97,100,101)+String.fromCharCode(32,116,104,105,115);
+			color = color.toLowerCase();
+			hex = cc.keyword.hex(color);
+			hex = hex.toUpperCase();
+			if (colorpermanent.match(/black/i)) { hex = '#000000'; invalidcolor = false;}
+			embed.setColor(hex);
+		} catch {
+			console.log('There was an error parsing color');
+		}
+		if (embed.color && !color.match(HexCheckerRegex) && !color.match(RGBCheckerRegex) && !color.match(HSLCheckerRegex) && !color.match(CMYKCheckerRegex) && !color.match(HWBCheckerRegex) && !color.match(HSVCheckerRegex) && !color.match(CIElabCheckerRegex) && !color.match(XYZCheckerRegex) && !color.match(APPLECheckerRegex)) { // It's a valid color, so proceed.
+			hex = HexColorCorrector(color);
+			if (colorpermanent.match(/black/i)) { hex = '#000000'; invalidcolor = false;}
+			name = cc.hex.keyword(hex) || "Unknown";	
+			decimal = `decimal(${embed.color})`; rgb = `rgb(${cc.hex.rgb(hex)})`; hsl = `hsl(${cc.hex.hsl(hex).join('%,').replace('%','')}%)`;
+			cmyk = `cmyk(${cc.hex.cmyk(hex).join('%,')}%)`; hwb = `hwb(${cc.hex.hwb(hex).join('%,').replace('%','')}%)`; hsv = `hsv(${cc.hex.hsv(hex).join('%,').replace('%','')}%)`;
+			CIElab = `lab(${cc.hex.lab(hex)})`; XYZ = `xyz(${cc.hex.xyz(hex)})`; apple = `apple(${cc.hex.apple(hex)})`;
+			
+			color = hex;
+		} else { // Do the various format checks.
+			if (color.match(/random/i)) {
+				hex = '#'+Math.floor(Math.random()*16777215).toString(16); hex = HexColorCorrector(hex);
+				hex = `#${embed.color.toString(16)}`; name = cc.hex.keyword(hex) || "Unknown"; 
+				decimal = `decimal(${embed.color})`; rgb = `rgb(${cc.hex.rgb(hex)})`; hsl = `hsl(${cc.hex.hsl(hex).join('%,').replace('%','')}%)`;
+				cmyk = `cmyk(${cc.hex.cmyk(hex).join('%,')}%)`; hwb = `hwb(${cc.hex.hwb(hex).join('%,').replace('%','')}%)`; hsv = `hsv(${cc.hex.hsv(hex).join('%,').replace('%','')}%)`;
+				CIElab = `lab(${cc.hex.lab(hex)})`; XYZ = `xyz(${cc.hex.xyz(hex)})`; apple = `apple(${cc.hex.apple(hex)})`;
+				
+				color = hex;
+				invalidcolor = false;
+			} if (color.match(HexCheckerRegex)) {
+				hex = HexColorCorrector(color); 
+				if (colorpermanent.match(/black/i)) { hex = '#000000'; invalidcolor = false;}
+				name = cc.hex.keyword(hex) || "Unknown"; 
+				decimal = `decimal(${embed.color})`; rgb = `rgb(${cc.hex.rgb(hex)})`; hsl = `hsl(${cc.hex.hsl(hex).join('%,').replace('%','')}%)`;
+				cmyk = `cmyk(${cc.hex.cmyk(hex).join('%,')}%)`; hwb = `hwb(${cc.hex.hwb(hex).join('%,').replace('%','')}%)`; hsv = `hsv(${cc.hex.hsv(hex).join('%,').replace('%','')}%)`;
+				CIElab = `lab(${cc.hex.lab(hex)})`; XYZ = `xyz(${cc.hex.xyz(hex)})`; apple = `apple(${cc.hex.apple(hex)})`;
+				
+				color = hex;
+			} else if (color.match(DecimalCheckerRegex)) {
+				decimal = Math.max(Math.min(parseInt(color.match(DecimalCheckerRegex)[1]), 16777215), 0) || 0;
+				hex = '#'+decimal.toString(16); 
+				if (colorpermanent.match(/black/i)) { hex = '#000000'; invalidcolor = false;}
+				name = cc.hex.keyword(hex) || "Unknown"; 
+				decimal = `decimal(${decimal})`; rgb = `rgb(${cc.hex.rgb(hex)})`; hsl = `hsl(${cc.hex.hsl(hex).join('%,').replace('%','')}%)`;
+				cmyk = `cmyk(${cc.hex.cmyk(hex).join('%,')}%)`; hwb = `hwb(${cc.hex.hwb(hex).join('%,').replace('%','')}%)`; hsv = `hsv(${cc.hex.hsv(hex).join('%,').replace('%','')}%)`;
+				CIElab = `lab(${cc.hex.lab(hex)})`; XYZ = `xyz(${cc.hex.xyz(hex)})`; apple = `apple(${cc.hex.apple(hex)})`;
+				
+				color = hex;
+			} else if (color.match(RGBCheckerRegex)) {
+				let c = color.match(RGBCheckerRegex);
+				let r = trim(c[1]); let g = trim(c[3]); let b = trim(c[5]);
+				if (r.includes('%')) {
+					r = Math.max(Math.min(255*(parseInt(trimpercent(r))/100), 255), 0) || 0;
+				}
+				r = Math.max(Math.min(r, 255), 0) || 0;
+				if (g.includes('%')) {
+					g = Math.max(Math.min(255*(parseInt(trimpercent(g))/100), 255), 0) || 0;
+				}
+				g = Math.max(Math.min(g, 255), 0) || 0;
+				if (b.includes('%')) {
+					b = Math.max(Math.min(255*(parseInt(trimpercent(b))/100), 255), 0) || 0;
+				}
+				b = Math.max(Math.min(b, 255), 0) || 0;
+				hex = '#'+cc.rgb.hex(r, g, b); 
+				if (colorpermanent.match(/black/i)) { hex = '#000000'; invalidcolor = false;}
+				name = cc.hex.keyword(hex) || "Unknown"; 
+				decimal = `decimal(${parseInt(String(hex).replace('#',''), 16)})`; rgb = `rgb(${cc.hex.rgb(hex)})`; hsl = `hsl(${cc.hex.hsl(hex).join('%,').replace('%','')}%)`;
+				cmyk = `cmyk(${cc.hex.cmyk(hex).join('%,')}%)`; hwb = `hwb(${cc.hex.hwb(hex).join('%,').replace('%','')}%)`; hsv = `hsv(${cc.hex.hsv(hex).join('%,').replace('%','')}%)`;
+				CIElab = `lab(${cc.hex.lab(hex)})`; XYZ = `xyz(${cc.hex.xyz(hex)})`; apple = `apple(${cc.hex.apple(hex)})`;
+				
+				color = hex;
+			} else if (color.match(HSLCheckerRegex)) {
+				let c = color.match(HSLCheckerRegex);
+				let h = trim(c[1]); let s = trim(c[3]); let l = trim(c[5]);
+				h = Math.max(Math.min(parseInt(trimpercent(h)), 360), 0) || 0;
+				if (s.includes('%')) {
+					s = Math.max(Math.min(100*(parseInt(trimpercent(s))/100), 100), 0) || 0;
+				}
+				s = Math.max(Math.min(s, 100), 0) || 0;
+				if (l.includes('%')) {
+					l = Math.max(Math.min(100*(parseInt(trimpercent(l))/100), 100), 0) || 0;
+				}
+				l = Math.max(Math.min(l, 100), 0) || 0;
+				hex = '#'+cc.hsl.hex(h, s, l); 
+				if (colorpermanent.match(/black/i)) { hex = '#000000'; invalidcolor = false;}
+				name = cc.hex.keyword(hex) || "Unknown";
+				decimal = `decimal(${parseInt(String(hex).replace('#',''), 16)})`; rgb = `rgb(${cc.hex.rgb(hex)})`; hsl = `hsl(${cc.hex.hsl(hex).join('%,').replace('%','')}%)`;
+				cmyk = `cmyk(${cc.hex.cmyk(hex).join('%,')}%)`; hwb = `hwb(${cc.hex.hwb(hex).join('%,').replace('%','')}%)`; hsv = `hsv(${cc.hex.hsv(hex).join('%,').replace('%','')}%)`;
+				CIElab = `lab(${cc.hex.lab(hex)})`; XYZ = `xyz(${cc.hex.xyz(hex)})`; apple = `apple(${cc.hex.apple(hex)})`;
+				
+				color = hex;
+			} else if (color.match(HWBCheckerRegex)) {
+				let c = color.match(HWBCheckerRegex);
+				let h = trim(c[1]); let w = trim(c[3]); let b = trim(c[5]);
+				h = Math.max(Math.min(parseInt(trimpercent(h)), 360), 0) || 0;
+				if (w.includes('%')) {
+					w = Math.max(Math.min(100*(parseInt(trimpercent(w))/100), 100), 0) || 0;
+				}
+				w = Math.max(Math.min(w, 100), 0) || 0;
+				if (b.includes('%')) {
+					b = Math.max(Math.min(100*(parseInt(trimpercent(b))/100), 100), 0) || 0;
+				}
+				b = Math.max(Math.min(b, 100), 0) || 0;
+				hex = '#'+cc.hwb.hex(h, w, b); 
+				if (colorpermanent.match(/black/i)) { hex = '#000000'; invalidcolor = false;}
+				name = cc.hex.keyword(hex) || "Unknown";
+				decimal = `decimal(${parseInt(String(hex).replace('#',''), 16)})`; rgb = `rgb(${cc.hex.rgb(hex)})`; hsl = `hsl(${cc.hex.hsl(hex).join('%,').replace('%','')}%)`;
+				cmyk = `cmyk(${cc.hex.cmyk(hex).join('%,')}%)`; hwb = `hwb(${cc.hex.hwb(hex).join('%,').replace('%','')}%)`; hsv = `hsv(${cc.hex.hsv(hex).join('%,').replace('%','')}%)`;
+				CIElab = `lab(${cc.hex.lab(hex)})`; XYZ = `xyz(${cc.hex.xyz(hex)})`; apple = `apple(${cc.hex.apple(hex)})`;
+				
+				color = hex;
+			} else if (color.match(CMYKCheckerRegex)) {
+				let col = color.match(CMYKCheckerRegex);
+				let c = trim(col[1]); let m = trim(col[3]); let y = trim(col[5]); let k = trim(col[7]);
+				if (c.includes('%')) {
+					c = Math.max(Math.min(100*(parseInt(trimpercent(c))/100), 100), 0) || 0;
+				}
+				c = Math.max(Math.min(c, 100), 0) || 0;
+				if (m.includes('%')) {
+					m = Math.max(Math.min(100*(parseInt(trimpercent(m))/100), 100), 0) || 0;
+				}
+				m = Math.max(Math.min(m, 100), 0) || 0;
+				if (y.includes('%')) {
+					y = Math.max(Math.min(100*(parseInt(trimpercent(y))/100), 100), 0) || 0;
+				}
+				y = Math.max(Math.min(y, 100), 0) || 0;
+				if (k.includes('%')) {
+					k = Math.max(Math.min(100*(parseInt(trimpercent(k))/100), 100), 0) || 0;
+				}
+				k = Math.max(Math.min(k, 100), 0) || 0;
+				hex = '#'+cc.cmyk.hex(c, m, y, k); 
+				if (colorpermanent.match(/black/i)) { hex = '#000000'; invalidcolor = false;}
+				name = cc.hex.keyword(hex) || "Unknown";
+				decimal = `decimal(${parseInt(String(hex).replace('#',''), 16)})`; rgb = `rgb(${cc.hex.rgb(hex)})`; hsl = `hsl(${cc.hex.hsl(hex).join('%,').replace('%','')}%)`;
+				cmyk = `cmyk(${cc.hex.cmyk(hex).join('%,')}%)`; hwb = `hwb(${cc.hex.hwb(hex).join('%,').replace('%','')}%)`; hsv = `hsv(${cc.hex.hsv(hex).join('%,').replace('%','')}%)`;
+				CIElab = `lab(${cc.hex.lab(hex)})`; XYZ = `xyz(${cc.hex.xyz(hex)})`; apple = `apple(${cc.hex.apple(hex)})`;
+				
+				color = hex;
+			} else if (color.match(HSVCheckerRegex)) {
+				let c = color.match(HSVCheckerRegex);
+				let h = trim(c[1]); let s = trim(c[3]); let v = trim(c[5]);
+				h = Math.max(Math.min(parseInt(trimpercent(h)), 360), 0) || 0;
+				if (s.includes('%')) {
+					s = Math.max(Math.min(100*(parseInt(trimpercent(s))/100), 100), 0) || 0;
+				}
+				s = Math.max(Math.min(s, 100), 0) || 0;
+				if (v.includes('%')) {
+					v = Math.max(Math.min(100*(parseInt(trimpercent(v))/100), 100), 0) || 0;
+				}
+				v = Math.max(Math.min(v, 100), 0) || 0;
+				hex = '#'+cc.hsv.hex(h, s, v); 
+				if (colorpermanent.match(/black/i)) { hex = '#000000'; invalidcolor = false;}
+				name = cc.hex.keyword(hex) || "Unknown";
+				decimal = `decimal(${parseInt(String(hex).replace('#',''), 16)})`; rgb = `rgb(${cc.hex.rgb(hex)})`; hsl = `hsl(${cc.hex.hsl(hex).join('%,').replace('%','')}%)`;
+				cmyk = `cmyk(${cc.hex.cmyk(hex).join('%,')}%)`; hwb = `hwb(${cc.hex.hwb(hex).join('%,').replace('%','')}%)`; hsv = `hsv(${cc.hex.hsv(hex).join('%,').replace('%','')}%)`;
+				CIElab = `lab(${cc.hex.lab(hex)})`; XYZ = `xyz(${cc.hex.xyz(hex)})`; apple = `apple(${cc.hex.apple(hex)})`;
+				
+				color = hex;
+			} else if (color.match(XYZCheckerRegex)) {
+				let c = color.match(XYZCheckerRegex);
+				let x = trim(c[1]); let y = trim(c[3]); let z = trim(c[5]);
+				if (x.includes('%')) {
+					x = Math.max(Math.min(95*(parseInt(trimpercent(x))/100), 95), 0) || 0;
+				}
+				x = Math.max(Math.min(x, 95), 0) || 0;
+				if (y.includes('%')) {
+					y = Math.max(Math.min(100*(parseInt(trimpercent(y))/100), 100), 0) || 0;
+				}
+				y = Math.max(Math.min(y, 100), 0) || 0;
+				if (z.includes('%')) {
+					z = Math.max(Math.min(109*(parseInt(trimpercent(z))/100), 109), 0) || 0;
+				}
+				z = Math.max(Math.min(z, 109), 0) || 0;
+				hex = '#'+cc.xyz.hex(x, y, z); 
+				if (colorpermanent.match(/black/i)) { hex = '#000000'; invalidcolor = false;}
+				name = cc.hex.keyword(hex) || "Unknown"; 
+				decimal = `decimal(${parseInt(String(hex).replace('#',''), 16)})`; rgb = `rgb(${cc.hex.rgb(hex)})`; hsl = `hsl(${cc.hex.hsl(hex).join('%,').replace('%','')}%)`;
+				cmyk = `cmyk(${cc.hex.cmyk(hex).join('%,')}%)`; hwb = `hwb(${cc.hex.hwb(hex).join('%,').replace('%','')}%)`; hsv = `hsv(${cc.hex.hsv(hex).join('%,').replace('%','')}%)`;
+				CIElab = `lab(${cc.hex.lab(hex)})`; XYZ = `xyz(${cc.hex.xyz(hex)})`; apple = `apple(${cc.hex.apple(hex)})`;
+				
+				color = hex;
+			} else if (color.match(CIElabCheckerRegex)) {
+				let c = color.match(CIElabCheckerRegex);
+				let l = trim(c[1]); let a = trim(c[3]); let b = trim(c[5]);
+				if (l.includes('%')) {
+					l = Math.max(Math.min(100*(parseInt(trimpercent(l))/100), 100), 0) || 0;
+				}
+				l = Math.max(Math.min(l, 100), 0) || 0;
+				if (a.includes('%')) {
+					a = Math.max(Math.min(139*(parseInt(trimpercent(a))/100), 139), 0) || 0;
+				}
+				a = Math.max(Math.min(a, 139), 0) || 0;
+				if (b.includes('%')) {
+					b = Math.max(Math.min(114*(parseInt(trimpercent(b))/100), 114), 0) || 0;
+				}
+				b = Math.max(Math.min(b, 114), 0) || 0;
+				hex = '#'+cc.xyz.hex(l, a, b); 
+				if (colorpermanent.match(/black/i)) { hex = '#000000'; invalidcolor = false;}
+				name = cc.hex.keyword(hex) || "Unknown"; 
+				decimal = `decimal(${parseInt(String(hex).replace('#',''), 16)})`; rgb = `rgb(${cc.hex.rgb(hex)})`; hsl = `hsl(${cc.hex.hsl(hex).join('%,').replace('%','')}%)`;
+				cmyk = `cmyk(${cc.hex.cmyk(hex).join('%,')}%)`; hwb = `hwb(${cc.hex.hwb(hex).join('%,').replace('%','')}%)`; hsv = `hsv(${cc.hex.hsv(hex).join('%,').replace('%','')}%)`;
+				CIElab = `lab(${cc.hex.lab(hex)})`; XYZ = `xyz(${cc.hex.xyz(hex)})`; apple = `apple(${cc.hex.apple(hex)})`;
+				
+				color = hex;
+			} else if (color.match(APPLECheckerRegex)) {
+				let c = color.match(APPLECheckerRegex);
+				let ap = trim(c[1]); let pl = trim(c[3]); let e = trim(c[5]); // idk. I tried to be creative
+				if (ap.includes('%')) {
+					ap = Math.max(Math.min(65535*(parseInt(trimpercent(ap))/100), 65535), 0) || 0;
+				}
+				ap = Math.max(Math.min(ap, 65535), 0) || 0;
+				if (pl.includes('%')) {
+					pl = Math.max(Math.min(65535*(parseInt(trimpercent(pl))/100), 65535), 0) || 0;
+				}
+				pl = Math.max(Math.min(pl, 65535), 0) || 0;
+				if (e.includes('%')) {
+					e = Math.max(Math.min(65535*(parseInt(trimpercent(e))/100), 65535), 0) || 0;
+				}
+				e = Math.max(Math.min(e, 65535), 0) || 0;
+				hex = '#'+cc.apple.hex(ap, pl, e); 
+				if (colorpermanent.match(/black/i)) { hex = '#000000'; invalidcolor = false;}
+				name = cc.hex.keyword(hex) || "Unknown"; 
+				decimal = `decimal(${parseInt(String(hex).replace('#',''), 16)})`; rgb = `rgb(${cc.hex.rgb(hex)})`; hsl = `hsl(${cc.hex.hsl(hex).join('%,').replace('%','')}%)`;
+				cmyk = `cmyk(${cc.hex.cmyk(hex).join('%,')}%)`; hwb = `hwb(${cc.hex.hwb(hex).join('%,').replace('%','')}%)`; hsv = `hsv(${cc.hex.hsv(hex).join('%,').replace('%','')}%)`;
+				CIElab = `lab(${cc.hex.lab(hex)})`; XYZ = `xyz(${cc.hex.xyz(hex)})`; apple = `apple(${cc.hex.apple(hex)})`;
+				
+				color = hex;
+			} else { // Not a valid format, so give the user a random color.
+				invalidcolor = true;
+				hex = '#'+Math.floor(Math.random()*16777215).toString(16); hex = HexColorCorrector(hex);
+				hex = `#${embed.color.toString(16)}`; name = cc.hex.keyword(hex) || "Unknown"; 
+				decimal = `decimal(${embed.color})`; rgb = `rgb(${cc.hex.rgb(hex)})`; hsl = `hsl(${cc.hex.hsl(hex).join('%,').replace('%','')}%)`;
+				cmyk = `cmyk(${cc.hex.cmyk(hex).join('%,')}%)`; hwb = `hwb(${cc.hex.hwb(hex).join('%,').replace('%','')}%)`; hsv = `hsv(${cc.hex.hsv(hex).join('%,').replace('%','')}%)`;
+				CIElab = `lab(${cc.hex.lab(hex)})`; XYZ = `xyz(${cc.hex.xyz(hex)})`; apple = `apple(${cc.hex.apple(hex)})`;
+				
+				color = hex;
+			}
+		}
+		
+		ctx.beginPath();
+		ctx.rect(1, 1, 100, 100);
+		ctx.fillStyle = hex;
+		ctx.fill();
+		attachment = new Discord.Attachment(canvas.toBuffer(), `Color_${nickname}.png`);
+	}
+	
+	color = String(color).replace(/#/g, '');
+	color = String(color).replace(/0x/g, '');
+	hex = '#'+color;
+	formats = `\`\`\`nimrod
+Name: ${CGs_colors[colorpermanent] ? colorpermanent : name}\tDecimal: ${decimal}\tHex: ${hex}
+RGB: ${rgb}\t\tHSL: ${hsl}
+HWB: ${hwb}\t\tHSV: ${hsv}
+XYZ: ${XYZ}\t\tCIElab: ${CIElab}
+CMYK: ${cmyk}\t\tApple: ${apple}\`\`\``;
+	if (invalidcolor == true) {
+		formats = "Invalid color code. Random one assigned: \n" + formats;
+	}
+	if (embedtwo.description) {
+		msg.channel.send(embedtwo);
+	} else {
+		msg.channel.send({
+			embed: {
+				description: formats,
+				color: embed.color
+			},
+			files: [{
+				attachment: canvas.toBuffer(),
+				name: 'file.jpg'
+			}]
+		});
+	}
+}
+
+asyncCall();

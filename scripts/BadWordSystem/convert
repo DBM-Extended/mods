@@ -1,0 +1,103 @@
+// Javascript code here. Editing this will prevent you from receiving any support.
+if (!global.CGsDBMBadWordSystemVersions) global.CGsDBMBadWordSystemVersions = {};
+global.CGsDBMBadWordSystemVersions.Convert = "1.0.2";
+
+const https = require('https');
+const ensure = this.getMods().require;
+const db = ensure('quick.db');
+const { inspect } = require('util');
+
+function ensurePath(path, obj, def) { // def = default value (optional; defaults to empty object). Built in checking if object already exists. If it does not exist, creates the path.
+	for(let i = 0; i < path.length; i++) {
+        obj = obj[path[i]] = obj[path[i]] || ((def !== undefined && (i === path.length - 1)) ? def : {});
+    }
+}
+
+function trim(str) { // Trims leading and trailing spaces from a string.
+	return str.replace(/^\s+|\s+$/gm,'');
+}
+
+function PermCase(arr, symbol) {
+	if (!symbol) symbol = " ";
+	let new_arr = [];
+	arr.forEach(elem => {
+		if (Object.prototype.toString.call(elem) === '[object String]') { // this case is only usable for Discord Permission format.
+			new_arr.push(elem.replace(/_/g,' ').replace(/\w+/g, (t) => `${t[0].toUpperCase() + t.slice(1, Infinity).toLowerCase()}` ));
+		} else {
+			new_arr.push(elem);
+		}
+	});
+    return new_arr.join(symbol);
+}
+
+const badwordsystem = db.get(`servers.${msg.guild.id}.badwordsystem`) || {};
+
+ensurePath(['status'], badwordsystem, false);
+ensurePath(['config', 'defaults', 'config'], badwordsystem);
+ensurePath(['config', 'badwordlog', 'channelid'], badwordsystem, '');
+ensurePath(['config', 'actionlog', 'channelid'], badwordsystem, '');
+ensurePath(['config', 'commands', 'disabled'], badwordsystem, []);
+
+
+const enabled = badwordsystem.status;
+const badwordlogchannel = bot.channels.cache.get(badwordsystem.config.badwordlog.channelid) || ''; // In case no channel exists anymore for the stored ChannelID.
+const actionlogchannel = bot.channels.cache.get(badwordsystem.config.actionlog.channelid) || ''; // In case no channel exists anymore for the stored ChannelID.
+
+const prefix = (server && server.tag) || this.getDBM().Files.data.settings.tag || "!";
+const args = msg.content.slice(prefix.length).trim().split(/ +/g); 
+const command = args[0]; args.shift();
+
+const configperms = [ 'BAN_MEMBERS', 'KICK_MEMBERS', 'MANAGE_MESSAGES' ];
+const msgperms = [ 'ATTACH_FILES', 'SEND_MESSAGES' ];
+
+const selfperms = configperms.every(p => msg.guild.me.hasPermission(p));
+const userperms = configperms.some(p => member.hasPermission(p));
+const messageperms = msgperms.every(p => msg.channel.permissionsFor(bot.user.id).has(p));
+
+const url = `https://github.com/DanTheComputerMan/javascript/tree/master/Discord%20Bot%20Maker%20(DBM)/RAW%20Data/Bad%20Words%20System`;
+const tutorial = `For more info, visit the [GitHub](${url}) page.`;
+let list = []; const defaults = badwordsystem.config.defaults;
+let content = "", str = "", file_url = "", attachment;
+if (!userperms || !selfperms) {
+	content = `? don't have the appropriate permissions to perform this command. ? need: ${PermCase(!userperms ? configperms : msgperms, ', ')}`.replace(/\?/g, (!userperms) ? 'You' : 'I');
+	msg.channel.send(content);
+} else {
+	try {
+		const reg = /^((http(s)?)?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)\/\w+\.txt$/
+		file_url = (msg.attachments.find(att => att.url.match(/\.txt$/)) && msg.attachments.find(att => att.url.match(/\.txt$/)).url) || (reg.test(args.join(' ')) && args.join(' ').match(reg)[0]);
+		
+		if (file_url) {
+			https.get(file_url, (resp) => {
+				let data = '';
+				resp.on('data', (chunk) => {
+					data += chunk;
+				})
+				resp.on('end', () => { // data is fully collected.
+					data = data.split("\r\n");
+					for (line of data) {
+						line = {"word":line};
+						if (defaults.action) line.action = defaults.action;
+						if (defaults.mode) line.mode = defaults.mode;
+						if (defaults.filters) line.filters = defaults.filters;
+						
+						list.push(line);
+					}
+					list = inspect(list); // Makes the whole list a string.
+					
+					content = "Successfully converted all words.";
+					
+					const buffer = Buffer.from(list, 'utf8');
+					attachment = new DiscordJS.MessageAttachment(buffer, 'bws_converted_wordlist.txt');
+					
+					msg.channel.send(messageperms ? content + " Attached is a file containing all words you submitted in the proper format." : `${content}\n\nI do not have permission to attach the file. Here is the file's download URL: **${attachment.url}**`, messageperms ? attachment : null); // auto-handles attachment not existing.
+				});
+			});
+		} else {
+			content = "Please attach a file or provide a valid link to the file.";
+			msg.channel.send(content);
+		}
+	} catch {
+		content = "There was an error parsing your file. Please ensure you are providing a valid file attachment or a valid link to the file.";
+		msg.channel.send(content);
+	}
+}

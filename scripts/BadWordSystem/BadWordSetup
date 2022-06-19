@@ -1,0 +1,823 @@
+// Javascript code here. Editing this will prevent you from receiving any support.
+if (!global.CGsDBMBadWordSystemVersions) global.CGsDBMBadWordSystemVersions = {};
+global.CGsDBMBadWordSystemVersions.Config = "2.2.1";
+(async () => {
+	const https = require('https');
+	const ensure = Actions.getMods().require;
+	const db = ensure('quick.db');
+	const isImageURL = ensure('image-url-validator'); // Invalid embed images break without it.
+	const { parse, stringify } = JSON5 = ensure('json5');
+	
+	function ensurePath(path, obj, def) { // def = default value (optional; defaults to empty object). Built in checking if object already exists. If it does not exist, creates the path.
+		for(let i = 0; i < path.length; i++) {
+			obj = obj[path[i]] = obj[path[i]] || ((def !== undefined && (i === path.length - 1)) ? def : {});
+		}
+	}
+	
+	function trim(str) { // Trims leading and trailing spaces from a string.
+		return str.replace(/^\s+|\s+$/gm,'');
+	}
+	
+	function formatText(str, len=1900) {
+		return trim(str).replace(/\*/g, '\\*').replace(/_/g, '\\_').slice(0, len);
+	}
+	
+	function PermCase(arr, symbol) {
+		if (!symbol) symbol = " ";
+		let new_arr = [];
+		arr.forEach(elem => {
+			if (Object.prototype.toString.call(elem) === '[object String]') { // this case is only usable for Discord Permission format.
+				new_arr.push(elem.replace(/_/g,' ').replace(/\w+/g, (t) => `${t[0].toUpperCase() + t.slice(1, Infinity).toLowerCase()}` ));
+			} else {
+				new_arr.push(elem);
+			}
+		});
+		return new_arr.join(symbol);
+	}
+	
+	const badwordsystem = db.get(`servers.${msg.guild.id}.badwordsystem`) || {};
+	
+	// to work with previous versions that saved old data here.
+	if (badwordsystem.version && badwordsystem.version.config) delete badwordsystem.version; db.delete(`servers.${msg.guild.id}.badwordsystem.version`);
+	
+	if (!badwordsystem.version) badwordsystem.version = {};
+	badwordsystem.version.Config = global.CGsDBMBadWordSystemVersions.Config;
+	badwordsystem.version.Filter = global.CGsDBMBadWordSystemVersions.Filter || "Type any non-command to fetch filter version.";
+	badwordsystem.version.Reset = global.CGsDBMBadWordSystemVersions.Reset || "The reset command must be run to fetch its version (You do not need to actually reset anything).";
+	badwordsystem.version.Convert = global.CGsDBMBadWordSystemVersions.Convert || "The convert command must be run to fetch its version (You do not need to actually convert anything).";
+	
+	// This is a starting bad word list. You may, and likely will add more to this (though you should do so through the provided commands).
+	const wordlist = badwordsystem.badwordlist || [{"word":"anal"},{"word":"anus"},{"word":"arse"},{"word":"ass"},{"word":"asshole"},{"word":"ballsack"},{"word":"balls"},{"word":"bastard"},{"word":"bitch"},{"word":"blowjob"},{"word":"blow job"},{"word":"boner"},{"word":"boob"},{"word":"clit"},{"word":"clitoris"},{"word":"cock"},{"word":"coon"},{"word":"cunnilingus"},{"word":"cunt"},{"word":"damn"},{"word":"dick"},{"word":"dildo"},{"word":"dyke"},{"word":"fag"},{"word":"faggot"},{"word":"fellate"},{"word":"fellatio"},{"word":"fuck"},{"word":"goddamn"},{"word":"god damn"},{"word":"hell"},{"word":"homo"},{"word":"jizz"},{"word":"labia"},{"word":"nigga"},{"word":"nigger"},{"word":"penis"},{"word":"pube"},{"word":"pussy"},{"word":"queer"},{"word":"scrotum"},{"word":"sex"},{"word":"shit"},{"word":"slut"},{"word":"smegma"},{"word":"tit"},{"word":"twat"},{"word":"vagina"},{"word":"wank"},{"word":"whore"}];
+	
+	const prefix = (server && server.tag) || Actions.getDBM().Files.data.settings.tag || "!";
+	const args = msg.content.slice(prefix.length).trim().split(/ +/g); 
+	const command = args[0]; args.shift();
+	
+	ensurePath(['status'], badwordsystem, false);
+	ensurePath(['config', 'channels', 'badwordlog'], badwordsystem);
+	ensurePath(['config', 'channels', 'actionlog'], badwordsystem);
+	ensurePath(['config', 'defaults', 'config'], badwordsystem);
+	ensurePath(['config', 'commands', 'addword'], badwordsystem);
+	ensurePath(['config', 'filters', 'channels'], badwordsystem, []);
+	ensurePath(['config', 'filters', 'roles'], badwordsystem, []);
+	ensurePath(['config', 'commands', 'disabled'], badwordsystem, []);
+	
+	const enabled = badwordsystem.status;
+	const badwordlogchannel = bot.channels.cache.get(badwordsystem.config.channels.badwordlog.channelid) || ''; // In case no channel exists anymore for the stored ChannelID.
+	const actionlogchannel = bot.channels.cache.get(badwordsystem.config.channels.actionlog.channelid) || ''; // In case no channel exists anymore for the stored ChannelID.
+	const default_rules = badwordsystem.config.defaults.config.rules || {};
+	
+	const configperms = [ "BAN_MEMBERS", "KICK_MEMBERS", "MANAGE_MESSAGES" ];
+	const msgperms = [ "SEND_MESSAGES", "EMBED_LINKS", "ATTACH_FILES" ];
+	
+	const selfperms = configperms.every(p => msg.guild.me.hasPermission(p));
+	const userperms = configperms.every(p => member.hasPermission(p));
+	const messageperms = msgperms.every(p => msg.channel.permissionsFor(bot.user.id).has(p));
+	
+	const pages = { "help":{}, "enable":{}, "disable":{}, "status":{}, "version":{}, "addword":{ "help":{}, "**<type anything else>**":{} }, 
+	"download":{}, "upload":{}, "channels":{ "help":{}, "status":{}, "badwordlog":{}, "actionlog":{} }, "defaults":{ "help":{}, "addword":{ "help":{}, "status":{}, "responsetime":{} }, "usermode":{ "help":{}, "status": {}, "mention":{}, "tag":{}, "id":{} }, "matchstyle":{ "help":{}, "status":{}, "regexbased":{}, "matchany":{}, "matchanycasingmatters":{}, "matchword":{}, "matchwordcasingmatters":{} }, "action":{ "help":{}, "status":{}, "delete":{}, "mute":{}, "kick":{}, "ban":{} }, "muterole":{}, "color":{}, "thumbnail":{}, "footer":{}, "timestamp":{} }, "filters":{ "help":{}, "status": {}, "channel":{}, "role":{} }, "rules":{ "help":{}, "status":{}, "BreakOnMatch":{}, "PostDeleteMessage":{}, "PostDeleteMessageText":{}, "PostMuteMessage":{}, "PostKickMessage":{}, "PostBanMessage":{} }, "transferfrom":{}, "transferto":{} };
+	
+	const url = `https://github.com/DanTheComputerMan/javascript/tree/master/Discord%20Bot%20Maker%20(DBM)/RAW%20Data/Bad%20Words%20System`;
+	const tutorial = `For more info, visit the [GitHub](${url}) page.`;
+	let content = `Welcome to the Bad Word Config System\n\nFrom here, you can configure various parts of the system. For a full breakdown of the features, visit the [Github page here](${url}).`;
+	
+	let attachment, file_url, channel;
+	
+	const em = new DiscordJS.MessageEmbed;
+	if (badwordsystem.config.defaults.config.timestamp) em.setTimestamp(Date.now());
+	if (badwordsystem.config.defaults.config.footer) em.setFooter(badwordsystem.config.defaults.config.footer);
+	if (await isImageURL(badwordsystem.config.defaults.config.imageURL)) em.setImage(badwordsystem.config.defaults.config.imageURL);
+	if (await isImageURL(badwordsystem.config.defaults.config.thumbnailURL)) em.setThumbnail(badwordsystem.config.defaults.config.thumbnailURL);
+	
+	em.setURL(url)
+		.setColor(badwordsystem.config.defaults.config.color || "GREEN")
+		.setTitle("Bad Word Config System")
+	
+	if (!userperms || !selfperms) {
+		em.setColor('ORANGE');
+		content = `? don't have the appropriate permissions to configure the system. ? need: ${PermCase(!userperms ? configperms : msgperms, ', ')}`.replace(/\?/g, (!userperms) ? 'You' : 'I');
+		em.setDescription(content);
+		msg.channel.send(messageperms ? em : content, messageperms ? attachment : null);
+	} else {
+		switch (args[0]) {
+			case undefined:
+			case 'help':
+				content = `Bad Word System Help Menu\n\nThe available commands are: \n**${Object.keys(pages).join('**, **')}**\n\nFor a full list of features, visit the [GitHub](${url}) page.`;
+				em.setDescription(content)
+				msg.channel.send(messageperms ? em : content);
+				break;
+			case 'enable':
+				content = `${badwordsystem.status ? "The Bad Word System is already enabled." : "Enabled the Bad Word System."}`;
+				em.setDescription(content)
+				db.set(`servers.${msg.guild.id}.badwordsystem.status`, true);
+				msg.channel.send(messageperms ? em : content);
+				break;
+			case 'disable':
+				content = `${badwordsystem.status ? "Disabled the Bad Word System." : "The Bad Word System is already disabled."}`;
+				em.setDescription(content)
+				db.set(`servers.${msg.guild.id}.badwordsystem.status`, false);
+				msg.channel.send(messageperms ? em : content);
+				break;
+			case 'status':
+				content = `The Bad Word System is currently ${badwordsystem.status ? "en" : "dis"}abled.`;
+				em.setDescription(content)
+				msg.channel.send(messageperms ? em : content);
+				break;
+			case 'version':
+				content = `The Bad Word System version is:\n${Object.entries(badwordsystem.version).map(ver => `**\`${ver[0]}\`**: ${ver[1]}`).join('\n')}`;
+				em.setDescription(content)
+				msg.channel.send(messageperms ? em : content);
+				break;
+			case 'addword':
+				switch (args[1]) {
+					case undefined:
+					case 'help':
+						content = `Bad Word System Add Word Help Menu\n\nThe available commands are: \n**${Object.keys(pages.addword).join('**, **')}**\n\nFor a full list of features, visit the [GitHub](${url}) page.`;
+						em.setDescription(content)
+						msg.channel.send(messageperms ? em : content);
+						break;
+					default:
+						const time = (badwordsystem.config.commands.addword.responsetime || 15) * 1000;
+						const id_regex = /\b\d+\b/
+						
+						const words = []; let response_arr = [];
+						let completed = false; let cancelled = false; let invalid = false;
+						let questionnum = 0;
+						
+						const questions = [ "This will add a word/phrase or series of words/phrases one at a time by asking questions. You can cancel, while saving any completed words/phrases at any point by typing **`cancel`** or **`done`**\n\nWhat is the word/phrase or regex (make sure to follow proper escaping procedures in Discord for regex)?", "What action should be taken for this word/phrase? **`mute`**, **`delete`**, **`kick`**, or **`ban`**?", "If there are any channel filters for this word/phrase, mention them all or provide their IDs seperated by spaces, but don't do both. Otherwise, type anything else to continue.", "If there are any role filters for this word/phrase, mention them all or provide their IDs seperated by spaces, but don't do both. Otherwise, type anything else to continue.", "Is this a standard, extended, or regular expression (regex)? **`standard`**, **`extended`**, or **`regex`**" ];
+						const valid_responses = [null, ["mute", "delete", "kick", "ban"], null, null, ["standard", "extended", "regex"]];
+						
+						function saveWord(arr) {
+							const obj = {};
+							obj.word = arr[0];
+							obj.action = [ arr[1] ];
+							obj.filters = {
+								channels: arr[2],
+								roles: arr[3]
+							};
+							obj.mode = {
+								operation: arr[4]
+							};
+							wordlist.push(obj);
+							db.set(`servers.${msg.guild.id}.badwordsystem.badwordlist`, wordlist);
+						}
+						
+						async function whileLoop() {
+							while (true) {
+								await promptSequence();
+								if (invalid) break;
+								if (completed || cancelled) {
+									content = `C${completed ? "ompleted" : "ancelled"}.`;
+									em.setDescription(content);
+									msg.channel.send(messageperms ? em : content);
+									break;
+								}
+							}
+						}
+						
+						function promptSequence() {
+							return new Promise(resolve => {
+								if (!questions[questionnum]) {
+									content = "Do you wish to add another word/phrase? **`yes`** or **`no`**";
+									em.setDescription(content);
+									msg.channel.send(messageperms ? em : content).then(prompt_msg => {
+										const collector = msg.channel.createMessageCollector(message => message.author.id === msg.author.id, {max:1, time:time});
+										
+										collector.on('end', collected => {
+											const response = (collected.map(m => m.content)[0] || '').toLowerCase();
+											if (!response) cancelled = true;
+											
+											saveWord(response_arr);
+											switch (response) {
+												case "yes":
+													response_arr = []; questionnum = 0; break;
+												case "no":
+												default:
+													completed = true; break;
+											}
+											resolve();
+										});
+									});
+								} else {
+									content = questions[questionnum];
+									em.setDescription(content);
+									msg.channel.send(messageperms ? em : content).then(prompt_msg => {
+										const collector = msg.channel.createMessageCollector(message => message.author.id === msg.author.id, {max:1, time:time});
+										
+										collector.on('end', collected => {
+											let response = collected.map(m => m.content)[0];
+											
+											if (["cancel", undefined].some(ind => ind === response)) cancelled = true;
+											if (response === "done") completed = true;
+											
+											if (!response) response = '';
+											
+											if (cancelled || completed) {
+											// if there are no pre-set responses for this step, then continue.
+											} else if (!valid_responses[questionnum]) {
+											} else if (valid_responses[questionnum].indexOf(response.toLowerCase()) === -1) {
+												content = "That was not a valid response (The response is case sensitive). Cancelled the question sequence, although any previous words/phrases have been saved.";
+												em.setDescription(content);
+												msg.channel.send(messageperms ? em : content);
+												invalid = true; resolve();
+											}
+											
+											switch (questionnum) {
+												case 2:
+													response = ((msg.mentions.channels.first()) ? msg.mentions.channels.map(chan => chan.id) : response.split(' ')).map(c => id_regex.test(c) ? c.match(id_regex)[0] : '').filter(Boolean)
+													break;
+												case 3:
+													response = ((msg.mentions.roles.first()) ? msg.mentions.roles.map(role => role.id) : response.split(' ')).map(r => id_regex.test(r) ? r.match(id_regex)[0] : '').filter(Boolean)
+													break;
+											}
+											
+											response_arr[questionnum] = response;
+											questionnum++;
+											resolve();
+										});
+									});
+								}
+							});
+						}
+						
+						whileLoop();
+				}
+				break;
+			case 'download':
+				let wlist = Buffer.from(stringify(wordlist), 'utf8');
+				attachment = new DiscordJS.MessageAttachment(wlist, 'bws_wordlist.txt');
+				content = messageperms ? "I have attached the entire bad word list." : `I do not have permission to attach the file. Here is the entire bad word list: ${attachment.url}`
+				msg.channel.send(content, messageperms ? attachment : null);
+				break;
+			case 'upload':
+				try {
+					file_url = msg.attachments.find(att => att.url.match(/\.txt$/)) || args.slice(1, Infinity).join(' ').match(/^((http(s)?)?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)\/\w+\.txt$/) || '';
+					if (!file_url) {
+						content = "Please either attach a file, or provide a link to the file."
+						em.setColor('ORANGE')
+							.setDescription(content);
+						msg.channel.send(messageperms ? em : content);
+						break;
+					}
+					
+					https.get(file_url[0] || file_url.url, (resp) => {
+						let data = '';
+						resp.on('data', (chunk) => {
+							data += chunk;
+						})
+						resp.on('end', () => { // data is fully collected.
+							const newwordlist = [...new Set(wordlist.map(w => stringify(w)))].map(w => parse(w));
+							
+							db.set(`servers.${msg.guild.id}.badwordsystem.badwordlist`, newwordlist);
+							
+							content = `Successfully uploaded all words in the file into the database. There are now ${newwordlist.length} words in the database.`;
+							em.setDescription(content);
+							msg.channel.send(messageperms ? em : content);
+						})
+					});
+				} catch (err) {
+					em.setColor('ORANGE'); attachment = null;
+					content = "There was an error parsing your file. Please ensure you are providing a valid file attachment or a valid link to the file.";
+					em.setDescription(content);
+					msg.channel.send(messageperms ? em : content);
+				}
+				break;
+			case 'channels':
+				switch (args[1]) {
+					case undefined:
+					case 'help':
+						content = `Bad Word System Channels Help Menu\n\nThe available options are: \n**${Object.keys(pages.channels).join("**, **")}**\n\nFor a full list of features, visit the [GitHub](${url}) page.`;
+						em.setDescription(content);
+						msg.channel.send(messageperms ? em : content);
+						break;
+					case 'status':
+						console.log(Object.entries(badwordsystem.config.channels));
+						content = `Bad Word System Channels Status Menu\n\nThe channels are:\n${Object.entries(badwordsystem.config.channels).map(chan => (chan[1] && chan[1].channelid) ? `**${chan[0]}:** <#${chan[1].channelid}>` : `**${chan[0]}:** <Not Set>`).join("\n")}\n\nFor a full list of features, visit the [GitHub](${url}) page.`;
+						em.setDescription(content);
+						msg.channel.send(messageperms ? em : content);
+						break;
+					case 'badwordlog':
+						if (!args[2]) {
+							content = `You did not provide a channel mention or channelID to use for the badwordlog. (Ex: ${msg.channel} or **${msg.channel.id}**)`;
+							em.setDescription(content);
+							msg.channel.send(messageperms ? em : content);
+							break;
+						}
+						channel = msg.mentions.channels.first() && msg.mentions.channels.first().id || args[2];
+						db.set(`servers.${msg.guild.id}.badwordsystem.config.channels.badwordlog.channelid`, channel);
+						content = `Successfully set the bad word log channel to <#${channel}>`;
+						em.setDescription(content);
+						msg.channel.send(messageperms ? em : content);
+						break;
+					case 'actionlog':
+						if (!args[2]) {
+							content = `You did not provide a channel mention or channelID to use for the actionlog. (Ex: ${msg.channel} or **${msg.channel.id}**)`;
+							em.setDescription(content);
+							msg.channel.send(messageperms ? em : content);
+							break;
+						}
+						channel = msg.mentions.channels.first() && msg.mentions.channels.first().id || args[2];
+						db.set(`servers.${msg.guild.id}.badwordsystem.config.channels.actionlog.channelid`, channel);
+						content = `Successfully set the action log channel to <#${channel}>`;
+						em.setDescription(content);
+						msg.channel.send(messageperms ? em : content);
+						break;
+					default:
+						content = `Sorry, **${formatText(args.join(' '))}** was not a valid selection.`;
+						em.setDescription(content);
+						msg.channel.send(messageperms ? em : content);
+						break;
+				}
+				break;
+			case 'defaults':
+				switch (args[1]) {
+					case undefined:
+					case 'help':
+						content = `Bad Word System Defaults Help Menu\n\nThe available options are: \n**${Object.keys(pages.defaults).join("**, **")}**\n\nFor a full list of features, visit the [GitHub](${url}) page.`;
+						em.setDescription(content);
+						msg.channel.send(messageperms ? em : content);
+						break;
+					case 'addword':
+						switch (args[2]) {
+							case undefined:
+							case 'help':
+								content = `Bad Word System Add Word Help Menu\n\nThe available commands are: \n**${Object.keys(pages.defaults.addword).join('**, **')}**\n\nFor a full list of features, visit the [GitHub](${url}) page.`;
+								em.setDescription(content);
+								msg.channel.send(messageperms ? em : content);
+								break;
+							case 'status':
+								content = `Your Bad Word System Add Word defaults are:\n${Object.entries(badwordsystem.config.commands.addword).map(p => `**\`${p[0]}\`**: ${p[1]}`).join('\n') || "**<No set values>**"}`;
+								em.setDescription(content);
+								msg.channel.send(messageperms ? em : content);
+								break;
+							case 'responsetime':
+								let num = parseInt(args[3]);
+								
+								if (num !== 0 && (!num || isNaN(num))) {
+									content = "That was not a valid number.";
+								} else if (num < 4 || num > 60) {
+									content = "You may not set the default response time to a number less than 4 or greater than 60 seconds."
+								} else {
+									db.set(`servers.${msg.guild.id}.badwordsystem.config.commands.addword.responsetime`, num);
+									content = `Successfully set the number of seconds to wait for input with the addword subcommand to ${num} seconds`;
+								}
+								em.setDescription(content);
+								msg.channel.send(messageperms ? em : content);
+								break;
+							default:
+								content = `Sorry, **${formatText(args.join(' '))}** was not a valid selection.`;
+								em.setDescription(content);
+								msg.channel.send(messageperms ? em : content);
+								break;
+						}
+						break;
+					case 'usermode':
+						switch (args[2]) {
+							case undefined:
+							case 'help':
+								content = `Bad Word System user mode Help Menu\n\nThe available options are: \n**${Object.keys(pages.defaults.usermode).join("**, **")}**`;
+								em.setDescription(content);
+								msg.channel.send(messageperms ? em : content);
+								break;
+							case 'status':
+								content = `The usermode is currently set as: **${badwordsystem.config.defaults.usermode || '@mention'}**`;
+								em.setDescription(content);
+								msg.channel.send(messageperms ? em : content);
+								break;
+							case 'mention':
+								db.set(`servers.${msg.guild.id}.badwordsystem.config.defaults.usermode`, 'mention');
+								content = `Successfully set the user mode to @mention. (Ex: ${msg.author})`;
+								em.setDescription(content);
+								msg.channel.send(messageperms ? em : content);
+								break;
+							case 'tag':
+								db.set(`servers.${msg.guild.id}.badwordsystem.config.defaults.usermode`, 'tag');
+								content = `Successfully set the user mode to tag. (Ex: **${msg.author.tag}**)`;
+								em.setDescription(content);
+								msg.channel.send(messageperms ? em : content);
+								break;
+							case 'id':
+								db.set(`servers.${msg.guild.id}.badwordsystem.config.defaults.usermode`, 'id');
+								content = `Successfully set the user mode to id. (Ex: **${msg.author.id}**)`;
+								em.setDescription(content);
+								msg.channel.send(messageperms ? em : content);
+								break;
+							default:
+								content = `Sorry, **${formatText(args.join(' '))}** was not a valid selection.`;
+								em.setDescription(content);
+								msg.channel.send(messageperms ? em : content);
+								break;
+						}
+						break;
+					case 'matchstyle':
+						switch (args[2]) {
+							case 'help':
+								content = `Bad Word System user mode Help Menu\n\nThe available options are: \n**${Object.keys(pages.defaults.matchstyle).join("**, **")}**`;
+								em.setDescription(content);
+								msg.channel.send(messageperms ? em : content);
+								break;
+							case 'status':
+								content = `The match style is currently set as: **${badwordsystem.config.defaults.matchstyle || 'matchword'}**`;
+								em.setDescription(content);
+								msg.channel.send(messageperms ? em : content);
+								break;
+							case 'matchregex':
+								db.set(`servers.${msg.guild.id}.badwordsystem.config.defaults.matchstyle`, 'matchregex');
+								content = "Successfully set the matchstyle to regexbased. This mode is useful if you have regex expressions as words.";
+								em.setDescription(content);
+								msg.channel.send(messageperms ? em : content);
+								break;
+							case 'matchany':
+								db.set(`servers.${msg.guild.id}.badwordsystem.config.defaults.matchstyle`, 'matchany');
+								content = "Successfully set the matchstyle to matchany.";
+								em.setDescription(content);
+								msg.channel.send(messageperms ? em : content);
+								break;
+							case 'matchanycasingmatters':
+								db.set(`servers.${msg.guild.id}.badwordsystem.config.defaults.matchstyle`, 'matchanycasingmatters');
+								content = "Successfully set the matchstyle to matchanycasingmatters.";
+								em.setDescription(content);
+								msg.channel.send(messageperms ? em : content);
+								break;
+							case 'matchword':
+								db.set(`servers.${msg.guild.id}.badwordsystem.config.defaults.matchstyle`, 'matchword');
+								content = "Successfully set the matchstyle to matchword.";
+								em.setDescription(content);
+								msg.channel.send(messageperms ? em : content);
+								break;
+							case 'matchwordcasingmatters':
+								db.set(`servers.${msg.guild.id}.badwordsystem.config.defaults.matchstyle`, 'matchwordcasingmatters');
+								content = "Successfully set the matchstyle to matchwordcasingmatters.";
+								em.setDescription(content);
+								msg.channel.send(messageperms ? em : content);
+								break;
+							default:
+								content = `Sorry, **${formatText(args.join(' '))}** was not a valid selection.`;
+								em.setDescription(content);
+								msg.channel.send(messageperms ? em : content);
+								break;
+						}
+						break;
+					case 'action':
+						switch (args[2]) {
+							case undefined:
+							case 'help':
+								content = `Bad Word System default action Help Menu\n\nThe available options are: \n**${Object.keys(pages.defaults.action).join("**, **")}**`;
+								em.setDescription(content);
+								msg.channel.send(messageperms ? em : content);
+								break;
+							case 'status':
+								content = `The default action is set as: **${badwordsystem.config.defaults.config.action || "delete"}**. This is used when the word does not have an action specified.`;
+								em.setDescription(content);
+								msg.channel.send(messageperms ? em : content);
+								break;
+							case 'delete':
+							case 'mute':
+							case 'kick':
+							case 'ban':
+								db.set(`servers.${msg.guild.id}.badwordsystem.config.defaults.config.action`, args[2]);
+								content = `Successfully changed the default action to: **${args[2]}**. This is used when the word does not have an action specified.`;
+								em.setDescription(content);
+								msg.channel.send(messageperms ? em : content);
+								break;
+							default:
+								content = "You did not provide a valid default action to use.";
+								em.setDescription(content);
+								em.setColor('ORANGE');
+								msg.channel.send(messageperms ? em : content);
+								break;
+						}
+						break;
+					case 'muterole':
+						const mentionedrole = msg.mentions.roles.first() && msg.mentions.roles.first().id || args[2];
+						if (!mentionedrole) {
+							content = "You did not mention a role or provide a role ID to use.";
+							em.setDescription(content);
+							em.setColor('ORANGE');
+							msg.channel.send(messageperms ? em : content);
+							break;
+						} else if (args[2] === "remove") {
+                            db.delete(`servers.${msg.guild.id}.badwordsystem.config.defaults.muterole`);
+                            content = "Removed the mute role.";
+                            em.setDescription(content);
+                            msg.channel.send(messageperms ? em : content);
+                            break;
+						} else {
+							db.set(`servers.${msg.guild.id}.badwordsystem.config.defaults.muterole`, mentionedrole);
+							content = `Successfully changed the muterole to: **<@&${mentionedrole}>**`;
+							em.setDescription(content);
+							msg.channel.send(messageperms ? em : content);
+							break;
+						}
+					case 'color':
+						if (args[2] === "remove") {
+							db.delete(`servers.${msg.guild.id}.badwordsystem.config.defaults.config.color`);
+                            content = "Removed the default color.";
+                            em.setDescription(content);
+                            msg.channel.send(messageperms ? em : content);
+                            break;
+						} else {
+							// Determine if the color is a valid Embed color.
+							em.setColor(Number(args[2]));
+							if (isNaN(em.color)) em.setColor(args[2] || ''.toUpperCase());
+							if (isNaN(em.color)) {
+								content = `That was an invalid embed color. Please try again or go to [this link](https://gist.github.com/thomasbnt/b6f455e2c7d743b796917fa3c205f812) to see the valid embed colors.`;
+								em.setDescription(content);
+								em.setColor('ORANGE');
+								msg.channel.send(messageperms ? em : content);
+								break;
+							}
+							db.set(`servers.${msg.guild.id}.badwordsystem.config.defaults.config.color`, em.color)
+							
+							content = `Successfully changed the default color.`;
+							em.setDescription(content);
+							msg.channel.send(messageperms ? em : content);
+							break;
+						}
+					case 'image':
+						if (args[2] === "remove") {
+							db.delete(`servers.${msg.guild.id}.badwordsystem.config.defaults.config.imageURL`);
+							delete em.image;
+							content = "Removed the imageURL";
+							em.setDescription(content);
+							msg.channel.send(messageperms ? em : content);
+							break;
+						} else if (!args[2] || !await isImageURL(args.slice(2, Infinity).join(" "))) {
+							content = "You did not provide a default image URL to use or the image URL was invalid.";
+							em.setDescription(content);
+							em.setColor('ORANGE');
+							msg.channel.send(messageperms ? em : content);
+							break;
+						}
+						db.set(`servers.${msg.guild.id}.badwordsystem.config.defaults.config.imageURL`, args.slice(2, Infinity).join(' '));
+						content = `Successfully changed the default image URL to: **${formatText(args.slice(2, Infinity).join(' '))}**`;
+						em.setDescription(content);
+						msg.channel.send(messageperms ? em : content);
+						break;
+					case 'thumbnail':
+						if (args[2] === "remove") {
+							db.delete(`servers.${msg.guild.id}.badwordsystem.config.defaults.config.thumbnailURL`);
+							delete em.thumbnail;
+							content = "Removed the thumbnailURL";
+							em.setDescription(content);
+							msg.channel.send(messageperms ? em : content);
+							break;
+						} else if (!args[2] || !await isImageURL(args.slice(2, Infinity).join(" "))) {
+							content = "You did not provide a default thumbnail URL to use or the thumbnail URL was invalid.";
+							em.setDescription(content);
+							em.setColor('ORANGE');
+							msg.channel.send(messageperms ? em : content);
+							break;
+						}
+						db.set(`servers.${msg.guild.id}.badwordsystem.config.defaults.config.thumbnailURL`, args.slice(2, Infinity).join(' '));
+						content = `Successfully changed the default thumbnail URL to: **${formatText(args.slice(2, Infinity).join(' '))}**`;
+						em.setDescription(content);
+						msg.channel.send(messageperms ? em : content);
+						break;
+					case 'footer':
+						if (args[2] === "remove") {
+							db.delete(`servers.${msg.guild.id}.badwordsystem.config.defaults.config.footer`);
+							delete em.footer;
+							content = "Removed the footer";
+							em.setDescription(content);
+							msg.channel.send(messageperms ? em : content);
+							break;
+						} else if (!args[2]) {
+							content = `You did not provide a default footer to use.`;
+							em.setDescription(content);
+							em.setColor('ORANGE');
+							msg.channel.send(messageperms ? em : content);
+							break;
+						}
+						db.set(`servers.${msg.guild.id}.badwordsystem.config.defaults.config.footer`, args.slice(2, Infinity).join(' '));
+						content = `Successfully changed the default footer to: **${formatText(args.slice(2, Infinity).join(' '))}**`;
+						em.setDescription(content)
+							.setFooter(args.slice(2, Infinity).join(' '));
+						msg.channel.send(messageperms ? em : content);
+						break;
+					case 'timestamp':
+						content = `You have ${badwordsystem.config.defaults.config.timestamp ? "dis" : "en"}abled the timestamp.`;
+						em.setDescription(content);
+						if (!badwordsystem.config.defaults.config.timestamp) { em.setTimestamp(Date.now()) } else { delete em.timestamp; }
+						db.set(`servers.${msg.guild.id}.badwordsystem.config.defaults.config.timestamp`, badwordsystem.config.defaults.config.timestamp ? false : true);
+						msg.channel.send(messageperms ? em : content);
+						break;
+					default:
+						em.setColor('ORANGE');
+						content = `Sorry, **${formatText(args.join(' ') || '<No selection>')}** was not a valid selection.`;
+						em.setDescription(content);
+						msg.channel.send(messageperms ? em : content, messageperms ? attachment : null);
+						break;
+				}
+				break;
+			case 'filters':
+				switch (args[1]) {
+					case undefined:
+					case 'help':
+						content = `Bad Word System Filters Help Menu\n\nThe available options are: \n**${Object.keys(pages.filters).join("**, **")}**\n\nFor a full list of features, visit the [GitHub](${url}) page.`;
+						em.setDescription(content);
+						msg.channel.send(messageperms ? em : content);
+						break;
+					case 'status':
+						let channelsarr = badwordsystem.config.filters.channels.map(c => `<#${c}>`);
+						let rolesarr = badwordsystem.config.filters.roles.map(r => msg.guild.roles.cache.get(r) || `\\<@&${r}>`);
+						content = `Bad Word System Filters Status Menu\n\nThe excluded channels are: **${channelsarr.join("**, **") || "<No channels>"}**\nThe excluded roles are: **${rolesarr.join("**, **") || "<No roles>"}**\n\nFor a full list of features, visit the [GitHub](${url}) page.`;
+						em.setDescription(content);
+						msg.channel.send(messageperms ? em : content);
+						break;
+					case 'channel':
+						if (!args[2]) {
+							content = `You did not provide a channel mention or channelID to use for the channel filter. (Ex: ${msg.channel} or **${msg.channel.id}**)`;
+							em.setDescription(content);
+							msg.channel.send(messageperms ? em : content);
+							break;
+						}
+						
+						let channels = badwordsystem.config.filters.channels;
+						const numchannels = channels.length;
+						channel = msg.mentions.channels.first() && msg.mentions.channels.first().id || args[2];
+						if (channels.indexOf(channel) === -1) {
+							channels.push(channel);
+						} else {
+							let index = channels.indexOf(channel);
+							channels.splice(index, 1);
+						}
+						channels = [...new Set(channels)];
+						
+						db.set(`servers.${msg.guild.id}.badwordsystem.config.filters.channels`, channels);
+						content = `Successfully ${(numchannels > channels.length) ? "removed" : "added"} the channel ${(numchannels > channels.length) ? "from" : "to"} the filtered channels.`;
+						em.setDescription(content);
+						msg.channel.send(messageperms ? em : content);
+						break;
+					case 'role':
+						if (!args[2]) {
+							content = `You did not provide a role mention or roleID to use for the role filter. (Ex: ${msg.member.roles.highest} or ${msg.member.roles.highest.id})`;
+							em.setDescription(content);
+							msg.channel.send(messageperms ? em : content);
+							break;
+						}
+						
+						let roles = badwordsystem.config.filters.roles;
+						const numroles = roles.length || 0;
+						let role = msg.mentions.roles.first() && msg.mentions.roles.first().id || args[2];
+						if (roles.indexOf(role) === -1) {
+							roles.push(role);
+						} else {
+							let index = roles.indexOf(role);
+							roles.splice(index, 1);
+						}
+						roles = [...new Set(roles)];
+						
+						db.set(`servers.${msg.guild.id}.badwordsystem.config.filters.roles`, roles);
+						content = `Successfully ${(numroles > roles.length) ? "removed" : "added"} the role ${(numroles > roles.length) ? "from" : "to"} the filtered roles.`;
+						em.setDescription(content);
+						msg.channel.send(messageperms ? em : content);
+						break;
+					default:
+						content = `Sorry, **${formatText(args.join(' '))}** was not a valid selection.`;
+						em.setDescription(content);
+						msg.channel.send(messageperms ? em : content);
+						break;
+				}
+				break;
+			case 'rules':
+				switch (args[1]) {
+					case undefined:
+					case 'help':
+						content = `Bad Word System Rules Help Menu\n\nThe available options are: \n**${Object.keys(pages.rules).join("**, **")}**`;
+						em.setDescription(content);
+						msg.channel.send(messageperms ? em : content);
+						break;
+					case 'status':
+						content = `The enabled rules are:\n**${Object.keys(default_rules).join("**, **") || "<No enabled rules>"}**`;
+						em.setDescription(content)
+						msg.channel.send(messageperms ? em : content);
+						break;
+					case 'BreakOnMatch':
+						if (default_rules.BreakOnMatch) { delete default_rules.BreakOnMatch; } else { default_rules.BreakOnMatch = true; }
+						content = `You have ${default_rules.BreakOnMatch ? "dis" : "en"}abled the BreakOnMatch rule.`;
+						em.setDescription(content);
+						db.set(`servers.${msg.guild.id}.badwordsystem.config.defaults.config.rules`, default_rules);
+						msg.channel.send(messageperms ? em : content);
+						break;
+					case 'PostDeleteMessage':
+						if (default_rules.PostDeleteMessage) { delete default_rules.PostDeleteMessage; } else { default_rules.PostDeleteMessage = true; }
+						content = `You have ${default_rules.PostDeleteMessage ? "dis" : "en"}abled the PostDeleteMessage rule.`;
+						em.setDescription(content);
+						db.set(`servers.${msg.guild.id}.badwordsystem.config.defaults.config.rules`, default_rules);
+						msg.channel.send(messageperms ? em : content);
+						break;
+					case 'PostDeleteMessageText':
+						if (default_rules.PostDeleteMessageText) { delete default_rules.PostDeleteMessageText; } else { default_rules.PostDeleteMessageText = true; }
+						content = `You have ${default_rules.PostDeleteMessageText ? "dis" : "en"}abled the PostDeleteMessageText rule.`;
+						em.setDescription(content);
+						db.set(`servers.${msg.guild.id}.badwordsystem.config.defaults.config.rules`, default_rules);
+						msg.channel.send(messageperms ? em : content);
+						break;
+					case 'PostMuteMessage':
+						if (default_rules.PostMuteMessage) { delete default_rules.PostMuteMessage; } else { default_rules.PostMuteMessage = true; }
+						content = `You have ${default_rules.PostMuteMessage ? "dis" : "en"}abled the PostMuteMessage rule.`;
+						em.setDescription(content);
+						db.set(`servers.${msg.guild.id}.badwordsystem.config.defaults.config.rules`, default_rules);
+						msg.channel.send(messageperms ? em : content);
+						break;
+					case 'PostMuteMessageText':
+						if (default_rules.PostMuteMessageText) { delete default_rules.PostMuteMessageText; } else { default_rules.PostMuteMessageText = true; }
+						content = `You have ${default_rules.PostMuteMessageText ? "dis" : "en"}abled the PostMuteMessageText rule.`;
+						em.setDescription(content);
+						db.set(`servers.${msg.guild.id}.badwordsystem.config.defaults.config.rules`, default_rules);
+						msg.channel.send(messageperms ? em : content);
+						break;
+					case 'PostKickMessage':
+						if (default_rules.PostKickMessage) { delete default_rules.PostKickMessage; } else { default_rules.PostKickMessage = true; }
+						content = `You have ${default_rules.PostKickMessage ? "dis" : "en"}abled the PostKickMessage rule.`;
+						em.setDescription(content);
+						db.set(`servers.${msg.guild.id}.badwordsystem.config.defaults.config.rules`, default_rules);
+						msg.channel.send(messageperms ? em : content);
+						break;
+					case 'PostKickMessageText':
+						if (default_rules.PostKickMessageText) { delete default_rules.PostKickMessageText; } else { default_rules.PostKickMessageText = true; }
+						content = `You have ${default_rules.PostKickMessageText ? "dis" : "en"}abled the PostKickMessageText rule.`;
+						em.setDescription(content);
+						db.set(`servers.${msg.guild.id}.badwordsystem.config.defaults.config.rules`, default_rules);
+						msg.channel.send(messageperms ? em : content);
+						break;
+					case 'PostBanMessage':
+						if (default_rules.PostBanMessage) { delete default_rules.PostBanMessage; } else { default_rules.PostBanMessage = true; }
+						content = `You have ${default_rules.PostBanMessage ? "dis" : "en"}abled the PostBanMessage rule.`;
+						em.setDescription(content);
+						db.set(`servers.${msg.guild.id}.badwordsystem.config.defaults.config.rules`, default_rules);
+						msg.channel.send(messageperms ? em : content);
+						break;
+					case 'PostBanMessageText':
+						if (default_rules.PostBanMessageText) { delete default_rules.PostBanMessageText; } else { default_rules.PostBanMessageText = true; }
+						content = `You have ${default_rules.PostBanMessageText ? "dis" : "en"}abled the PostBanMessageText rule.`;
+						em.setDescription(content);
+						db.set(`servers.${msg.guild.id}.badwordsystem.config.defaults.config.rules`, default_rules);
+						msg.channel.send(messageperms ? em : content);
+						break;
+					default:
+						em.setColor('ORANGE');
+						content = `Sorry, **${formatText(args.join(' ') || '<No selection>')}** was not a valid selection.`;
+						em.setDescription(content);
+						msg.channel.send(messageperms ? em : content, messageperms ? attachment : null);
+						break;
+				}
+				break;
+			case 'transferfrom':
+				const bws = Buffer.from(stringify(badwordsystem), 'utf8');
+				attachment = new DiscordJS.MessageAttachment(bws, 'bws_settings.txt');
+				content = messageperms ? "I have attached the entire bad word system settings for this server." : `I do not have permission to attach the file. Here is the entire bad word system settings for this server: ${attachment.url}`;
+				em.attachFiles(attachment)
+					.setDescription(content);
+				
+				msg.channel.send(content, messageperms ? attachment : null);
+				break;
+			case 'transferto':
+				if (!member.hasPermission("ADMINISTRATOR")) {
+					content = "To prevent abuse, this command requires the Administrator permission to be run, as it replaces the ENTIRE Bad Word System settings.";
+					em.setColor('ORANGE')
+						.setDescription(content);
+					msg.channel.send(messageperms ? em : content);
+					break;
+				}
+				try {
+					file_url = msg.attachments.find(att => att.url.match(/\.txt$/)) || args.slice(1, Infinity).join(' ').match(/^((http(s)?)?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)\/\w+\.txt$/) || '';
+					if (!file_url) {
+						content = "Please either attach a file, or provide a link to the file."
+						em.setColor('ORANGE')
+							.setDescription(content);
+						msg.channel.send(messageperms ? em : content);
+						break;
+					}
+					
+					https.get(file_url, (resp) => {
+						let data = '';
+						resp.on('data', (chunk) => {
+							data += chunk;
+						})
+						resp.on('end', () => { // data is fully collected.
+							badwordsystem = parse(data);
+							db.set(`servers.${msg.guild.id}.badwordsystem`, badwordsystem);
+							
+							content = `Successfully setup the bad word system with the provided settings file.`;
+							em.setDescription(content);
+							msg.channel.send(messageperms ? em : content);
+						})
+					});
+				} catch (err) {
+					em.setColor('ORANGE'); attachment = null;
+					content = "There was an error parsing your file. Please ensure you are providing a valid file attachment or a valid link to the file.";
+					em.setDescription(content);
+					msg.channel.send(messageperms ? em : content);
+				}
+				break;
+			default:
+				em.setColor('ORANGE');
+				content = `Sorry, **${formatText(args.join(' ') || '<No selection>')}** was not a valid selection. Try running **${prefix}${command} help**`;
+				em.setDescription(content);
+				msg.channel.send(messageperms ? em : content, messageperms ? attachment : null);
+				break;
+		}
+	}
+})();

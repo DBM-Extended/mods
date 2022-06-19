@@ -1,0 +1,155 @@
+// Javascript code here. Editing this will prevent you from receiving any support.
+if (!global.CGsDBMBadWordSystemVersions) global.CGsDBMBadWordSystemVersions = {};
+global.CGsDBMBadWordSystemVersions.Filter = "2.1.1";
+(async () => {
+	const ensure = Actions.getMods().require;
+	const db = ensure('quick.db');
+	const { parse, stringify } = JSON5 = ensure('json5');
+	const isImageURL = ensure('image-url-validator'); // Invalid embed images break without it.
+	
+	function ensurePath(path, obj, def) { // def = default value (optional; defaults to empty object). Built in checking if object already exists. If it does not exist, creates the path.
+		for(let i = 0; i < path.length; i++) {
+			obj = obj[path[i]] = obj[path[i]] || ((def !== undefined && (i === path.length - 1)) ? def : {});
+		}
+	}
+	
+	function trim(str) { // Trims leading and trailing spaces from a string.
+		return str.replace(/^\s+|\s+$/gm,'');
+	}
+	
+	function formatText(str, len=1900) {
+		return trim(str).replace(/\*/g, '\\*').replace(/_/g, '\\_').slice(0, len);
+	}
+	
+	const badwordsystem = db.get(`servers.${msg.guild.id}.badwordsystem`) || {};
+	
+	const enabled = badwordsystem.status;
+	
+	// If not enabled, do nothing. DBM doesn't allow for "if (!enabled) return; w/o encasing it in this function."
+	if (!enabled) { cache.index += 1; return Actions.callNextAction(cache); }
+	
+	// This is just a starting bad word list.
+	const wordlist = (badwordsystem.badwordlist && badwordsystem.badwordlist.length !== 0) ? badwordsystem.badwordlist : [{"word":"anal"},{"word":"anus"},{"word":"arse"},{"word":"ass"},{"word":"asshole"},{"word":"ballsack"},{"word":"balls"},{"word":"bastard"},{"word":"bitch"},{"word":"blowjob"},{"word":"blow job"},{"word":"boner"},{"word":"boob"},{"word":"clit"},{"word":"clitoris"},{"word":"cock"},{"word":"coon"},{"word":"cunnilingus"},{"word":"cunt"},{"word":"damn"},{"word":"dick"},{"word":"dildo"},{"word":"dyke"},{"word":"fag"},{"word":"faggot"},{"word":"fellate"},{"word":"fellatio"},{"word":"fuck"},{"word":"goddamn"},{"word":"god damn"},{"word":"hell"},{"word":"homo"},{"word":"jizz"},{"word":"labia"},{"word":"nigga"},{"word":"nigger"},{"word":"penis"},{"word":"pube"},{"word":"pussy"},{"word":"queer"},{"word":"scrotum"},{"word":"sex"},{"word":"shit", "action":["mute"]},{"word":"slut"},{"word":"smegma"},{"word":"tit"},{"word":"twat"},{"word":"vagina"},{"word":"wank"},{"word":"whore"}];
+	
+	ensurePath(['status'], badwordsystem, false);
+	ensurePath(['config', 'defaults', 'config'], badwordsystem);
+	ensurePath(['config', 'filters', 'channels'], badwordsystem, []);
+	ensurePath(['config', 'filters', 'roles'], badwordsystem, []);
+	ensurePath(['config', 'channels', 'badwordlog'], badwordsystem);
+	ensurePath(['config', 'channels', 'actionlog'], badwordsystem);
+	ensurePath(['config', 'commands', 'disabled'], badwordsystem, []);
+	
+	const usermode = (badwordsystem.config.defaults.usermode === 'id') ? msg.author.id : (badwordsystem.config.defaults.usermode === 'tag' ? msg.author.tag : msg.author);
+	const badwordlogchannel = bot.channels.cache.get(badwordsystem.config.channels.badwordlog.channelid) || ''; // In case no channel exists anymore for the stored ChannelID.
+	const actionlogchannel = bot.channels.cache.get(badwordsystem.config.channels.actionlog.channelid) || ''; // In case no channel exists anymore for the stored ChannelID.
+	
+	const url = `https://github.com/DanTheComputerMan/javascript/tree/master/Discord%20Bot%20Maker%20(DBM)/RAW%20Data/Bad%20Words%20System`;
+	
+	const em = new DiscordJS.MessageEmbed;
+	if (badwordsystem.config.defaults.config.timestamp) em.setTimestamp(Date.now());
+	if (badwordsystem.config.defaults.config.footer) em.setFooter(badwordsystem.config.defaults.config.footer);
+	if (await isImageURL(badwordsystem.config.defaults.config.imageURL)) em.setImage(badwordsystem.config.defaults.config.imageURL);
+	if (await isImageURL(badwordsystem.config.defaults.config.thumbnailURL)) em.setThumbnail(badwordsystem.config.defaults.config.thumbnailURL);
+	
+	em.setURL(url)
+		.setColor(badwordsystem.config.defaults.config.color || 'GREEN')
+	
+	const matchstyle = badwordsystem.config.defaults.matchstyle || "matchword";
+	const default_mode = badwordsystem.config.defaults.config.mode || {operation: "standard"}; // standard, substitution, extended, and regex. Substitution is WIP.
+	const default_action = badwordsystem.config.defaults.config.action || [ "delete" ];
+	const default_rules = badwordsystem.config.defaults.config.rules || {};
+	let actions = []; const words = [];
+	let reg;
+	
+	// If not a whitelisted channel, or not by someone with a whitelisted role, proceed.
+	if (badwordsystem.config.filters.channels.indexOf(msg.channel.id) !== -1) { cache.index += 1; return Actions.callNextAction(cache); }
+	if (badwordsystem.config.filters.roles.some(id => msg.member.roles.cache.map(r => r.id).includes(id))) { cache.index += 1; return Actions.callNextAction(cache); }
+	
+	const wordsnum = wordlist.length - 1;
+	for (let i = wordsnum; i > 0; i--) { // inclusive step. Also, for-loop down to 0 is reportedly faster.
+		let mode = wordlist[i].mode || default_mode;
+		let action = wordlist[i].action || default_action;
+		
+		// If in an allowed channel, or by someone with an allowed role, skip.
+		if (wordlist[i].filters && ((wordlist[i].filters.channels && wordlist[i].filters.channels.indexOf(msg.channel.id) !== -1) || (wordlist[i].filters.roles && wordlist[i].filters.roles.some(r => msg.member.roles.cache.has(r))))) continue;
+		
+		if (mode.operation === "regex") {
+			reg = new RegExp(wordlist[i].word, mode.flags || "");
+			if (reg.test(msg.content.match)) {
+				actions = actions.concat(action);
+				words.push(wordlist[i].word);
+			}
+		} else {
+			switch (matchstyle) {
+				case "matchregex":
+					reg = new RegExp(wordlist[i].word, mode.flags || "");
+					if (reg.test(msg.content.match)) {
+						actions = actions.concat(action);
+						words.push(wordlist[i].word);
+					}
+					break;
+				case "matchany":
+				case "matchanycasingmatters":
+					reg = new RegExp(wordlist[i].word, (matchstyle === "matchany") ? 'i' : '');
+					if (mode.operation === "standard" && reg.test(msg.content)) {
+						actions = actions.concat(action);
+						words.push(wordlist[i].word);
+					} else if (mode.operation === "extended") {
+						reg = new RegExp(wordlist[i].word.replace(/\?/g, "[A-Za-z]").replace(/\#/g, "[0-9]"), (matchstyle === "matchany") ? 'i' : '');
+						if (reg.test(msg.content)) {
+							actions = actions.concat(action);
+							words.push(wordlist[i].word);
+						}
+					}
+					break;
+				case "matchword":
+				case "matchwordcasingmatters":
+					reg = new RegExp(`\\b${wordlist[i].word}\\b`, (matchstyle === "matchword") ? 'i' : '');
+					if (mode.operation === "standard" && reg.test(msg.content)) {
+						actions = actions.concat(action);
+						words.push(wordlist[i].word);
+					} else if (mode.operation === "extended") {
+						reg = new RegExp(wordlist[i].word.replace(/\?/g, "[A-Za-z]").replace(/\#/g, "[0-9]"), (matchstyle === "matchword") ? 'i' : '');
+						if (reg.test(msg.content)) {
+							actions = actions.concat(action);
+							words.push(wordlist[i].word);
+						}
+					}
+					break;
+			}
+		}
+		if (default_rules.BreakOnMatch && words.length === 1) break;
+	}
+	if (words.length === 0) { cache.index++; return Actions.callNextAction(cache); } // If there are no words caught, stop.
+	actions = [...new Set(actions)];
+	
+	// Now, perform actions. Ex: Delete the message, and mute/kick/ban the user.
+	if (actions.indexOf('delete') !== -1) {
+		msg.delete().then(m => {
+			em.setDescription(`A message by ${usermode} containing **\`${words.join("`**, **`")}\`** deleted from ${m.channel}`);
+			badwordlogchannel && badwordlogchannel.send(em).catch(() => null);
+			default_rules.PostDeleteMessage && msg.channel.send(`${usermode}'s message was deleted${default_rules.PostDeleteMessageText ? ` for typing **\`${words.join("\`**, **\`")}\`**` : ""}.`);
+		}).catch(() => null);
+	}
+	if (actions.indexOf('mute') !== -1) {
+		msg.guild.roles.fetch(badwordsystem.config.defaults.muterole).then(r => msg.member.roles.add(r)).catch(() => null).then(m => {
+			em.setDescription(`${usermode} was muted for typing a message containing **\`${words.join("`**, **`")}\`** in ${m.channel}`);
+			actionlogchannel && actionlogchannel.send(em).catch(() => null);
+			default_rules.PostMuteMessage && msg.channel.send(`${usermode} was muted${default_rules.PostMuteMessageText ? ` for typing **\`${words.join("\`**, **\`")}\`**` : ""}.`);
+		}).catch(() => null);
+	}
+	if (actions.indexOf('kick') !== -1 && msg.member.kickable) {
+		msg.author.send(`You have been kicked from the ${msg.guild.name} server for typing: **\`${words.join("`**, **`")}\`**`).catch(() => null).then(msg.member.kick()).then(m => {
+			em.setDescription(`${usermode} was kicked for typing a message containing **${words.join("**, **")}** in ${m.channel}`);
+			actionlogchannel && actionlogchannel.send(em).catch(() => null);
+			default_rules.PostKickMessage && msg.channel.send(`${usermode} was kicked${default_rules.PostKickMessageText ? ` for typing **\`${words.join("\`**, **\`")}\`**` : ""}.`);
+		}).catch(() => null);
+	}
+	if (actions.indexOf('ban') !== -1 && msg.member.bannable) {
+		msg.author.send(`You have been banned from the ${msg.guild.name} server for typing: **\`${words.join("`**, **`")}\`**`).catch(() => null).then(msg.member.ban()).then(m => {
+			em.setDescription(`${usermode} was banned for typing a message containing **${words.join("**, **")}** in ${m.channel}`);
+			actionlogchannel && actionlogchannel.send(em).catch(() => null);
+			default_rules.PostBanMessage && msg.channel.send(`${usermode} was banned${default_rules.PostBanMessageText ? ` for typing **\`${words.join("\`**, **\`")}\`**` : ""}.`);
+		}).catch(() => null);
+	}
+})();
