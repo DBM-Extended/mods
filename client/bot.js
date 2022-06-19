@@ -9,7 +9,7 @@ DBM.version = "2.1.4";
 
 const DiscordJS = (DBM.DiscordJS = require("discord.js"));
 
-const requiredDjsVersion = "13.7.0";
+const requiredDjsVersion = "13.8.0";
 if (DiscordJS.version < requiredDjsVersion) {
   console.log(
     `This version of Discord Bot Maker requires discord.js ${requiredDjsVersion}+.\nPlease use "Project > Module Manager" and "Project > Reinstall Node Modules" to update to discord.js ${requiredDjsVersion}.\n`,
@@ -1563,13 +1563,16 @@ Actions.getParameterFromParameterData = function (option) {
       case "ROLE": {
         return option.role;
       }
-      case "MENTIONABLE": {
-        return option.member ?? option.channel ?? option.role ?? option.user;
-      }
-    }
-  }
-  return null;
-};
+       case "MENTIONABLE": {
+         return option.member ?? option.channel ?? option.role ?? option.user;
+       }
+       case "ATTACHMENT": {
+         return option.attachment;
+       }
+     }
+   }
+   return null;
+ };
 
 Actions.findMemberOrUserFromName = async function (name, server) {
   if (!Bot.hasMemberIntents) {
