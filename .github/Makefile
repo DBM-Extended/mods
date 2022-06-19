@@ -1,6 +1,5 @@
 CURL=curl
 GREP=grep
-
 README_TMP=readme.html
 USER=DBM-Extended
 REPO=mods
