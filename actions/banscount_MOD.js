@@ -57,7 +57,7 @@ module.exports = {
     // This will make it so the patch version (0.0.X) is not checked.
     //---------------------------------------------------------------------
   
-    meta: { version: "2.1.4", preciseCheck: false, author: "DBMExtended", authorUrl: "https://github.com/DBM-Extended/mods", downloadUrl: "https://github.com/DBM-Extended/mods" },
+    meta: { version: "2.1.5", preciseCheck: false, author: "DBMExtended", authorUrl: "https://github.com/DBM-Extended/mods", downloadUrl: "https://github.com/DBM-Extended/mods" },
   
     //---------------------------------------------------------------------
     // Action Fields

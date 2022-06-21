@@ -2,7 +2,7 @@ module.exports = {
   name: 'Text',
   section: 'Other Stuff',
   meta: {
-    version: '2.1.4',
+    version: '2.1.5',
     preciseCheck: false,
     author: 'DBM Extended',
     authorUrl: 'https://github.com/DBM-Extended/mods',

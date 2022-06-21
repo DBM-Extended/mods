@@ -21,7 +21,7 @@ module.exports = {
     },
 
   
-    meta: { version: "2.1.4", preciseCheck: true, author: 'Gotowka', authorUrl: 'https://github.com/Gotowka/autorskieakcje/blob/main/image_slash.js', downloadUrl: 'https://github.com/Gotowka/autorskieakcje/blob/main/image_slash.js' },
+    meta: { version: "2.1.5", preciseCheck: true, author: 'Gotowka', authorUrl: 'https://github.com/Gotowka/autorskieakcje/blob/main/image_slash.js', downloadUrl: 'https://github.com/Gotowka/autorskieakcje/blob/main/image_slash.js' },
   
 
   
