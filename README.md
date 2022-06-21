@@ -82,6 +82,7 @@ All the developers who made different Mods, Packages, Tools & APIs. Specially
 - [DBM Brazil](https://github.com/DBM-Brazil/mods)
 - [DBM BlackFire](https://github.com/BLACKFIRE228/Mods)
 - [DBM Gotowka Slash](https://github.com/Gotowka/poradniki)
+- [DBM FirebaseV2](https://github.com/Snullerr/Firebase-V2)
 
 ## Disclaimers
 <p>
