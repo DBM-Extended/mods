@@ -1,11 +1,11 @@
 /******************************************************
  * Discord Bot Maker Bot
- * Version 2.1.4
+ * Version 2.1.5
  * Robert Borghese
  ******************************************************/
 
 const DBM = {};
-DBM.version = "2.1.4";
+DBM.version = "2.1.5";
 
 const DiscordJS = (DBM.DiscordJS = require("discord.js"));
 
@@ -1563,16 +1563,20 @@ Actions.getParameterFromParameterData = function (option) {
       case "ROLE": {
         return option.role;
       }
-       case "MENTIONABLE": {
-         return option.member ?? option.channel ?? option.role ?? option.user;
+      case "MENTIONABLE": {
+        return option.member ?? option.channel ?? option.role ?? option.user;
+      }
+	  case "ATTACHMENT": {
+        return option.attachment;
        }
-       case "ATTACHMENT": {
-         return option.attachment;
-       }
-     }
-   }
-   return null;
- };
+      case "ATTACHMENT_URL": {
+        return option.attachment?.url ?? "";
+      }
+      return option.value;
+    }
+  }
+  return null;
+};
 
 Actions.findMemberOrUserFromName = async function (name, server) {
   if (!Bot.hasMemberIntents) {
@@ -2614,9 +2618,16 @@ Images.getFont = function (url) {
   return this.JIMP.loadFont(Actions.getLocalFile(url));
 };
 
+Images.isImage = function(obj) {
+  if (!Images.JIMP) {
+    return false;
+  }
+  return obj instanceof Images.JIMP;
+}
+
 Images.createBuffer = function (image) {
   return new Promise((resolve, reject) => {
-    image.getBuffer(this.JIMP.MIME_PNG, function (err, buffer) {
+    image.getBuffer(this.JIMP.AUTO, function (err, buffer) {
       if (err) {
         reject(err);
       } else {
@@ -2998,8 +3009,10 @@ Audio.Subscription = class {
             await Audio.voice.entersState(this.voiceConnection, Audio.voice.VoiceConnectionStatus.Connecting, 5_000);
           } catch {
             // Probably removed from voice channel
-            this.voiceConnection.destroy();
-          }
+            if (this.voiceConnection.state.status !== Audio.voice.VoiceConnectionStatus.Destroyed) {
+              this.voiceConnection.destroy();
+            }
+         }
         } else if (this.voiceConnection.rejoinAttempts < 5) {
           await setTimeout((this.voiceConnection.rejoinAttempts + 1) * 5_000);
           this.voiceConnection.rejoin();
@@ -3196,10 +3209,19 @@ Audio.connectToVoice = function (voiceChannel) {
 
   Audio.inlineVolume ??= (Files.data.settings.mutableVolume ?? "true") === "true";
 
-  const existingSubscription = this.subscriptions.get(voiceChannel?.guild?.id);
+  var existingSubscription = this.subscriptions.get(voiceChannel?.guild?.id);
   if (existingSubscription) {
-    if (existingSubscription.voiceConnection?.joinConfig?.channelId === voiceChannel.id) {
-      return;
+
+    const status = existingSubscription.voiceConnection?.state?.status;
+    if (status === Audio.voice.VoiceConnectionStatus.Disconnected) {
+      existingSubscription.voiceConnection.destroy();
+      existingSubscription = null;
+    } else if (status === Audio.voice.VoiceConnectionStatus.Destroyed) {
+      existingSubscription = null;
+    }
+
+    if (existingSubscription?.voiceConnection?.joinConfig?.channelId === voiceChannel.id) {
+     return;
     }
   }
 
