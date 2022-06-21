@@ -16,8 +16,8 @@ module.exports = {
       "Category Name",
       "Category Server",
       "Category Position",
-      "Is the category manageable?"
-      "Is the category erasable?"
+      "Is the category manageable?",
+      "Is the category erasable?",
       "Category channel list",
       "Total channels of the category",
       "Category text channel list",
