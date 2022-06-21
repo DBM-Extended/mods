@@ -2,11 +2,11 @@ module.exports = {
   name: 'Create Server Template',
   section: 'Server Control',
     meta: {
-      version: '2.1.4',
+      version: '2.1.5',
       preciseCheck: true,
-      author: '[XinXyla - 172782058396057602]',
-      authorUrl: 'https://github.com/DBM-Brazil/mods',
-      downloadURL: 'https://github.com/DBM-Brazil/mods',
+      author: 'DBM Extended',
+      authorUrl: 'https://github.com/DBM-Extended/mods',
+      downloadURL: 'https://github.com/DBM-Extended/mods',
     },
 
   subtitle (data) {
@@ -24,28 +24,28 @@ module.exports = {
   html (isEvent, data) {
     return `
 <div>
-<server-input dropdownLabel="Servidor" selectId="server" variableContainerId="varNameContainer" variableInputId="varName"></server-input>
+<server-input dropdownLabel="Server" selectId="server" variableContainerId="varNameContainer" variableInputId="varName"></server-input>
 <br><br><br>
 <div style="float: left; width: 100%;">
-<span class="dbminputlabel">Nome do Modelo</span><br>
+<span class="dbminputlabel">Model Name</span><br>
 <input id="templatename" class="round" type="text">
 </div>
 <br><br><br>
 <div style="padding-top: 3px;">
-<span class="dbminputlabel">Descrição</span><br>
-		  <textarea id="templatedescricao" name="templatedescricao" rows="3" placeholder="Insira o texto aqui..." style="width: 99%; font-family: monospace; white-space: nowrap;"></textarea>
+<span class="dbminputlabel">Description</span><br>
+		  <textarea id="templatedescricao" name="templatedescricao" rows="3" placeholder="Enter text here..." style="width: 99%; font-family: monospace; white-space: nowrap;"></textarea>
       Máximo de 120 caracteres
 	  </div>
     <br>
 <div style="padding-top: 8px;">
   <div style="float: left; width: 35%;">
-  <span class="dbminputlabel">Armazenar em</span><br>
+  <span class="dbminputlabel">Store in</span><br>
     <select id="storage" class="round">
       ${data.variables[1]}
     </select>
   </div>
   <div id="varNameContainer" style="float: right; width: 60%;">
-  <span class="dbminputlabel">Nome da Variável</span><br>
+  <span class="dbminputlabel">Variable Name</span><br>
     <input id="varName2" class="round" type="text">
   </div>
 </div>`
@@ -62,7 +62,7 @@ module.exports = {
     const templatename = this.evalMessage(data.templatename, cache)
     const templatedescricao = this.evalMessage(data.templatedescricao, cache)
     result = targetServer.createTemplate(templatename, templatedescricao).catch((err) => {
-      console.log('Já existe um template no servidor')
+      console.log('There is already a template on the Server')
       console.error(err)
     })
 

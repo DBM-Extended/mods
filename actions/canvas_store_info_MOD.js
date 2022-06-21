@@ -1,8 +1,14 @@
 module.exports = {
 
   name: 'Store Canvas Info',
-
   section: 'Image Editing',
+  meta: {
+    version: '2.1.5',
+    preciseCheck: true,
+    author: 'DBM Extended',
+    authorUrl: 'https://github.com/DBM-Extended/mods',
+    downloadURL: 'https://github.com/DBM-Extended/mods',
+   },
 
   subtitle (data) {
     const info = ['Image Width', 'Image Height', 'Is Image Gif?', 'Average Color of Image (hex)', 'GIF Total Frame', 'GIF Delay (ms)', 'GIF Repeat Times', 'Get Image from GIF']

@@ -2,11 +2,11 @@ module.exports = {
   name: 'Fetch User',
   section: 'Member Control',
     meta: {
-      version: '2.1.4',
-      preciseCheck: false,
-      author: '[XinXyla - 172782058396057602]',
-      authorUrl: 'https://github.com/DBM-Brazil/mods',
-      downloadURL: 'https://github.com/DBM-Brazil/mods',
+      version: '2.1.5',
+      preciseCheck: true,
+      author: 'DBM Extended',
+      authorUrl: 'https://github.com/DBM-Extended/mods',
+      downloadURL: 'https://github.com/DBM-Extended/mods',
     },
 
   subtitle (data) {
@@ -23,21 +23,21 @@ module.exports = {
 
   html (isEvent, data) {
     return `
-<div> Criado por XinXyla#0001<br><br>
+<div> Created by XinXyla | Translated by DBMEx<br><br>
   <div style="padding-top: 8px;">
-    Buscar usuário - ID:<br>
+    Search user - ID:<br>
     <textarea class="round" id="User" rows="1" placeholder="" style="width: 99%; font-family: monospace; white-space: nowrap; resize: none;"></textarea>
   </div><br>
 </div>
 <div style="padding-top: 8px;">
   <div style="float: left; width: 35%;">
-  Armazenar em:<br>
+  Store in:<br>
     <select id="storage" class="round">
       ${data.variables[1]}
     </select>
   </div>
   <div id="varNameContainer" style="float: right; width: 60%;">
-    Nome da Variável:<br>
+    Variable name:<br>
     <input id="varName" class="round" type="text">
   </div>
 </div>`

@@ -3,16 +3,16 @@ module.exports = {
     name: 'Create Timestamp Discord',
     section: 'Other Stuff',
     meta: {
-      version: '2.1.4',
-      preciseCheck: false,
-      author: '[Tempest - 321400509326032897]',
-      authorUrl: 'https://github.com/DBM-Brazil/mods',
-      downloadURL: 'https://github.com/DBM-Brazil/mods',
+      version: '2.1.5',
+      preciseCheck: true,
+      author: 'DBM Extended',
+      authorUrl: 'https://github.com/DBM-Extended/mods',
+      downloadURL: 'https://github.com/DBM-Extended/mods',
     },
 
 
     subtitle: function(data) {
-      const info = ['Tempo Curto','Muito tempo','Data abreviada','Data longa','Data longa com tempo curto','Data longa com dia da semana e horário curto','Relativo'];
+      const info = ['Short time','Very long','Short date','Long date','Long date with short time','Long date with day of week and short time','Relative'];
       const prse = parseInt(data.saida);
       return `${info[prse]}`;
   },
@@ -28,30 +28,30 @@ module.exports = {
       return `
     <div>
     <span class="dbminputlabel" style="padding-top: 8px;">Data</span><br>
-    <input id="date" class="round"; style="width: 100%;" type="text" placeholder="Exemplo: \${new Date}">
+    <input id="date" class="round"; style="width: 100%;" type="text" placeholder="Example: \${new Date}">
   </div>
   <br>
   <div>
-    <span class="dbminputlabel">Saída</span><br>
+    <span class="dbminputlabel">Output</span><br>
     <select id="saida" class="round">
-    <option value="0" selecionado>Tempo curto</option>
-    <option value="1">Muito tempo</option>
-    <option value="2">Data abreviada</option>
-    <option value="3">Data longa</option>
-    <option value="4">Data longa com tempo curto</option>
-    <option value="5">Data longa com dia da semana e horário curto</option>
-    <option value="6">Relativo</option>
-    </select>
+    <option value="0" selected>Short time</option>
+     <option value="1">Too long</option>
+     <option value="2">Short date</option>
+     <option value="3">Long date</option>
+     <option value="4">Long date with short time</option>
+     <option value="5">Long date with weekday and short time</option>
+     <option value="6">Relative</option>
+     </select>
   </div>
   <br>
   <div style="float: left; width: 35%; padding-top: 8px;">
-  <span class="dbminputlabel">Armazenar em</span><br>
+  <span class="dbminputlabel">Store in</span><br>
     <select id="storage" class="round" onchange="glob.variableChange(this, 'varNameContainer')">
     ${data.variables[0]}
     </select>
   </div>
   <div id="varNameContainer" style="float: right; display: none; width: 60%; padding-top: 8px;">
-  <span class="dbminputlabel">Nome da variavel</span><br>
+  <span class="dbminputlabel">Variable name</span><br>
     <input id="varName" class="round" type="text">
   </div>`;
     },
@@ -69,8 +69,8 @@ module.exports = {
         var date = moment(Date.parse(this.evalMessage(data.date, cache)));
 
         if(isNaN(date)) {
-            console.error("Action Create Timestamp Discord: Formato de data inválido!");
-            result = "Formato de data inválido!";
+            console.error("Action Create Discord Timestamp: Invalid date format!");
+            result = "Invalid date format!";
         } else {
             date = date + "-";
             date = date.replace("000-", "");

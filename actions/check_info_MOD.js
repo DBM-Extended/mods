@@ -3,8 +3,8 @@ module.exports = {
   name: "Check Info",
   section: "Conditions",
   meta: {
-    version: '2.1.4',
-    preciseCheck: false,
+    version: '2.1.5',
+    preciseCheck: true,
     author: 'DBM Extended',
     authorUrl: 'https://github.com/DBM-Extended/mods',
     downloadURL: 'https://github.com/DBM-Extended/mods',
@@ -20,7 +20,7 @@ module.exports = {
   html(isEvent, data) {
     return `
     <span class="dbminputlabel">Information</span><br>
-<textarea id="storage" rows="5" placeholder="Enter Information here..." style="width: 99%; font-family: monospace; white-space: nowrap;"></textarea>
+<textarea id="storage" rows="5" placeholder="Enter information here..." style="width: 99%; font-family: monospace; white-space: nowrap;"></textarea>
 
 <br>
 <div style="padding-top: 8px;">

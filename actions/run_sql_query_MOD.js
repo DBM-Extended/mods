@@ -2,11 +2,11 @@ module.exports = {
   name: 'Run SQL Query',
   section: 'Other Stuff',
   meta: {
-    version: '2.1.4',
-    preciseCheck: false,
-    author: '[XinXyla - 172782058396057602]',
-    authorUrl: 'https://github.com/DBM-Brazil/mods',
-    downloadURL: 'https://github.com/DBM-Brazil/mods',
+    version: '2.1.5',
+    preciseCheck: true,
+    author: 'DBM Extended',
+    authorUrl: 'https://github.com/DBM-Extended/mods',
+    downloadURL: 'https://github.com/DBM-Extended/mods',
     },
 
   variableStorage (data, varType) {
@@ -45,21 +45,21 @@ module.exports = {
   <div id="wrexdiv" style="height: 370px; overflow-y: scroll;padding:0px 10px">
     <div id="getSource"><br />
      <div style="float: left; width: 35%;">
-    <span class="dbminputlabel">Fonte de Conexão</span><br />
+    <span class="dbminputlabel">Connection Source</span><br />
       <select id="source_conn_storage" class="round" onchange="glob.variableChange(this, 'varNameContainer2')">
         ${data.variables[0]}
       </select><br />
     </div>
     <div id="varNameContainer2" style="display: ; float: right; width: 60%;">
-    <span class="dbminputlabel">Nome da variável</span><br />
+    <span class="dbminputlabel">Variable Name</span><br />
       <input id="source_conn_varName" class="round" type="text" />
     </div><br /><br />
   </div><br /><br />
   <div style="margin-left: 5px;" class="ui toggle checkbox">
     <input type="checkbox" name="public" id="toggleAuth" onclick='document.getElementById("authSection").style.display = this.checked ? "" : "none";' />
-    <label><font color="white">Mostrar opções de conexão</font></label>
-    Mostrar / ocultar opções de conexão.<br />
-    Será desativado se a conexão acima for selecionada
+    <label><font color="white">Show connection options</font></label>
+    Show / hide connection options.<br />
+    Will be disabled if the above connection is selected
   </div>
   <div id="authSection" style="display: none;"><br />
     <div class="ui inverted column stackable center">
@@ -117,53 +117,53 @@ module.exports = {
       </div>
       <div><span class="dbminputlabel">JSON Path</span> 
       <input id="path" class="round"; style="width: 100%;" type="text"></div><br>
-      Deixe em branco para armazenar tudo<br /> Oferece suporte ao uso do caminho JSON<br>
-      Mais informações aqui  <u><span class="wrexlink" data-url="http://goessner.net/articles/JsonPath/index.html#e2">JSON Path</span></u><br /><br />
+      Deixe em branco para armazenar tudo<br /> Supports use of the JSON path<br>
+      More information here  <u><span class="wrexlink" data-url="http://goessner.net/articles/JsonPath/index.html#e2">JSON Path</span></u><br /><br />
       <div style="float: left; width: 35%;">
-      <span class="dbminputlabel">Resultados em</span><br />
+      <span class="dbminputlabel">Results in</span><br />
         <select id="storage" class="round" onchange="glob.variableChange(this, 'varNameContainer')">
           ${data.variables[0]}
         </select>
       </div>
       <div id="varNameContainer" style="display: ; float: right; width: 60%;">
-      <span class="dbminputlabel">Nome da variável</span><br />
+      <span class="dbminputlabel">Variable Name</span><br />
         <input id="varName" class="round" type="text" /><br />
       </div><br><br><br>
       <div id="storeSource"><br />
       
         <div style="float: left; width: 35%;">
-        <span class="dbminputlabel">Conexão armazenada</span><br />
+        <span class="dbminputlabel">Stored connection</span><br />
           <select id="store_source_conn_storage" class="round" onchange="glob.variableChange(this, 'varNameContainer3')">
             ${data.variables[0]}
           </select>
         </div>
         <div id="varNameContainer3" style="display: ; float: right; width: 60%;">
-        <span class="dbminputlabel">Nome da variável</span><br />
+        <span class="dbminputlabel">Variable Name</span><br />
           <input id="store_source_conn_varName" class="round" type="text" />
         </div>
-      </div><br /><br /><br /><br />Armazene a conexão em uma variável para salvar as conexões com o banco de dados.<br>
-      Não usado se a conexão de origem estiver definida<br /><br /><br />
+      </div><br /><br /><br /><br />Store the connection in a variable to save the database connections.<br>
+      Not used if source connection is set<br /><br /><br />
       <div style="float: left; width: 100%;">
-      <span class="dbminputlabel">Modo de depuração</span><br />
+      <span class="dbminputlabel">Debug Mode</span><br />
         <select id="debugMode" class="round">
-          <option value="1">Habilitado</option>
-          <option value="0" selected="selected">Desabilitado</option>
+          <option value="1">Enabled</option>
+          <option value="0" selected="selected">Disabled</option>
         </select>
-      </div><br /><div style="width:100%">Ative para ver a impressão detalhada no console do bot</div><br /><br />
+      </div><br /><div style="width:100%">Turn on to see the detailed printout in the bot console</div><br /><br />
       <div style="float: left; width: 100%;">
-      <span class="dbminputlabel">Restringir saída</span>
+      <span class="dbminputlabel">Restrict output</span>
       <select id="stringifyOutput" class="round">
-        <option value="1">Habilitado</option>
-        <option value="0" selected="selected">Desabilitado</option>
+        <option value="1">Enabled</option>
+        <option value="0" selected="selected">Disabled</option>
       </select>
       </div>
       <br /><br />
-      Restringe os resultados no chat<br />
-    Habilite isto para não mostrar [Object object] no chat
-    Deve ser desativado para verificar as condições.<br /><br />
+      Restrict results in chat<br />
+     Enable this to not show [Object object] in chat
+     Must be deactivated to verify conditions.<br /><br />
       <div>
       <p>
-      Com este mod, você pode executar consultas SQL usando MySQL, MsSQL, postgres e SQLite.
+      With this mod, you can execute SQL queries using MySQL, MsSQL, postgres and SQLite.
       </p>
       <p>
         <u><span class="wrexlink" data-url="https://www.w3schools.com/sql/">W3 Schools SQL Tutorial</span></u> / <u><span class="wrexlink" data-url="https://tutorialzine.com/2016/01/learn-sql-in-20-minutes">Aprenda SQL em 20 minutos</span></u><br />
@@ -252,7 +252,7 @@ module.exports = {
         const options = {
           host: hostname || 'localhost',
           port: port || '3311',
-          dialect: getType(type) || 'sqlite',
+          daylect: getType(type) || 'sqlite',
           operatorsAliases: false,
           pool: {
             max: 5,
@@ -294,7 +294,7 @@ module.exports = {
          if (url) {
            wrexlink.setAttribute('title', url);
            wrexlink.addEventListener('click', (e) => {
-             e.stopImmediatePropagation();
+             e.stopImmedaytePropagation();
              console.log(`Launching URL: [${url}] in your default browser.`);
              require('child_process').execSync(`start ${url}`);
            });
@@ -373,7 +373,7 @@ module.exports = {
       const options = {
         host: hostname || 'localhost',
         port: port || '3311',
-        dialect: getType(type) || 'sqlite',
+        daylect: getType(type) || 'sqlite',
         pool: {
           max: 5,
           min: 0,
@@ -393,7 +393,7 @@ module.exports = {
         const storedConnection = this.getVariable(sourceConnStorage, sourceConnVarName, cache)
         sequelize = storedConnection && storedConnection.sequelize
         if (sequelize) {
-          if (DEBUG) console.log(`Conexão armazenanda para host '${storedConnection.hostname}:${storedConnection.port}', usando banco de dados '${storedConnection.database}'`)
+          if (DEBUG) console.log(`Using stored Connection for host '${storedConnection.hostname}:${storedConnection.port}', using database '${storedConnection.database}'`)
         } else {
           sequelize = new Sequelize(database || 'database', username || 'username', password || 'password', options)
         }
@@ -405,7 +405,7 @@ module.exports = {
         if (storeSourceConnStorage > 0 && storeSourceConnVarName && sourceConnStorage === 0) {
           if (sequelize) {
             const storedConnection = { hostname, port, database, sequelize }
-            if (DEBUG) console.log(`Conexão armazenanda para host '${storedConnection.hostname}:${storedConnection.port}' usando banco de dados '${storedConnection.database}'`)
+            if (DEBUG) console.log(`Storing connection for host '${storedConnection.hostname}:${storedConnection.port}' using database '${storedConnection.database}'`)
             this.storeValue(storedConnection, storeSourceConnStorage, storeSourceConnVarName, cache)
           }
         }
@@ -420,7 +420,7 @@ module.exports = {
               if (jsonOut === false) jsonOut = Mods.jsonPath(results, ('$.[0].').concat(path))
               if (jsonOut) {
                 if (jsonOut.length === 0) jsonOut = jsonOut[0]
-                if (DEBUG) console.log(`Run SQL Query: valores de dados JSON começando em [${path}] armazenados em [${varName}]`)
+                if (DEBUG) console.log(`Run SQL Query: JSON Data values starting from [${path}] stored to: [${varName}]`)
                 if (DEBUG) console.dir(jsonOut)
               }
             }
@@ -433,12 +433,19 @@ module.exports = {
               console.log('\r\nAnexe a chave com a qual deseja armazenar esse valor à variável.')
               const storageType = ['', 'tempVars', 'serverVars', 'globalVars']
               const output = storageType[storage]
-              console.log('Se não estiver usando a caixa de texto Path no mod, veja como obter valores especiais.')
-              console.log(`Example \${${output}("${varName}")} to \${${output}("${varName}")[0]["${Object.keys(results[0])[0]}"]}`)
-              console.log(`Example Run Script ${output}("${varName}")["${Object.keys(results[0])[0]}"] or a place without \${}.\r\n`)
-              console.log('Anexe o caminho ao final após a chave ou use o mod Parse From Stored JSON, \n para obter o valor que você deseja')
-              console.log(`Exemplo \${${output}("${varName}")[key].path} ou use a caixa de caminho json na interface do usuário do mod.`)
-            }
+              console.log('If not using the Path textbox in the mod, this is how to get special values.')
+              console.log(`Example \${${output}("${varName}")} to \${${output}("${varName}")[0]["${
+                      Object.keys(results[0])[0]
+                    }"]}`)
+                    `Example Run Script ${output}("${varName}")["${
+                      Object.keys(results[0])[0]
+                    }"] or a place without \${}.\r\n`,
+                  );
+                  console.log(
+                    'Append the path to the end after the key or use the Parse From Stored JSON mod,\nin order to get the value you want',
+                  );
+                  console.log(`Example \${${output}("${varName}")[key].path} or use the json path box in the mod UI.`);
+                }
             const out = jsonOut || results
             this.storeValue(stringifyOutput ? JSON.stringify(out) : out, storage, varName, cache)
             this.callNextAction(cache)
@@ -453,11 +460,11 @@ module.exports = {
           this.callNextAction(cache)
         }
       }).catch((err) => {
-        console.log('Não foi possível conectar ao banco de dados')
+        console.log('Unable to connect to the database:');
         console.error(err)
       })
     } catch (error) {
-      console.log(`SQL Mod Error: ${error.stack ? error.stack : error}`)
+      console.log(`SQL Mod error: ${error.stack ? error.stack : error}`);
     }
   },
 

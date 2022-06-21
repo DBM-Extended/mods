@@ -1,10 +1,10 @@
 
   module.exports = {
-      // Название
+
       name: 'HTML to Image',
-      // Группа
+
       section: 'Other Stuff',
-      // Поля
+
       fields: [
           "html",
           "storage",
@@ -14,27 +14,26 @@
           "varName"
       ],
     
-      // Мета данные (useless)
       meta: {
-        version: '3.0.0',
-        preciseCheck: false,
+        version: '2.1.5',
+        preciseCheck: true,
         author: 'DBM Extended',
         authorUrl: 'https://github.com/DBM-Extended/mods',
         downloadURL: 'https://github.com/DBM-Extended/mods/blob/main/actions/control_custom_data.js',
       },
     
-      // субтайтлы
+
       subtitle(data) {
         return `Create image in <b>${data.url}</b>` 
       },
     
-      // Переменные (useless)
+
       variableStorage(data, varType) {
           if (parseInt(data.storage, 10) !== varType) return;
           return [data.varName, 'Image'];
       },
     
-      // HTML - внешний вид
+
       html(data, isEvent) {
         return `
           <span class="dbminputlabel">HTML</span><br>
@@ -52,10 +51,10 @@
           `;
       },
   
-      // Инит (useless)
+
       async init() {},
     
-      // Действие
+
     async action(cache) {
         const data = cache.actions[cache.index];
         const html = this.evalMessage(data.html, cache)
@@ -90,6 +89,6 @@
         this.callNextAction(cache)
     },
     
-      // (useless)
+
       mod() {},
     };

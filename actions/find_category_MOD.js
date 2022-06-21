@@ -2,11 +2,11 @@ module.exports = {
   name: 'Find Category',
   section: 'Channel Control',
   meta: {
-    version: '2.1.4',
-    preciseCheck: false,
-    author: '[XinXyla - 172782058396057602]',
-    authorUrl: 'https://github.com/DBM-Brazil/mods',
-    downloadURL: 'https://github.com/DBM-Brazil/mods',
+    version: '2.1.5',
+    preciseCheck: true,
+    author: 'DBM Extended',
+    authorUrl: 'https://github.com/DBM-Extended/mods',
+    downloadURL: 'https://github.com/DBM-Extended/mods',
   },
 
   subtitle(data) {
@@ -25,26 +25,26 @@ module.exports = {
     return `
 <div>
   <div style="float: left; width: 40%;">
-  <span class="dbminputlabel">Origem</span><br>
+  <span class="dbminputlabel">Source</span><br>
     <select id="info" class="round">
-      <option value="0" selected>ID da Categoria</option>
-      <option value="1">Nome da Categoria</option>
+      <option value="0" selected>Category ID</option>
+      <option value="1">Category Name</option>
     </select>
   </div>
   <div style="float: right; width: 55%;">
-  <span class="dbminputlabel">Buscar</span><br>
+  <span class="dbminputlabel">Search</span><br>
     <input id="find" class="round" type="text">
   </div>
 </div><br><br><br>
 <div style="padding-top: 8px;">
   <div style="float: left; width: 35%;">
-  <span class="dbminputlabel">Armazenar em</span><br>
+  <span class="dbminputlabel">Store in</span><br>
     <select id="storage" class="round">
       ${data.variables[1]}
     </select>
   </div>
   <div id="varNameContainer" style="float: right; width: 60%;">
-  <span class="dbminputlabel">Nome da variavel</span><br>
+  <span class="dbminputlabel">Variable name</span><br>
     <input id="varName" class="round" type="text">
   </div>
 </div><br><br><br>

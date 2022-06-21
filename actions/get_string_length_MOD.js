@@ -4,11 +4,11 @@ module.exports = {
 name: "Get String Length",
 section: "Other Stuff",
 meta: {
-	version: '2.1.4',
-	preciseCheck: false,
-	author: '[XinXyla - 172782058396057602]',
-	authorUrl: 'https://github.com/DBM-Brazil/mods',
-	downloadURL: 'https://github.com/DBM-Brazil/mods',
+	version: '2.1.5',
+	preciseCheck: true,
+	author: 'DBM Extended',
+	authorUrl: 'https://github.com/DBM-Extended/mods',
+	downloadURL: 'https://github.com/DBM-Extended/mods',
   },
 
 
@@ -35,7 +35,7 @@ html: function(isEvent, data) {
     <br>
 
 	<div>
-		Texto:<br>
+		Text:<br>
 		<textarea id="girdi" class="round" rows="5" cols="60"></textarea>
 	</div>
 
@@ -43,13 +43,13 @@ html: function(isEvent, data) {
 
     <div>
 		<div style="float: left; width: 35%;">
-			Armazenar em:<br>
+			Store in:<br>
 			<select id="storage" class="round">
 				${data.variables[1]}
 			</select>
 		</div>
 		<div id="varNameContainer" style="float: right; width: 60%;">
-			Nome da Variavel:<br>
+			Variable name:<br>
 			<input id="varName" class="round" type="text">
 		</div>
 	 </div>

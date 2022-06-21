@@ -4,36 +4,36 @@ module.exports = {
   name: "Store Role Info",
   section: "Role Control",
   meta: {
-    version: '2.1.4',
-    preciseCheck: false,
-    author: '[XinXyla - 172782058396057602]',
-    authorUrl: 'https://github.com/DBM-Brazil/mods',
-    downloadURL: 'https://github.com/DBM-Brazil/mods',
-    },
+    version: '2.1.5',
+    preciseCheck: true,
+    author: 'DBM Extended',
+    authorUrl: 'https://github.com/DBM-Extended/mods',
+    downloadURL: 'https://github.com/DBM-Extended/mods',
+   },
 
   subtitle(data, presets) {
     const info = [
       "Role Object",
-      "ID do Cargo",
-      "Nome do Cargo",
-      "Cor do Cargo",
-      "Posição do Cargo",
-      "Timestamp de criação do Cargo",
-      "O Cargo é mencionavel?",
-      "O Cargo é separado dos outros",
-      "O Cargo é gerenciavel",
-      "Lista de membros do Cargo",
-      "Data da criação do Cargo",
-      "Lista de permissões do Cargo",
-      "Quantidade de Membros do Cargo",
-      "Icone do Cargo",
-      "Tag do Cargo",
-      "Servidor do Cargo",
-      "ID do Servidor do Cargo",
-      "O Cargo e editavel?",
-      "Lista de IDs de membros do Cargo",
+      "Role ID",
+      "Position Name",
+      "Position Color",
+      "Position of Position",
+      "Timestamp of Job creation",
+      "Is the Position mentionable?",
+      "Is the job separate from the others?",
+      "Is the Role manageable",
+      "The Role's member list",
+      "Role creation date",
+      "Role's permission list",
+      "Number of members of the Role",
+      "Role Icon",
+      "Position Tag",
+      "Position Server",
+      "Position's Server ID",
+      "Is the Position editable?",
+      "List of member IDs of the Position",
     ];
-    return `${presets.getRoleText(data.role, data.varName)} - ${info[parseInt(data.info, 10)]} para (${data.varName2})`;
+    return `${presets.getRoleText(data.role, data.varName)} - ${info[parseInt(data.info, 10)]} to (${data.varName2})`;
   },
 
   variableStorage(data, varType) {
@@ -105,48 +105,48 @@ module.exports = {
 
   html(isEvent, data) {
     return `
-<role-input dropdownLabel="Função de origem" selectId="role" variableContainerId="varNameContainer" variableInputId="varName"></role-input>
+<role-input dropdownLabel="Source function" selectId="role" variableContainerId="varNameContainer" variableInputId="varName"></role-input>
 
 <br><br><br>
 
 <div style="padding-top: 8px;">
-	<span class="dbminputlabel">Informações de origem</span><br>
+	<span class="dbminputlabel">Source Information</span><br>
 	<select id="info" class="round">
-    <optgroup label="Informações do Cargo">
-		<option value="0" selected>Cargo - Objeto</option>
-		<option value="1">ID do Cargo</option>
-		<option value="2">Nome do Cargo</option>
-		<option value="3">Cor do Cargo</option>
-		<option value="4">Posição do Cargo</option>
-    <option value="14">Tag do Cargo</option>
-    <option value="13">Icone do Cargo</option>
-    <option value="12">Quantidade de Membros do Cargo</option>
+	<optgroup label="Position Information">
+	 <option value="0" selected>Position - Object</option>
+	 <option value="1">Job ID</option>
+	 <option value="2">Job Name</option>
+	 <option value="3">Position Color</option>
+	 <option value="4">Position Position</option>
+     <option value="14">Position Tag</option>
+     <option value="13">Position Icon</option>
+     <option value="12">Position Membership Number</option>
     </optgroup>
-    <optgroup label="Condições do Cargo">
-		<option value="6">O Cargo é mencionavel?</option>
-		<option value="17">O Cargo e editavel?</option>
-    <option value="7">O Cargo é separado dos outros?</option>
-    <option value="8">O Cargo é gerenciado pelo bot/integração?</option>
-    </optgroup>
-    <optgroup label="Datas do Cargo">
-		<option value="5">Timestamp de criação do Cargo</option>
-    <option value="10">Data da criação do Cargo</option>
-    </optgroup>
-    <optgroup label="Informações do Cargo">
-    <option value="15">Servidor do Cargo</option>
-    <option value="16">ID do Servidor do Cargo</option>
-    </optgroup>
-    <optgroup label="Informações do Cargo em Listas">
-    <option value="9">Lista de membros do Cargo</option>
-    <option value="18">Lista de IDs de membros do Cargo</option>
-    <option value="11">Lista de permissões do Cargo</option>
+    <optgroup label="Position Conditions">
+<option value="6">Is the title mentionable?</option>
+<option value="17">Is the title editable?</option>
+     <option value="7">Is the Position separate from others?</option>
+     <option value="8">Is the role managed by the bot/integration?</option>
+     </optgroup>
+     <optgroup label="Position Dates">
+<option value="5">Position creation timestamp</option>
+     <option value="10">Position creation date</option>
+     </optgroup>
+     <optgroup label="Position Information">
+     <option value="15">Position Server</option>
+     <option value="16">Position Server ID</option>
+     </optgroup>
+     <optgroup label="Position Information in Lists">
+     <option value="9">Position Member List</option>
+     <option value="18">Position Member ID List</option>
+     <option value="11">Position Whitelist</option>
     </optgroup>
 	</select>
 </div>
 
 <br>
 
-<store-in-variable dropdownLabel="Armazenar em" selectId="storage" variableContainerId="varNameContainer2" variableInputId="varName2"></store-in-variable>`;
+<store-in-variable dropdownLabel="Store in" selectId="storage" variableContainerId="varNameContainer2" variableInputId="varName2"></store-in-variable>`;
   },
 
 

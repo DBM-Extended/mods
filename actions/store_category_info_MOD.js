@@ -2,30 +2,30 @@ module.exports = {
   name: 'Store Category Info',
   section: 'Channel Control',
   meta: {
-    version: '2.1.4',
-    preciseCheck: false,
-    author: '[XinXyla - 172782058396057602]',
-    authorUrl: 'https://github.com/DBM-Brazil/mods',
-    downloadURL: 'https://github.com/DBM-Brazil/mods',
+    version: '2.1.5',
+    preciseCheck: true,
+    author: 'DBM Extended',
+    authorUrl: 'https://github.com/DBM-Extended/mods',
+    downloadURL: 'https://github.com/DBM-Extended/mods',
     },
 
   subtitle(data) {
     const categories = ['You cheater!', 'Temp Variable', 'Server Variable', 'Global Variable'];
     const info = [
-      "ID da Categoria",
-      "Nome da Categoria",
-      "Servidor da Categoria",
-      "Posição da Categoria",
-      "A categoria é gerenciável?",
-      "A categoria é apagável?",
-      "Lista de canais da categoria",
-      "Total de canais da categoria",
-      "Lista de canais de texto da categoria",
-      "Total de canais de texto da categoria",
-      "Lista de canais de voz da categoria",
-      "Total de canais de voz da categoria",
-      "Lista de canais de palco da categoria",
-      "Total de canais de palco da categoria",
+      "Category ID",
+      "Category Name",
+      "Category Server",
+      "Category Position",
+      "Is the category manageable?"
+      "Is the category erasable?"
+      "Category channel list",
+      "Total channels of the category",
+      "Category text channel list",
+      "Total text channels of the category",
+      "Category voice channel list",
+      "Total category voice channels",
+      "Category stage channel list",
+      "Total category stage channels",
     ];
     return `${categories[parseInt(data.category, 10)]} - ${info[parseInt(data.info, 10)]}`;
   },
@@ -90,49 +90,47 @@ module.exports = {
     return `
 <div>
   <div style="float: left; width: 35%;">
-  <span class="dbminputlabel">Categoria de origem</span><br>
+  <span class="dbminputlabel">Source category</span><br>
     <select id="category" class="round" onchange="glob.refreshVariableList(this)">
       ${data.variables[1]}
     </select>
   </div>
   <div id="varNameContainer" style="float: right; width: 60%;">
-  <span class="dbminputlabel">Nome da variavel</span><br>
+  <span class="dbminputlabel">Variable name</span><br>
     <input id="varName" class="round" type="text" list="variableList"><br>
   </div>
 </div><br><br><br>
 <div>
   <div style="padding-top: 8px; width: 70%;">
-  <span class="dbminputlabel">Informações de origem</span><br>
+  <span class="dbminputlabel">Source Information</span><br>
     <select id="info" class="round">
-      <optgroup label="Principal">
-      <option value="0">ID da Categoria</option>
-      <option value="1">Nome da Categoria</option>
-      <option value="2">Servidor da Categoria</option>
-      <option value="3">Posição da Categoria</option>
-      <option value="4">A categoria é gerenciável?</option>
-      <option value="5">A categoria é apagável?</option>
+      <optgroup label="Main">
+      <option value="2">Category Server</option>
+      <option value="3">Category Position</option>
+      <option value="4">Is the category manageable?</option>
+      <option value="5">Is the category erasable?</option>
       </optgroup>
-      <optgroup label="Informações">
-      <option value="6">Lista de canais da categoria</option>
-      <option value="7">Total de canais da categoria</option>
-      <option value="8">Lista de canais de texto da categoria</option>
-      <option value="9">Total de canais de texto da categoria</option>
-      <option value="10">Lista de canais de voz da categoria</option>
-      <option value="11">Total de canais de voz da categoria</option>
-      <option value="12">Lista de canais de palco da categoria</option>
-      <option value="13">Total de canais de palco da categoria</option>
+      <optgroup label="Information">
+      <option value="6">List of channels in the category</option>
+      <option value="7">Total channels in the category</option>
+      <option value="8">List of text channels in the category</option>
+      <option value="9">Total category text channels</option>
+      <option value="10">List of category voice channels</option>
+      <option value="11">Total category voice channels</option>
+      <option value="12">List of category stage channels</option>
+      <option value="13">Total category stage channels</option>
     </select>
   </div>
 </div><br>
 <div>
   <div style="float: left; width: 35%;">
-  <span class="dbminputlabel">Armazenar em</span><br>
+  <span class="dbminputlabel">Store in</span><br>
     <select id="storage" class="round">
       ${data.variables[1]}
     </select>
   </div>
   <div id="varNameContainer2" style="float: right; width: 60%;">
-  <span class="dbminputlabel">Nome da variavel</span><br>
+  <span class="dbminputlabel">Variable name</span><br>
     <input id="varName2" class="round" type="text"><br>
   </div>
 </div>

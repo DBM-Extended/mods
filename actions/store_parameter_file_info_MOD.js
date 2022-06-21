@@ -2,23 +2,23 @@ module.exports = {
   name: "Store Parameter File Info",
   section: 'Other Stuff',
   meta: {
-    version: '2.1.4',
+    version: '2.1.5',
     preciseCheck: true,
-    author: '[XinXyla - 172782058396057602]',
-    authorUrl: 'https://github.com/DBM-Brazil/mods',
-    downloadURL: 'https://github.com/DBM-Brazil/mods',
+    author: 'DBM Extended',
+    authorUrl: 'https://github.com/DBM-Extended/mods',
+    downloadURL: 'https://github.com/DBM-Extended/mods',
   },
 
   subtitle(data, presets) {
     const info = [
-      "Objeto do Arquivo",
-      "ID do Arquivo",
-      "URL do arquivo",
-      "Nome do arquivo",
-      "Tamanho do arquivo",
-      "Tipo de arquivo",
-      "Largura da imagem",
-      "Altura da imagem",
+      "File Object",
+      "File ID",
+      "File URL",
+      "File Name",
+      "File Size",
+      "File Type",
+      "Image Width",
+      "Image height",
     ];
     return `${info[parseInt(data.info, 10)]}`;
   },
@@ -39,35 +39,34 @@ module.exports = {
     return `
     <div>
     <div style="float: left; width: 100%;">
-        <span class="dbminputlabel">Nome do parâmetro</span><br>
+        <span class="dbminputlabel">Parameter name</span><br>
         <input id="parametro" class="round" type="text">
     </div>
 </div>
 <br><br><br>
-
 <div style="padding-top: 8px;">
-	<span class="dbminputlabel">Informação</span><br>
+	<span class="dbminputlabel">Information</span><br>
 	<select id="info" class="round">
-  <option value="0" selected>Objeto do Arquivo</option>
-  <option value="1">ID do Arquivo</option>
-  <option value="2">URL do arquivo</option>
-  <option value="3">Nome do arquivo</option>
-  <option value="4">Tamanho do arquivo</option>
-	<option value="5">Tipo de arquivo</option>
-  <option value="6">Largura da imagem [Pixel]</option>
-  <option value="7">Altura da imagem [Pixel]</option>
+  <option value="0" selected>File Object</option>
+  <option value="1">File ID</option>
+  <option value="2">File URL</option>
+  <option value="3">File Name</option>
+  <option value="4">File Size</option>
+	<option value="5">File Type</option>
+  <option value="6">Image Width [Pixel]</option>
+  <option value="7">Image Height [Pixel]</option>
 	</select>
 </div>
 
 <br>
 <div style="float: left; width: 35%; padding-top: 8px;">
-<span class="dbminputlabel">Resultado em</span><br>
+<span class="dbminputlabel">Result in</span><br>
 		<select id="storage" class="round" onchange="glob.variableChange(this, 'varNameContainer')">
 		${data.variables[0]}
 		</select>
 	</div>
 	<div id="varNameContainer" style="float: right; display: none; width: 60%; padding-top: 8px;">
-  <span class="dbminputlabel">Nome da Variável</span><br>
+  <span class="dbminputlabel">Variable Name</span><br>
 		<input id="varName2" class="round" type="text">
 	</div>`;
   },

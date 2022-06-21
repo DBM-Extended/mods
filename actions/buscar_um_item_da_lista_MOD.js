@@ -1,12 +1,12 @@
 module.exports = {
-  name: 'Buscar um item da lista',
+  name: 'Search a list item',
   section: 'Lists and Loops',
   meta: {
-    version: '2.1.4',
-    preciseCheck: false,
-    author: '[XinXyla - 172782058396057602]',
-    authorUrl: 'https://github.com/DBM-Brazil/mods',
-    downloadURL: 'https://github.com/DBM-Brazil/mods',
+    version: '2.1.5',
+    preciseCheck: true,
+    author: 'DBM Extended',
+    authorUrl: 'https://github.com/DBM-Extended/mods',
+    downloadURL: 'https://github.com/DBM-Extended/mods',
   },
 
   subtitle(data) {
@@ -22,66 +22,66 @@ module.exports = {
       'Server Variable',
       'Global Variable',
     ];
-    const info = ['exatamente igual a', 'inclua', 'matches regex','menor que', 'menor ou igual a', 'maior que', 'maior ou igual a', 'comprimento maior que', 'comprimento menor que', 'comprimento igual a', 'começa com', 'termina com'];
-     return `Buscar ${info[parseInt(data.buscadoxin)]} "${data.item}" em "${data.varName}"`;
+    const info = ['exactly equal to', 'include', 'matches regex', 'less than', 'less than or equal to', 'greater than', 'greater than or equal to', 'length greater than', 'length less than', 'length equal to', 'begins with', 'ends with'];
+	return `Search ${info[parseInt(data.fetchedxin)]} "${data.item}" in "${data.varName}"`;
   },
 
   variableStorage(data, varType) {
-    const prse2 = parseInt(data.buscadoxin);
+    const prse2 = parseInt(data.fetchedxin);
     if (parseInt(data.storage, 10) !== varType) return;
     return [data.varName2, 'Number'[prse2]];
   },
 
-  fields: ['list', 'varName', 'buscadoxin', 'item', 'storage', 'varName2'],
+  fields: ['list', 'varName', 'fetchedxin', 'item', 'storage', 'varName2'],
 
   html(isEvent, data) {
     return `
 <div style="float: left; width: 35%;">
-<span class="dbminputlabel">Fonte da lista:</span><br>
+<span class="dbminputlabel">List source:</span><br>
   <select id="list" class="round" onchange="glob.listChange(this, 'varNameContainer')">
     ${data.lists[isEvent ? 1 : 0]}
   </select>
 </div>
 <div id="varNameContainer" style="display: none; float: right; width: 60%;">
-<span class="dbminputlabel">Nome da variavel:</span><br>
+<span class="dbminputlabel">Variable name:</span><br>
   <input id="varName" class="round" type="text" list="variableList"><br>
 </div>
 </div><br><br><br>
 <div style="padding-top: 8px; width: 100%;">
-<span class="dbminputlabel">Buscar:</span><br>
-			<select id="buscadoxin" class="round">
-				<option value="0" selected>Exatamente igual a</option>
-				<option value="1">Que inclua</option>
-        <option value="2">Matches Regex</option>
-        <option value="7">O comprimento é maior que</option>
-        <option value="8">O comprimento é menor que</option>
-        <option value="9">O comprimento e igual a</option>
-        <option value="10">Começa com</option>
-        <option value="11">Termina com</option>
-        <option value="3">Menor que [Requer somente números na lista]</option>
-        <option value="4">Menor ou igual a [Requer somente números na lista]</option>
-        <option value="5">Maior que [Requer somente números na lista]</option>
-        <option value="6">Maior ou igual a [Requer somente números na lista]</option>
+<span class="dbminputlabel">Search:</span><br>
+		   <select id="fetchedxin" class="round">
+		 <option value="0" selected>Exactly equal to</option>
+		 <option value="1">That includes</option>
+         <option value="2">Matches Regex</option>
+         <option value="7">Length is greater than</option>
+         <option value="8">Length is less than</option>
+         <option value="9">Length is equal to</option>
+         <option value="10">Starts with</option>
+         <option value="11">Ends with</option>
+         <option value="3">Less than [Requires only numbers in list]</option>
+         <option value="4">Less than or equal to [Requires only numbers in list]</option>
+         <option value="5">Greater than [Requires only numbers in list]</option>
+         <option value="6">Greater than or equal to [Requires only numbers in list]</option>
 			</select>
 		</div>
 <div style="padding-top: 8px;">
-    <textarea id="item" rows="4" placeholder="Insira uma variável ou algum texto. Esses '' não são necessários!" style="width: 100%; font-family: monospace; white-space: nowrap;"></textarea>
+    <textarea id="item" rows="4" placeholder="Enter a variable or some text. Those '' are not necessary!" style="width: 100%; font-family: monospace; white-space: nowrap;"></textarea>
 </div><br>
 <div style="padding-top: 8px;">
   <div style="float: left; width: 35%;">
-  <span class="dbminputlabel">Armazenar em:</span><br>
+  <span class="dbminputlabel">Store in:</span><br>
     <select id="storage" class="round">
       ${data.variables[1]}
     </select>
   </div>
   <div id="varNameContainer2" style="float: right; width: 60%;">
-  <span class="dbminputlabel">Nome da variavel:</span><br>
+  <span class="dbminputlabel">Variable name:</span><br>
     <input id="varName2" class="round" type="text">
   </div>
 </div><br><br><br>
-<div><p>Esta ação procura um item em uma lista e retorna a posição.<br>
-Observe que toda lista em JavaScript começa em 0<br>
-Caso não encontre retornará sempre -1</p></div>`;
+<div><p>This action searches for an item in a list and returns the position.<br>
+Note that every list in JavaScript starts at 0<br>
+If not found, it will always return -1</p></div>`;
   },
 
   init() {
@@ -105,12 +105,12 @@ Caso não encontre retornará sempre -1</p></div>`;
     const storage = parseInt(data.list, 10);
     const varName = this.evalMessage(data.varName, cache);
     const list = await this.getList(storage, varName, cache);
-    const buscadoxin = parseInt(data.buscadoxin);
+    const fetchedxin = parseInt(data.fetchedxin);
     const item = this.evalMessage(data.item, cache);
 
     let result;
     
-		switch (buscadoxin) {
+		switch (fetchedxin) {
 			case 0:
 				result = list.findIndex((i) => i === item);
 				break;

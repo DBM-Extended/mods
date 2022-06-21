@@ -33,7 +33,9 @@ module.exports = {
       text = `${data.buttons.length} Buttons and ${data.selectMenus.length} Select Menus`;
     } else if (data.editMessage && data.editMessage !== "0") {
       text = `Message Options - ${presets.getVariableText(data.editMessage, data.editMessageVarName)}`;
-    } 
+    } else {
+      text = `Nothing (might cause error)`;
+    }
     if (data.dontSend) {
       return `Store Data: ${text}`;
     }
@@ -62,9 +64,14 @@ module.exports = {
   // This will make it so the patch version (0.0.X) is not checked.
   //---------------------------------------------------------------------
 
-	meta: { version: "2.1.4", preciseCheck: false, author: "DBM Extended", authorUrl: "https://github.com/DBM-Extended/mods", downloadURL: "https://github.com/DBM-Extended/mods/tree/main/actions/server_ban_count.js" },
-
-
+   meta: {
+    version: '2.1.5',
+    preciseCheck: true,
+    author: 'DBM Extended',
+    authorUrl: 'https://github.com/DBM-Extended/mods',
+    downloadURL: 'https://github.com/DBM-Extended/mods',
+    },
+	
   //---------------------------------------------------------------------
   // Action Fields
   //
@@ -440,7 +447,7 @@ module.exports = {
 
 
   <tab label="Settings" icon="cogs">
-    <div style="padding: 8px;">
+    <div style="padding: 8px;height:250px;overflow:auto">
       <dbm-checkbox style="float: left;" id="reply" label="Reply to Interaction if Possible" checked></dbm-checkbox>
 
       <dbm-checkbox style="float: right;" id="ephemeral" label="Make Reply Private (Ephemeral)"></dbm-checkbox>
@@ -455,7 +462,8 @@ module.exports = {
         <dbm-checkbox id="dontSend" label="Don't Send Message"></dbm-checkbox>
       </div>
 
- 
+      <br>
+      <hr class="subtlebar" style="margin-top: 4px; margin-bottom: 4px;">
 
       <br>
 
@@ -818,15 +826,17 @@ module.exports = {
       this.callListFunc(target, "send", [messageOptions]).then(onComplete);
     }
 
-    else if (isEdit === 2 && cache?.interaction?.update) {
+    else if (isEdit === 2) {
       let promise = null;
 
       defaultResultMsg = cache.interaction?.message;
 
       if (cache.interaction?.replied && cache.interaction?.editReply) {
         promise = cache.interaction.editReply(messageOptions);
-      } else {
+      } else if(cache?.interaction?.update) {
         promise = cache.interaction.update(messageOptions);
+      } else {
+        this.displayError(data, cache, "Send Message -> Message/Options to Edit -> Interaction Update / Could not find interaction to edit");
       }
       
       if (promise) {

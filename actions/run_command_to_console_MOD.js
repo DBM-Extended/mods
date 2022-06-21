@@ -15,7 +15,13 @@ name: "Run Command to Console",
 //---------------------------------------------------------------------
 
 section: "Other Stuff",
-
+  meta: {
+    version: '2.1.5',
+    preciseCheck: true,
+    author: 'DBM Extended',
+    authorUrl: 'https://github.com/DBM-Extended/mods',
+    downloadURL: 'https://github.com/DBM-Extended/mods',
+   },
 //---------------------------------------------------------------------
 // Action Subtitle
 //
@@ -25,27 +31,6 @@ section: "Other Stuff",
 subtitle: function(data) {
 	return `${data.command}`;
 },
-
-//---------------------------------------------------------------------
-	 // DBM Mods Manager Variables (Optional but nice to have!)
-	 //
-	 // These are variables that DBM Mods Manager uses to show information
-	 // about the mods for people to see in the list.
-	 //---------------------------------------------------------------------
-
-	 // Who made the mod (If not set, defaults to "DBM Mods")
-	 author: "MrGold", //Idea by I Am Alien Pete
-
-	 // The version of the mod (Defaults to 1.0.0)
-	 version: "1.9.2", //Added in 1.9.2
-
-	 // A short description to show on the mod line for this mod (Must be on a single line)
-	 short_description: "Runs a Command to the Console",
-
-	 // If it depends on any other mods by name, ex: WrexMODS if the mod uses something from WrexMods
-
-
-	 //---------------------------------------------------------------------
 
 //---------------------------------------------------------------------
 // Action Fields

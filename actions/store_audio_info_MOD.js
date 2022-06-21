@@ -20,7 +20,13 @@ const itemList = [
 module.exports = {
   name: 'Store Audio Info',
   section: 'Audio Control',
-  
+  meta: {
+    version: '2.1.5',
+    preciseCheck: true,
+    author: 'DBM Extended',
+    authorUrl: 'https://github.com/DBM-Extended/mods',
+    downloadURL: 'https://github.com/DBM-Extended/mods',
+   },
 
   fields: ['server', 'info', 'storage', 'varName', 'varName2'],
 

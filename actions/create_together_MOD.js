@@ -36,7 +36,7 @@ module.exports = {
     // This will make it so the patch version (0.0.X) is not checked.
     //---------------------------------------------------------------------
   
-    meta: { version: "2.1.4", preciseCheck: false, author: null, authorUrl: null, downloadUrl: null },
+    meta: { version: "2.1.5", preciseCheck: true, author: null, authorUrl: null, downloadUrl: null },
   
     //---------------------------------------------------------------------
     // Action Fields
@@ -55,7 +55,7 @@ module.exports = {
     // editing actions.
     //
     // The "isEvent" parameter will be true if this action is being used
-    // for an event. Due to their nature, events lack certain information,
+    // for an event. Due to their nature, events lack certain Information,
     // so edit the HTML to reflect this.
     //---------------------------------------------------------------------
   
@@ -69,8 +69,8 @@ module.exports = {
       <option value="spellcast">Spellcast</options>
       <option value="poker">Poker</options>
       <option value="fishing">Fishing</options>
-      <option value="chess">Szachy</options>
-      <option value="checkers">Warcaby</options>
+      <option value="chess">Chess</options>
+      <option value="checkers">Checkers</options>
       <option value="sketchheads">Sketchheads</options>
       <option value="doodlecrew">Doodlecrew</options>
       <option value="wordsnack">Wordsnack</options>
@@ -112,7 +112,7 @@ this.callNextAction(cache);
 });
 } else {
         const embederror = new MessageEmbed()
-                .setTitle(`Błąd!`)
+                .setTitle(`Error!`)
                 .setColor('RED')
                 .setTimestamp()
                 .setDescription(`

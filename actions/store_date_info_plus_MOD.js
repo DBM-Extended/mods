@@ -4,8 +4,8 @@ module.exports = {
     name: "Store Date Info Plus",
     section: "Other Stuff",
     meta: {
-        version: '2.1.4',
-        preciseCheck: false,
+        version: '2.1.5',
+        preciseCheck: true,
         author: 'DBM Extended',
         authorUrl: 'https://github.com/DBM-Extended/mods',
         downloadURL: 'https://github.com/DBM-Extended/mods',
@@ -205,7 +205,7 @@ module.exports = {
              result = date.format(buildInput);
           }
 
-          if (result === "Date invalid") {
+          if (result === "Invalid date") {
              return console.log('Invalid Date! Check that your date is valid in "Store Date Info Plus". A Date usually looks like the one stored in a server\'s "Creation Date" (variables work)');
           }
     

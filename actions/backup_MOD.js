@@ -3,11 +3,11 @@ module.exports = {
     name: 'Backup',
     section: 'Other Stuff',
     meta: {
-      version: '2.1.4',
-      preciseCheck: false,
+      version: '2.1.5',
+      preciseCheck: true,
       author: '[Tempest - 321400509326032897]',
-      authorUrl: 'https://github.com/DBM-Brazil/mods',
-      downloadURL: 'https://github.com/DBM-Brazil/mods',
+      authorUrl: 'https://github.com/DBM-Extended/mods',
+      downloadURL: 'https://github.com/DBM-Extended/mods',
     },
 
     subtitle(data) {
@@ -19,25 +19,25 @@ module.exports = {
     html(_isEvent, data) {
       return `
    <div style="float: left; width: 70%; padding-top: 10px; padding-bottom: 15px;">
-   <span class="dbminputlabel">Pasta a fazer Backup</span>
+   <span class="dbminputlabel">Folder to Backup</span>
     <input id="pastaBackup" class="round" type="text" placeholder="Ex: data">
   </div>
   <div style="float: left; width: 70%; padding-top: 10px; padding-bottom: 15px;">
-  <span class="dbminputlabel">Nome do Backup</span>
+  <span class="dbminputlabel">Backup Name</span>
     <input id="backupNome" class="round" type="text" placeholder="Ex: backup">
   </div>
   <div style="float: left; width: 70%; padding-top: 10px; padding-bottom: 15px;">
-  <span class="dbminputlabel">Log no console</span>
+  <span class="dbminputlabel">Console logging</span>
   <select id="log" class="round">
-      <option value="0" selected>Sim</option>
-      <option value="1">Não</option>
+      <option value="0" selected>Yes</option>
+      <option value="1">No</option>
   </select>
   </div>
   <div style="float: left; width: 70%; padding-top: 10px; padding-bottom: 15px;">
-  <span class="dbminputlabel">Chamar próxima action</span>
+  <span class="dbminputlabel">Call next action</span>
   <select id="nextAction" class="round">
-      <option value="0" selected>Sim</option>
-      <option value="1">Não</option>
+      <option value="0" selected>Yes</option>
+      <option value="1">No</option>
   </select>
   </div>`;
     },
@@ -62,7 +62,7 @@ module.exports = {
 
         switch (log) {
           case 0:
-              console.log("Backup feito com sucesso!");
+              console.log("Backup done successfully!");
             break;
           case 1:
             break;

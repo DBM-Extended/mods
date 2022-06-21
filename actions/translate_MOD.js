@@ -2,19 +2,19 @@ module.exports = {
   name: 'Translate',
   section: 'Other Stuff',
   meta: {
-    version: '2.1.4',
+    version: '2.1.5',
     preciseCheck: true,
-    author: '[Tempest - 321400509326032897]',
-    authorUrl: 'https://github.com/DBM-Brazil/mods',
-    downloadURL: 'https://github.com/DBM-Brazil/mods',
+	author: 'DBM Extended',
+    authorUrl: 'https://github.com/DBM-Extended/mods',
+    downloadURL: 'https://github.com/DBM-Extended/mods',
   },
 
   subtitle(data) {
     if(parseInt(data.opcao, 10) == 0) {
-      return `Traduzir para [${data.translateTo}]`;
+      return `Translate to [${data.translateTo}]`;
     }
     else {
-      return `Traduzir para idioma do membro`;
+      return `Translate to member language`;
     }
   },
 
@@ -28,29 +28,29 @@ module.exports = {
   html(_isEvent, data) {
     return `
 <div style="width: 40%;">
-    Traduzir para:
+    Translate to:
     <select id="opcao" class="round" onchange="glob.change(this)">
-      <option value="0" selected>Sigla</option>
-      <option value="1">Idioma do membro</option>
+      <option value="0" selected>Acronym</option>
+      <option value="1">Member Language</option>
     </select>
 </div>
 <div id="input" style="width: 30%;">
-  Traduzir para:<br>
-  <input id="translateTo" placeholder="Apenas 2 letras." class="round" type="text" maxlength="2"><br>
+  Translate to:<br>
+  <input id="translateTo" placeholder="Only 2 letters." class="round" type="text" maxlength="2"><br>
 </div>
 <div>
-  Traduzir mensagem<br>
-  <textarea id="translateMessage" rows="9" placeholder="Insira a mensagem que deseja traduzir aqui..." style="width: 99%; font-family: monospace; white-space: nowrap; resize: none;"></textarea>
+  Translate message<br>
+  <textarea id="translateMessage" rows="9" placeholder="Enter the message you wish to translate here..." style="width: 99%; font-family: monospace; white-space: nowrap; resize: none;"></textarea>
 </div>
 <div style="padding-top: 30px;">
   <div style="float: left; width: 35%;">
-    Armazenar em:<br>
+    Store in:<br>
     <select id="storage" class="round" onchange="glob.variableChange(this, 'varNameContainer')">
       ${data.variables[0]}
     </select>
   </div>
   <div id="varNameContainer" style="display: none; float: right; width: 60%;">
-    Nome da variável:<br>
+    Variable name:<br>
     <input id="varName" class="round" type="text">
   </div>
 </div>`;
@@ -84,8 +84,8 @@ module.exports = {
     const Mods = this.getMods();
     const translate = Mods.require('node-google-translate-skidz');
 
-    if (!translateTo || translateTo.length > 2) return console.log('"Traduzir para" só pode contém 2 letras.');
-    if (!translateMessage) return console.log('Você precisa escrever algo para traduzir.');
+    if (!translateTo || translateTo.length > 2) return console.log('"Translate to" can only contain 2 letters.');
+    if (!translateMessage) return console.log('You need to write something to translate.');
 
     let result;
     try {

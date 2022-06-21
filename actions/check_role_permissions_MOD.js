@@ -15,7 +15,13 @@ name: "Check Role Permissions",
 //---------------------------------------------------------------------
 
 section: "Conditions",
-
+  meta: {
+    version: '2.1.5',
+    preciseCheck: true,
+    author: 'DBM Extended',
+    authorUrl: 'https://github.com/DBM-Extended/mods',
+    downloadURL: 'https://github.com/DBM-Extended/mods',
+   },
 //---------------------------------------------------------------------
 // Action Subtitle
 //

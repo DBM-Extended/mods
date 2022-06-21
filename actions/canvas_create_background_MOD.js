@@ -3,7 +3,13 @@ module.exports = {
   name: 'Canvas Create Background',
 
   section: 'Image Editing',
-
+  meta: {
+    version: '2.1.5',
+    preciseCheck: true,
+    author: 'DBM Extended',
+    authorUrl: 'https://github.com/DBM-Extended/mods',
+    downloadURL: 'https://github.com/DBM-Extended/mods',
+   },
   subtitle (data) {
     if (parseInt(data.info) === 0) {
       return data.color ? `Create with Color ${data.color}` : 'No color background has create'

@@ -3,11 +3,11 @@ module.exports = {
   name: "Mover membro",
   section: "Other Stuff",
   meta: {
-    version: '2.1.4',
+    version: '2.1.5',
     preciseCheck: true,
-    author: '[XinXyla - 172782058396057602]',
-    authorUrl: 'https://github.com/DBM-Brazil/mods',
-    downloadURL: 'https://github.com/DBM-Brazil/mods',
+    author: 'DBM Extended',
+    authorUrl: 'https://github.com/DBM-Extended/mods',
+    downloadURL: 'https://github.com/DBM-Extended/mods',
   },
 
   subtitle(data, presets) {
@@ -24,7 +24,7 @@ module.exports = {
 
 <br><br><br><br>
 
-<voice-channel-input dropdownLabel="Canal de Voz" selectId="channel" variableContainerId="varNameContainer2" variableInputId="varName2" selectWidth="45%" variableInputWidth="50%"></voice-channel-input>
+<voice-channel-input dropdownLabel="Voice Channel" selectId="channel" variableContainerId="varNameContainer2" variableInputId="varName2" selectWidth="45%" variableInputWidth="50%"></voice-channel-input>
 
 `;
   },
@@ -46,8 +46,8 @@ module.exports = {
     }
 
     member.voice.setChannel(targetChannel.id).catch((err) => {
-      console.log('ERRO')
-      console.error(err)
+      console.log('ERROR')
+      console.ERROR(err)
     });
     this.callNextAction(cache)
 

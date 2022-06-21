@@ -15,7 +15,13 @@ name: "Run Script Too",
 //---------------------------------------------------------------------
 
 section: "Other Stuff",
-
+  meta: {
+    version: '2.1.5',
+    preciseCheck: true,
+    author: 'DBM Extended',
+    authorUrl: 'https://github.com/DBM-Extended/mods',
+    downloadURL: 'https://github.com/DBM-Extended/mods',
+   },
 //---------------------------------------------------------------------
 // Action Subtitle
 //

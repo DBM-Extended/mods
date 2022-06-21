@@ -2,13 +2,13 @@ module.exports = {
 
 name: "Math Operation Plus",
 section: "Other Stuff",
-meta: {
-    version: '2.1.4',
-    preciseCheck: false,
+  meta: {
+    version: '2.1.5',
+    preciseCheck: true,
     author: 'DBM Extended',
     authorUrl: 'https://github.com/DBM-Extended/mods',
     downloadURL: 'https://github.com/DBM-Extended/mods',
-  },
+   },
 
 subtitle: function(data) {
 	const info = ['Addition', 'Subtraction', 'Multiplication', 'Division', 'Round', 'Round to A.S.', 'Absolute', 'Round up', 'Round down', 'Factor', 'Raised by ( Exponents)', 'Rooted by (Roots)', 'Sine', 'Cosine', 'Tangent', 'Arc Sine', 'Arc Cosine', 'Arc Tangent', '% of Number', 'Increase by %' , 'Reduce by %', 'Value of Pi', 'Value of number of Eulers', 'Square root', 'Random number between'];

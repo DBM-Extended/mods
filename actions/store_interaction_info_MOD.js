@@ -2,23 +2,23 @@ module.exports = {
   name: "Store interaction Info",
   section: 'Other Stuff',
   meta: {
-    version: '2.1.4',
+    version: '2.1.5',
     preciseCheck: true,
-    author: '[XinXyla - 172782058396057602]',
-    authorUrl: 'https://github.com/DBM-Brazil/mods',
-    downloadURL: 'https://github.com/DBM-Brazil/mods',
+    author: 'DBM Extended',
+    authorUrl: 'https://github.com/DBM-Extended/mods',
+    downloadURL: 'https://github.com/DBM-Extended/mods',
   },
 
   subtitle(data, presets) {
     const info = [
-      "Objeto da interação",
-      "ID da interação",
-      "Linguagem do autor",
-      "Tipo de interação",
-      "Token da interação",
-      "Canal da interação",
-      "ID do canal da interação",
-      "Objeto > Opções da Interação",
+      "Object of the interaction",
+      "Interaction ID",
+      "Author language",
+      "Interaction type",
+      "Interaction token", "Interaction token",
+      "Interaction channel",
+      "Interaction channel ID",
+      "Object > Interaction Options",
     ];
     return `${info[parseInt(data.info, 10)]}`;
   },
@@ -39,29 +39,29 @@ module.exports = {
     return `
     <div>
 <div style="padding-top: 8px;">
-	<span class="dbminputlabel">informação</span><br>
+	<span class="dbminputlabel">Information</span><br>
 	<select id="info" class="round">
-  <option value="0 selected">Objeto da interação</option>
-  <option value="1">ID da interação</option>
-  <option value="2">Linguagem do autor</option>
-  <option value="3">Tipo de interação</option>
-  <option value="4">Token da interação</option>
-  <option value="5">Canal da interação</option>
-  <option value="6">ID do canal da interação</option>
-  <option value="7">Objeto > Opções da Interação</option>
+  <option value="0 selected">Interaction object</option>
+  <option value="1">ID of the interaction</option>
+  <option value="2">Author language</option>
+  <option value="3">Type of interaction</option>
+  <option value="4">Token of the interaction</option>
+  <option value="5">Channel of the interaction</option>
+  <option value="6">Channel ID of the interaction</option>
+  <option value="7">Object >Interaction options</option>
 	</select>
 </div>
 
 <br>
 
 <div style="float: left; width: 35%; padding-top: 8px;">
-<span class="dbminputlabel">Resultado em</span><br>
+<span class="dbminputlabel">Result in</span><br>
 		<select id="storage" class="round" onchange="glob.variableChange(this, 'varNameContainer')">
 		${data.variables[0]}
 		</select>
 	</div>
 	<div id="varNameContainer" style="float: right; display: none; width: 60%; padding-top: 8px;">
-  <span class="dbminputlabel">Nome da Variável</span><br>
+  <span class="dbminputlabel">Variable Name</span><br>
 		<input id="varName2" class="round" type="text">
 	</div>`;
   },

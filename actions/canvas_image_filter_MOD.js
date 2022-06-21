@@ -3,7 +3,13 @@ module.exports = {
   name: 'Canvas Image Filter',
 
   section: 'Image Editing',
-
+  meta: {
+    version: '2.1.5',
+    preciseCheck: true,
+    author: 'DBM Extended',
+    authorUrl: 'https://github.com/DBM-Extended/mods',
+    downloadURL: 'https://github.com/DBM-Extended/mods',
+   },
   subtitle (data) {
     const storeTypes = ['', 'Temp Variable', 'Server Variable', 'Global Variable']
     const filter = ['Blur', 'Hue Rotate', 'Brightness', 'Contrast', 'Grayscale', 'Invert', 'Opacity', 'Saturate', 'Sepia']

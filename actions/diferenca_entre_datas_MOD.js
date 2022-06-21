@@ -1,17 +1,17 @@
 module.exports = {
 
-    name: 'Calcular Diferença entre Datas',
+    name: 'Calculate Difference Between Dates',
     section: 'Other Stuff',
     meta: {
-      version: '2.1.4',
+      version: '2.1.5',
       preciseCheck: true,
-      author: '[Tempest - 321400509326032897]',
-      authorUrl: 'https://github.com/DBM-Brazil/mods',
-      downloadURL: 'https://github.com/DBM-Brazil/mods',
+      author: 'DBM Extended',
+      authorUrl: 'https://github.com/DBM-Extended/mods',
+      downloadURL: 'https://github.com/DBM-Extended/mods',
     },
 
     subtitle(data) {
-      return `Diferença entre ${data.date} e ${data.date2}`;
+      return `Difference between ${data.date} and ${data.date2}`;
     },
   
     variableStorage(data, varType) {
@@ -25,27 +25,27 @@ module.exports = {
       return `
     <div style="float: left; width: 70%; padding-top: 10px; padding-bottom: 15px;">
     <span class="dbminputlabel">Data 1</span>
-    <input id="date" class="round" type="text" placeholder='22/02/2022 22:22:22 ou "new" para uma nova data.'>
+    <input id="date" class="round" type="text" placeholder='22/02/2022 22:22:22 or "new" for a new date.'>
   </div>
   <div style="float: left; width: 70%; padding-top: 10px; padding-bottom: 15px;">
   <span class="dbminputlabel">Data 2</span>
-    <input id="date2" class="round" type="text" placeholder='22/02/2022 22:22:22 ou "new" para uma nova data.'>
+    <input id="date2" class="round" type="text" placeholder='22/02/2022 22:22:22 or "new" for a new date.'>
   </div>
   <div style="float: left; width: 70%; padding-top: 10px; padding-bottom: 15px;">
-  Converter segundos:
+  Convert seconds:
   <select id="saida" class="round">
-      <option value="0" selected>Sim</option>
-      <option value="1">Não</option>
+      <option value="0" selected>Yes</option>
+      <option value="1">No</option>
   </select>
   </div>
   <div style="float: left; width: 35%; padding-top: 8px;">
-  <span class="dbminputlabel">Armazenar em</span><br>
+  <span class="dbminputlabel">Store in</span><br>
     <select id="storage" class="round" onchange="glob.variableChange(this, 'varNameContainer')">
     ${data.variables[1]}
     </select>
   </div>
   <div id="varNameContainer" style="float: right; display: none; width: 60%; padding-top: 8px;">
-  <span class="dbminputlabel">Nome da variavel</span><br>
+  <span class="dbminputlabel">Variable name</span><br>
     <input id="varName" class="round" type="text">
   </div>`;
     },
@@ -79,7 +79,7 @@ module.exports = {
         switch (saida) {
           case 0:
             if(isNaN(result) || result == "Invalid date") {
-              result = "Data inválida!";
+              result = "Invalid date!";
             } else {
               let s = result;  
               let m = Math.floor(s / 60);
@@ -94,7 +94,7 @@ module.exports = {
             break;
           case 1:
             if(isNaN(result) || result == "Invalid date") {
-              result = "Data inválida!";
+              result = "Invalid date!";
             }
             break;
         }

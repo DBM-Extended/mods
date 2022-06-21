@@ -2,10 +2,10 @@ module.exports = {
 
     name: "Converter",  
     section: "Other Stuff",   
-    short_description: "Convert an Information to text, number or format",
+    short_description: "Convert an information to text, number or format",
     meta: {
-        version: '2.1.4',
-        preciseCheck: false,
+        version: '2.1.5',
+        preciseCheck: true,
         author: 'DBM Extended',
         authorUrl: 'https://github.com/DBM-Extended/mods',
         downloadURL: 'https://github.com/DBM-Extended/mods',

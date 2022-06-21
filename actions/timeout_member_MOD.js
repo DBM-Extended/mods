@@ -2,14 +2,20 @@ module.exports = {
 
   name: "Timeout Member",
 
-  section: "Discord Bots Poland",
+  section: "Member Management",
 
   subtitle(data, presets) {
     return `${presets.getMemberText(data.member, data.varName)}`;
   },
 
-  meta: { version: "2.1.4", preciseCheck: false, author: 'Gotowka', authorUrl: 'https://github.com/Gotowka/autorskieakcje/blob/main/timeout_member.js', downloadUrl: 'https://github.com/Gotowka/autorskieakcje/blob/main/timeout_member.js' },
-
+  meta: {
+    version: '2.1.5',
+    preciseCheck: true,
+    author: 'DBM Extended',
+    authorUrl: 'https://github.com/DBM-Extended/mods',
+    downloadURL: 'https://github.com/DBM-Extended/mods',
+   },
+   
   fields: ["member", "varName", "czas", "ilosc", "reason"],
 
   html(isEvent, data) {

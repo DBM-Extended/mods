@@ -15,7 +15,13 @@ name: "Shuffle Queue MOD",
 //---------------------------------------------------------------------
 
 section: "Audio Control",
-
+  meta: {
+    version: '2.1.5',
+    preciseCheck: true,
+    author: 'DBM Extended',
+    authorUrl: 'https://github.com/DBM-Extended/mods',
+    downloadURL: 'https://github.com/DBM-Extended/mods',
+   },
 
 //---------------------------------------------------------------------
 // Action Subtitle
@@ -27,10 +33,6 @@ subtitle: function(data) {
 	const servers = ['Current Server', 'Temp Variable', 'Server Variable', 'Global Variable'];
 	return `Shuffle Queue of ${servers[parseInt(data.server)]}`;
 },
-
-//https://github.com/LeonZ2019/
-author: "LeonZ",
-version: "1.1.0",
 
 //---------------------------------------------------------------------
 

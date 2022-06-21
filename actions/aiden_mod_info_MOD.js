@@ -6,7 +6,7 @@ module.exports = {
 	// This is the name of the action displayed in the editor.
 	//---------------------------------------------------------------------
 	
-	name: "Tlumaczenie Info",
+	name: "Translation of Info",
 	
 	//---------------------------------------------------------------------
 	// Action Section
@@ -14,7 +14,7 @@ module.exports = {
 	// This is the section the action will fall into.
 	//---------------------------------------------------------------------
 	
-	section: "#Info Tlumaczenie",
+	section: "#Info Translation",
 	
 	//---------------------------------------------------------------------
 	// Action Subtitle
@@ -23,7 +23,7 @@ module.exports = {
 	//---------------------------------------------------------------------
 	
 	subtitle: function(data) {
-		const info = ['Aidens Mod Pack', 'Aidens Mod Pack', 'Aidens Mod Pack', 'Aidens Mod Pack', 'Aidens Mod Pack', 'Aidens Mod Pack'];
+		const info = ['DBMEX Mod Pack', 'DBMEX Mod Pack', 'DBMEX Mod Pack', 'DBMEX Mod Pack', 'DBMEX Mod Pack', 'DBMEX Mod Pack'];
 		return `${info[parseInt(data.info)]}`;
 	},
 	
@@ -35,15 +35,15 @@ module.exports = {
 		 //---------------------------------------------------------------------
 	
 		 // Who made the mod (If not set, defaults to "DBM Mods")
-		 author: "Meffiu",
+		 author: "Giingu",
 	
 		 // The version of the mod (Defaults to 1.0.0)
-		 version: "1.9.1", //Added in 1.9.1
+		 version: "2.1.5", //Added in 2.1.5
 	
 		 // A short description to show on the mod line for this mod (Must be on a single line)
-		 short_description: "Aidens Mod Pack Information.",
+		 short_description: "DBMEX Mod Pack Information.",
 
-		 long_description: "Y",
+		 long_description: "2D > 3D",
 	
 		 // If it depends on any other mods by name, ex: WrexMODS if the mod uses something from WrexMods
 	
@@ -66,7 +66,7 @@ module.exports = {
 				dataType = "Credits";
 				break;
 			case 1:
-				dataType = "Aiden#8250";
+				dataType = "DBMEX";
 				break;
 		}
 		return ([data.varName, dataType]);
@@ -105,47 +105,47 @@ module.exports = {
 		<div class="embed">
             <embedleftline style="background-color: #2b9696;"></embedleftline>
         <div class="embedinfo">
-	    <span class="embed-auth"><u>Informacje o tłumaczeniu</u><br>Stworzono przez <b>Meffiu#9999</b></span><br>
-	    <span class="embed-desc">Aktualizacje znajdziesz <a href="https://github.com/dbmtranslation/DBM-PL-translation">tu</a><br>Wersja: 2.1.1<br>Wersja modów: 1.9.5</span>
+	    <span class="embed-auth"><u>Translation information</u><br>Created by <b>DBM Extended</b></span><br>
+	    <span class="embed-desc">You will find the updates <a href="https://github.com/DBM-Extended/mods">here</a><br>Version: 2.1.1 for <br>Mods version: 2.1.5</span>
         </div>
         </div><br>
 	<div style="width: 95%; padding-top: 8px;">
-		Glowny tworca<br>
-		<textarea id="serverip" rows="2" placeholder="Meffiu#9999" style="width: 95%; font-family: monospace; white-space: nowrap; resize: none;"></textarea>
+		The main creator<br>
+		<textarea id="serverip" rows="2" placeholder="Gii#1995" style="width: 95%; font-family: monospace; white-space: nowrap; resize: none;"></textarea>
 	 </div>
 	 <div style="width: 95%; padding-top: 8px;">
-	 	Wielkie podziekowania dla<br>
-	 	<textarea id="gametype" rows="2" placeholder="MOICH RODZICOW, ktorzy pozwolili mi nad tym dlugo siedziec" style="width: 95%; font-family: monospace; white-space: nowrap; resize: none;"></textarea>
+	 	Many thanks to<br>
+	 	<textarea id="gametype" rows="2" placeholder="MY PARENTS who let me sit for a long time" style="width: 95%; font-family: monospace; white-space: nowrap; resize: none;"></textarea>
 		 </div>
 	<div style="float: left; width: 55%; padding-top: 8px;">
 		Info:<br>
 		<select id="info" class="round">
-			<option value="0" selected>---Tworca---</option>
-			<option value="1">Meffiu#9999</option>
-			<option value="2">---Pomocnicy---</option>
-			<option value="3">Gryzzli#1337</option>
-			<option value="4">nikt</option>
-			<option value="5">nikt</option>
+			<option value="0" selected>---Creator---</option>
+			<option value="1">DBM Extended</option>
+			<option value="2">---Helpers---</option>
+			<option value="3">Anime Girls</option>
+			<option value="4">nobody</option>
+			<option value="5">nobody</option>
 				</select>
 			</div>
 		</div><br><br><br>
 	<div>
 		<div style="float: left; width: 35%; padding-top: 8px;">
-			IGNORUJ TO<br>
+			IGNORE THIS<br>
 			<select id="storage" class="round" onchange="glob.variableChange(this, 'varNameContainer')">
 				${data.variables[1]}
 			</select>
 		</div>
 		<div id="varNameContainer" style="float: right; width: 60%; padding-top: 8px;">
-			TO TEZ IGNORUJ<br>
+			IGNORE THIS TOO<br>
 			<input id="varName" class="round" type="text"><br>
 	</div>
 </div>
 	<div style="float: left; width: 88%; padding-top: 8px;">
 		<br>
 		<p>
-			<a href="https://discord.gg/8fFT58h
-			">Polski Support DBM</a><br><a href="https://discord.gg/z5bmGf9">DBM Network</a>
+			<a href="https://discord.gg/shiba
+			">DBMEX Support</a><br><a href="https://discord.gg/shiba">DBM Network</a>
 		</p>
 	<div>
 </div>

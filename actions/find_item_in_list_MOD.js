@@ -2,11 +2,11 @@ module.exports = {
   name: 'Find Item in List',
   section: 'Lists and Loops',
   meta: {
-    version: '2.1.4',
-    preciseCheck: false,
-    author: '[XinXyla - 172782058396057602]',
-    authorUrl: 'https://github.com/DBM-Brazil/mods',
-    downloadURL: 'https://github.com/DBM-Brazil/mods',
+    version: '2.1.5',
+    preciseCheck: true,
+    author: 'DBM Extended',
+    authorUrl: 'https://github.com/DBM-Extended/mods',
+    downloadURL: 'https://github.com/DBM-Extended/mods',
   },
 
   subtitle(data) {
@@ -22,7 +22,7 @@ module.exports = {
       'Server Variable',
       'Global Variable',
     ];
-    return `Buscar "${data.item}" em ${list[parseInt(data.list, 10)]}`;
+    return `Search "${data.item}" in ${list[parseInt(data.list, 10)]}`;
   },
 
   variableStorage(data, varType) {
@@ -35,35 +35,35 @@ module.exports = {
   html(isEvent, data) {
     return `
 <div style="float: left; width: 35%;">
-  Fonte da lista:<br>
+  List source:<br>
   <select id="list" class="round" onchange="glob.listChange(this, 'varNameContainer')">
     ${data.lists[isEvent ? 1 : 0]}
   </select>
 </div>
 <div id="varNameContainer" style="display: none; float: right; width: 60%;">
-  Nome da variavel:<br>
+  Variable name:<br>
   <input id="varName" class="round" type="text" list="variableList"><br>
 </div>
 </div><br><br><br>
 <div style="padding-top: 8px;">
-  Buscar item:<br>
-  <textarea id="item" rows="4" placeholder="Insira uma variável ou algum texto. Esses '' não são necessários!" style="width: 100%; font-family: monospace; white-space: nowrap;"></textarea>
+  Search item:<br>
+  <textarea id="item" rows="4" placeholder="Enter a variable or some text. These '' are not required!" style="width: 100%; font-family: monospace; white-space: nowrap;"></textarea>
 </div><br>
 <div style="padding-top: 8px;">
   <div style="float: left; width: 35%;">
-    Armazenar em:<br>
+    Store in:<br>
     <select id="storage" class="round">
       ${data.variables[1]}
     </select>
   </div>
   <div id="varNameContainer2" style="float: right; width: 60%;">
-    Nome da variavel:<br>
+    Variable name:<br>
     <input id="varName2" class="round" type="text">
   </div>
 </div><br><br><br>
-<div><p>Esta ação procura um item em uma lista e retorna a posição.<br>
-Observe que toda lista em JavaScript começa em 0<br>
-Caso não encontre retornará sempre -1</p></div>`;
+<div><p>This action searches for an item in a list and returns the position.<br>
+Note that every list in JavaScript starts at 0<br>
+If not found, it will always return -1</p></div>`;
   },
 
   init() {

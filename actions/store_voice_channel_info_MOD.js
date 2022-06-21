@@ -81,7 +81,7 @@ variableStorage(data, varType) {
 // This will make it so the patch version (0.0.X) is not checked.
 //---------------------------------------------------------------------
 
-meta: { version: "2.1.4", preciseCheck: false, author: null, authorUrl: null, downloadUrl: null },
+meta: { version: "2.1.5", preciseCheck: true, author: null, authorUrl: null, downloadUrl: null },
 
 //---------------------------------------------------------------------
 // Action Fields

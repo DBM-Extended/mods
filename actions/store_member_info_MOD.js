@@ -2,51 +2,51 @@ module.exports = {
   name: "Store Member Info",
   section: "Member Control",
   meta: {
-    version: '2.1.4',
+    version: '2.1.5',
     preciseCheck: true,
-    author: '[XinXyla - 172782058396057602]',
-    authorUrl: 'https://github.com/DBM-Brazil/mods',
-    downloadURL: 'https://github.com/DBM-Brazil/mods',
+    author: 'DBM Extended',
+    authorUrl: 'https://github.com/DBM-Extended/mods',
+    downloadURL: 'https://github.com/DBM-Extended/mods',
   },
 
   subtitle(data, presets) {
     const info = [
-      "Objeto do membro",
-      "ID de membro",
-      "Nome de usuário do membro",
-      "Nome de exibição do membro",
-      "Cor do Membro",
-      "Nome do Servidor do Membro",
-      "Última mensagem do membro (removido)",
-      "Cargo mais alta do membro",
-      "Cargo de elevação do membro",
-      "Cargo de cor do membro",
-      "Membro é proprietário?",
-      "O membro está mudo?",
-      "O membro é surdo?",
-      "O membro é banível?",
-      "Nome do status de jogo do membro",
-      "Estado de Membro",
-      "URL do avatar do membro",
-      "Lista de cargos do Membro",
-      "Quantidade de cargos do membro",
-      "Canal de voz do membro",
-      "Discriminador do membro",
-      "Tag do Membro",
-      "Conta do membro criada em",
-      "Timestamp da conta criada pelo membro",
-      "Membro entrou no servidor em",
-      "Timestamp do membro que entrou no servidor",
-      "ID da última mensagem (removido)",
-      "Lista de permissões do membro",
-      "Lista de Badges do Membro",
-      "Status do cliente membro",
-      "Status personalizado de membro",
-      "URL do Avatar do Servidor Membro",
-      "Membro expirou em",
-      "Timestamp do membro expirou",
-      "URL do banner do membro",
-      "ID do Servidor do Membro",
+	  "Member Object",
+      "Member ID",
+      "Member Username",
+      "Member Display Name",
+      "Member Color",
+      "Member Server Name",
+      "Member's Last Message (Removed)",
+      "Highest Member Position",
+      "Limb Lifting Position",
+      "Member Color Position",
+      "Member is owner?",
+      "Is the member mute?",
+      "Is the member deaf?",
+      "Is the member banable?",
+      "Member's Game Status Name",
+      "Member State",
+      "Member Avatar URL",
+      "Member Role List",
+      "Number of member positions",
+      "Member's Voice Channel",
+      "Member Discriminator",
+      "Member Tag",
+      "Member account created on",
+      "Timestamp of the account created by the member",
+      "Member joined the Server on",
+      "Timestamp of the member who joined the Server",
+      "Last Message ID (Removed)",
+      "Member Whitelist",
+      "Member Badge List",
+      "Member Client Status",
+      "Custom Member Status",
+      "Member Server Avatar URL",
+      "Member expired on",
+      "Member timestamp expired",
+      "Member Banner URL",
+      "Member Server ID",
     ];
     return `${presets.getMemberText(data.member, data.varName)} - ${info[parseInt(data.info, 10)]}`;
   },
@@ -156,50 +156,50 @@ module.exports = {
 <br><br><br>
 
 <div style="padding-top: 8px;">
-	<span class="dbminputlabel">Informação</span><br>
+	<span class="dbminputlabel">Information</span><br>
 	<select id="info" class="round">
-  <option value="0" selecionado>Objeto Membro</option>
-  <option value="1">ID do membro</option>
-  <option value="2">Nome de usuário do membro</option>
-  <option value="3">Nome de exibição do membro [Apelido]</option>
-  <option value="21">Tag do membro</option>
-  <option value="20">Discriminador do membro</option>
-  <option value="4">Cor do membro</option>
-  <option value="15">Status de membro</option>
-  <option value="16">URL do avatar do membro</option>
-  <option value="34">URL do banner do membro</option>
-  <option value="31">URL do Avatar do Servidor do Membro</option>
-  <option value="5">Nome do Servidor do membro</option>
-  <option value="35">ID do servidor do membro</option>
-  <option value="6">Última mensagem do membro (removida)</option>
-  <option value="26">ID da última mensagem do membro (removido)</option>
-  <option value="7">Cargo mais alto do membro</option>
-  <option value="8">Cargo de elevação do membro</option>
-  <option value="9">Cargo de cor do membro</option>
-  <option value="17">Lista de cargos do membro</option>
-  <option value="18">Quantidade de cargos do membro</option>
-  <option value="10">O membro é proprietário?</option>
-  <option value="11">O membro está silenciado?</option>
-  <option value="12">O membro está surdo?</option>
-  <option value="13">O membro pode ser banido?</option>
-  <option value="14">Nome do status de jogo do membro</option>
-  <option value="30">Status personalizado do membro</option>
-  <option value="19">Canal de voz do membro</option>
-  <option value="22">Conta do membro criada em</option>
-  <option value="23">Timestamp da conta criada pelo membro</option>
-  <option value="24">Membro entrou no servidor em</option>
-  <option value="25">Timestamp do membro que entrou no servidor</option>
-  <option value="27">Lista de permissões do membro</option>
-  <option value="28">Lista de badges do membro</option>
-  <option value="29">Status do cliente membro [Web ou Mobile]</option>
-  <option value="32">Tempo esgotado do membro em</option>
-  <option value="33">Timestamp do membro expirado</option>
+  <option value="0" selected>Member Object</option>
+  <option value="1">Member ID</option>
+  <option value="2">Member Username</option>
+  <option value="3">Member Display Name [Nickname]</option>
+  <option value="21">Member tag</option>
+  <option value="20">Member discriminator</option>
+  <option value="4">Member color</option>
+  <option value="15">Member Status</option>
+  <option value="16">Member Avatar URL</option>
+  <option value="34">Member Banner URL</option>
+  <option value="31">Member Server Avatar URL</option>
+  <option value="5">Member Server Name</option>
+  <option value="35">Member Server ID</option>
+  <option value="6">Last message from member (removed)</option>
+  <option value="26">Member's last message ID (removed)</option>
+  <option value="7">Highest member rank</option>
+  <option value="8">Member Elevation Position</option>
+  <option value="9">Member color title</option>
+  <option value="17">Member Role List</option>
+  <option value="18">Amount of member positions</option>
+  <option value="10">Is the member an owner?</option>
+  <option value="11">Is the member muted?</option>
+  <option value="12">Is the member deaf?</option>
+  <option value="13">Can the member be banned?</option>
+  <option value="14">Member game status name</option>
+  <option value="30">Custom member status</option>
+  <option value="19">Member's Voice Channel</option>
+  <option value="22">Member account created at</option>
+  <option value="23">Account timestamp created by member</option>
+  <option value="24">Member joined the Server at</option>
+  <option value="25">Timestamp of the member who joined the Server</option>
+  <option value="27">Member Whitelist</option>
+  <option value="28">List of member badges</option>
+  <option value="29">Member Client Status [Web or Mobile]</option>
+  <option value="32">Member timed out in</option>
+  <option value="33">Expired member timestamp</option>
 	</select>
 </div>
 
 <br>
 
-<store-in-variable dropdownLabel="Armazenar em" selectId="storage" variableContainerId="varNameContainer2" variableInputId="varName2"></store-in-variable>`;
+<store-in-variable dropdownLabel="Store in" selectId="storage" variableContainerId="varNameContainer2" variableInputId="varName2"></store-in-variable>`;
   },
 
   init() {},
@@ -269,8 +269,8 @@ module.exports = {
           switch(status) {
             case "online": { result = "Online"; break; }
             case "offline": { result = "Offline"; break; }
-            case "idle": { result = "Ausente"; break; }
-            case "dnd": { result = "Ocupado"; break; }
+            case "idle": { result = "Absent"; break; }
+            case "dnd": { result = "Occupied"; break; }
           }
         }
         break;

@@ -27,7 +27,7 @@ section: "Conditions",
 author: "TheMonDon",
 
 // The version of the mod (Defaults to 1.0.0)
-version: "1.9.5", //Added in 1.9.5
+version: "2.1.5", //Added in 2.1.5
 
 // A short description to show on the mod line for this mod (Must be on a single line)
 short_description: "Check if a channel meets the conditions.",

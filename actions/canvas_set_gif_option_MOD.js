@@ -3,7 +3,13 @@ module.exports = {
   name: 'Canvas Set Gif Option',
 
   section: 'Image Editing',
-
+  meta: {
+    version: '2.1.5',
+    preciseCheck: true,
+    author: 'DBM Extended',
+    authorUrl: 'https://github.com/DBM-Extended/mods',
+    downloadURL: 'https://github.com/DBM-Extended/mods',
+   },
   subtitle (data) {
     const type = ['Set Loop', 'Set Delap', 'Set Images']
     return `${type[parseInt(data.type)]} ${data.value}`

@@ -3,11 +3,11 @@ module.exports = {
   name: "Control Variable",
   section: "Other Stuff",
   meta: {
-    version: '2.1.4',
-    preciseCheck: false,
-    author: '[XinXyla - 172782058396057602]',
-    authorUrl: 'https://github.com/DBM-Brazil/mods',
-    downloadURL: 'https://github.com/DBM-Brazil/mods',
+    version: '2.1.5',
+    preciseCheck: true,
+    author: 'DBM Extended',
+    authorUrl: 'https://github.com/DBM-Extended/mods',
+    downloadURL: 'https://github.com/DBM-Extended/mods',
   },
 
   subtitle(data, presets) {
@@ -30,23 +30,23 @@ module.exports = {
 
   html(isEvent, data) {
     return `
-<store-in-variable dropdownLabel="Armazenado em" selectId="storage" variableContainerId="varNameContainer" variableInputId="varName"></store-in-variable>
+<store-in-variable dropdownLabel="Stored in" selectId="storage" variableContainerId="varNameContainer" variableInputId="varName"></store-in-variable>
 
 <br><br><br>
 
 <div style="padding-top: 8px;">
 	<div style="float: left; width: 35%;">
-		<span class="dbminputlabel">Tipo de controle</span><br>
+		<span class="dbminputlabel">Control Type</span><br>
 		<select id="changeType" class="round">
-			<option value="0" selected>Alterar valor</option>
-			<option value="1">Adicionar valor</option>
+			<option value="0" selected>Change value</option>
+			<option value="1">Add Value</option>
 		</select>
 	</div></div>
 
   <br><br><br>
 
 	<div style="float: left; width: 100%;">
-		<span class="dbminputlabel">Valor</span><br>
+		<span class="dbminputlabel">Value</span><br>
     <textarea id="value" rows="6" class="round" name="is-eval" style="width:100%"></textarea><br>
 	</div>
 `;

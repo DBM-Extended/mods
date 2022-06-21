@@ -1,10 +1,10 @@
 
   module.exports = {
-      // Название
+
       name: 'Get Text From Image',
-      // Группа
+
       section: 'Other Stuff',
-      // Поля
+
       fields: [
           "image",
           "langs",
@@ -13,27 +13,26 @@
           "varName"
       ],
     
-      // Мета данные (useless)
+
       meta: {
         version: '3.0.0',
-        preciseCheck: false,
+        preciseCheck: true,
         author: 'DBM Extended',
         authorUrl: 'https://github.com/DBM-Extended/mods',
         downloadURL: 'https://github.com/DBM-Extended/mods',
       },
     
-      // субтайтлы
+
       subtitle(data) {
         return `Take text from <b>${data.image}</b> and store in <b>${data.varName}</b>` 
       },
-    
-      // Переменные (useless)
+
       variableStorage(data, varType) {
           if (parseInt(data.storage, 10) !== varType) return;
           return [data.varName, 'Text from image'];
       },
     
-      // HTML - внешний вид
+
       html(data, isEvent) {
         return `
           <span class="dbminputlabel">Image link / File path</span><br>
@@ -49,10 +48,10 @@
           `;
       },
   
-      // Инит (useless)
+
       async init() {},
     
-      // Действие
+
     async action(cache) {
         const data = cache.actions[cache.index];
         const image = this.evalMessage(data.image, cache)

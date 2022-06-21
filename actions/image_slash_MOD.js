@@ -4,12 +4,12 @@ module.exports = {
     name: "Find Slash Image",
   
   
-    section: "Discord Bot Poland",
+	section: "Messaging",
   
 
   
     subtitle(data, presets) {
-      return 'Akcja stworzona przez money#6283';
+      return 'Action created by DBM Extended';
     },
   
 
@@ -21,8 +21,13 @@ module.exports = {
     },
 
   
-    meta: { version: "2.1.4", preciseCheck: true, author: 'Gotowka', authorUrl: 'https://github.com/Gotowka/autorskieakcje/blob/main/image_slash.js', downloadUrl: 'https://github.com/Gotowka/autorskieakcje/blob/main/image_slash.js' },
-  
+  meta: {
+    version: '2.1.5',
+    preciseCheck: true,
+    author: 'DBM Extended',
+    authorUrl: 'https://github.com/DBM-Extended/mods',
+    downloadURL: 'https://github.com/DBM-Extended/mods',
+   },
 
   
     fields: ["PhotoUrl", "storage", "varName"],

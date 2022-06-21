@@ -15,7 +15,13 @@ name: "Canvas Save Image",
 //---------------------------------------------------------------------
 
 section: "Image Editing",
-
+  meta: {
+    version: '2.1.5',
+    preciseCheck: true,
+    author: 'DBM Extended',
+    authorUrl: 'https://github.com/DBM-Extended/mods',
+    downloadURL: 'https://github.com/DBM-Extended/mods',
+   },
 //---------------------------------------------------------------------
 // Action Subtitle
 //
@@ -25,10 +31,6 @@ section: "Image Editing",
 subtitle: function(data) {
 	return `Save to "${data.Path}"`;
 },
-
-//https://github.com/LeonZ2019/
-author: "LeonZ",
-version: "1.1.0",
 
 //---------------------------------------------------------------------
 // Action Storage Function

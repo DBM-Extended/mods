@@ -4,7 +4,13 @@ module.exports = {
 
   section: 'Image Editing',
 
-  version: '3.0.2',
+  meta: {
+    version: '2.1.5',
+    preciseCheck: true,
+    author: 'DBM Extended',
+    authorUrl: 'https://github.com/DBM-Extended/mods',
+    downloadURL: 'https://github.com/DBM-Extended/mods',
+   },
 
   subtitle (data) {
     return `${data.url}`

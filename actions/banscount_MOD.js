@@ -13,7 +13,7 @@ module.exports = {
     // This is the section the action will fall into.
     //---------------------------------------------------------------------
   
-    section: "Discord Bots Poland",
+    section: "DBM Extended",
   
     //---------------------------------------------------------------------
     // Action Subtitle
@@ -57,7 +57,7 @@ module.exports = {
     // This will make it so the patch version (0.0.X) is not checked.
     //---------------------------------------------------------------------
   
-    meta: { version: "2.1.4", preciseCheck: false, author: "DBMExtended", authorUrl: "https://github.com/DBM-Extended/mods", downloadUrl: "https://github.com/DBM-Extended/mods" },
+    meta: { version: "2.1.5", preciseCheck: true, author: "DBMExtended", authorUrl: "https://github.com/DBM-Extended/mods", downloadUrl: "https://github.com/DBM-Extended/mods" },
   
     //---------------------------------------------------------------------
     // Action Fields
@@ -76,7 +76,7 @@ module.exports = {
     // editing actions.
     //
     // The "isEvent" parameter will be true if this action is being used
-    // for an event. Due to their nature, events lack certain information,
+    // for an event. Due to their nature, events lack certain Information,
     // so edit the HTML to reflect this.
     //---------------------------------------------------------------------
   

@@ -15,7 +15,7 @@ module.exports = {
     return [data.varName2, dataType];
   },
 
-  meta: { version: "2.1.4", preciseCheck: false, author: 'DBMExtended', authorUrl: 'https://github.com/DBM-Extended/mods', downloadUrl: 'https://github.com/DBM-Extended/mods' },
+  meta: { version: "2.1.5", preciseCheck: true, author: 'DBMExtended', authorUrl: 'https://github.com/DBM-Extended/mods', downloadUrl: 'https://github.com/DBM-Extended/mods' },
 
   fields: ["server", "varName", "name2", "description", "storage", "varName2"],
 

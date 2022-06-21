@@ -2,23 +2,23 @@ module.exports = {
   name: 'Find Message',
   section: 'Messaging',
   meta: {
-    version: '2.1.4',
+    version: '2.1.5',
     preciseCheck: true,
-    author: '[Snull - 612775910449610763]<br>[XinXyla - 172782058396057602]',
-    authorUrl: 'https://github.com/DBM-Brazil/mods',
-    downloadURL: 'https://github.com/DBM-Brazil/mods',
+    author: 'DBM Extended',
+    authorUrl: 'https://github.com/DBM-Extended/mods',
+    downloadURL: 'https://github.com/DBM-Extended/mods',
   },
 
   subtitle(data) {
     const channels = [
-      'Mesmo Canal',
-      'Canal Mencionado',
-      '1º Canal do Servidor',
-      'Variável Temporaria',
-      'Variável do Servidor',
-      'Variável Global',
+      'Same Channel',
+      'Mentioned Channel',
+      '1st Server Channel',
+      'Temporary Variable',
+      'Server Variable',
+      'Global Variable',
     ];
-    const info = ['Localizar por conteúdo', 'Localizar por ID'];
+    const info = ['Browse by Content', 'Find by ID'];
     return `${channels[parseInt(data.channel, 10)]} - ${info[parseInt(data.info, 10)]}`;
   },
 
@@ -34,45 +34,45 @@ module.exports = {
 
 <div>
 <table style="width: 100%;"><tr><td style="width: 60%">
-  <span class="dbminputlabel">Canal</span><br>
+  <span class="dbminputlabel">Channel</span><br>
     <select id="channel" class="round" onchange="glob.channelChange(this, 'varNameContainer')">
       ${data.channels[isEvent ? 1 : 0]}
     </select>
     </td><td style="width: 40%">
   <div id="varNameContainer" style="display: none; float: right; width: 90%;">
-  <span class="dbminputlabel">Nome da variavel</span><br>
+  <span class="dbminputlabel">Variable name</span><br>
     <input id="varName" class="round" type="text" list="variableList">
   </div></td></tr></table>
 <div><br>
   <div style="float: left; width: 70%;">
-  <span class="dbminputlabel">Encontrar por</span><br>
+  <span class="dbminputlabel">Find by</span><br>
     <select id="info" class="round">
-      <option value="0" selected>Localizar por conteúdo</option>
-      <option value="1">Localizar por ID</option>
+      <option value="0" selected>Browse by Content</option>
+      <option value="1">Find by ID</option>
     </select>
   </div><br><br><br>
   <div style="float: left; width: 70%;">
-  <span class="dbminputlabel">Buscar por</span><br>
+  <span class="dbminputlabel">Search for</span><br>
     <input id="search" class="round" type="text"><br>
   </div>
 </div><br>
 <div>
   <div style="float: left; width: 35%;">
-  <span class="dbminputlabel">Armazenar em</span><br>
+  <span class="dbminputlabel">Store in</span><br>
     <select id="storage" class="round">
       ${data.variables[1]}
     </select>
   </div>
   <div id="varNameContainer2" style="float: right; width: 60%;">
-  <span class="dbminputlabel">Nome da variavel</span><br>
+  <span class="dbminputlabel">Variable name</span><br>
     <input id="varName2" class="round" type="text"><br>
   </div>
 </div><br><br><br>
 <div>
 <br><br><p>
   <u>Nota:</u><br>
-  Este MOD só pode encontrar mensagens por <b>conteúdo</b> nas últimas 100 mensagens.<br>
-  Se houver várias mensagens com o mesmo conteúdo, o bot estará sempre usando a mensagem mais antiga (após o início).
+  This MOD can only find messages by <b>content</b> in the last 100 messages.<br>
+  If there are multiple messages with the same content, the bot will always be using the oldest message (after the start).
 </div>`;
   },
 
@@ -93,7 +93,7 @@ module.exports = {
 
     if (!targetChannel) return this.callNextAction(cache);
     if (!search) {
-      console.error('Erro: Insira algo para pesquisar na ação Find Message.');
+      console.error('Error: Enter something to search for in the Find Message action.');
       return this.callNextAction(cache);
     }
 

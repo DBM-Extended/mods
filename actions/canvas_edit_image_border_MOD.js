@@ -3,7 +3,13 @@ module.exports = {
   name: 'Canvas Edit Image Border',
 
   section: 'Image Editing',
-
+  meta: {
+    version: '2.1.5',
+    preciseCheck: true,
+    author: 'DBM Extended',
+    authorUrl: 'https://github.com/DBM-Extended/mods',
+    downloadURL: 'https://github.com/DBM-Extended/mods',
+   },
   subtitle (data) {
     const storeTypes = ['', 'Temp Variable', 'Server Variable', 'Global Variable']
     return `${storeTypes[parseInt(data.storage)]} (${data.varName})`

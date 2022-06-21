@@ -2,7 +2,14 @@ module.exports = {
   name: 'Check If Member has Role MOD',
   displayName: 'Check If Member has Role',
   section: 'Conditions',
-
+  meta: {
+    version: '2.1.5',
+    preciseCheck: true,
+    author: 'DBM Extended',
+    authorUrl: 'https://github.com/DBM-Extended/mods',
+    downloadURL: 'https://github.com/DBM-Extended/mods',
+   },
+   
   subtitle(data) {
     const results = [
       'Continue Actions',

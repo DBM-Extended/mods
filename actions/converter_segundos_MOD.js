@@ -1,13 +1,13 @@
 module.exports = {
-name: "Converter segundos em A/D/H/M/S",
+name: "Convert seconds to Y/D/H/M/S",
 section: "Other Stuff",
 meta: {
-    version: '2.1.4',
-    preciseCheck: false,
-    author: '[XinXyla - 172782058396057602]',
-	short_description: "Converter segundos em anos, meses, dias, horas, minutos e segundos.",
-    authorUrl: 'https://github.com/DBM-Brazil/mods',
-    downloadURL: 'https://github.com/DBM-Brazil/mods',
+    version: '2.1.5',
+    preciseCheck: true,
+    author: 'DBM Extended',
+	short_description: "Convert seconds to years, months, days, hours, minutes and seconds.",
+    authorUrl: 'https://github.com/DBM-Extended/mods',
+    downloadURL: 'https://github.com/DBM-Extended/mods',
   },
 
 subtitle: function(data) {
@@ -26,21 +26,21 @@ fields: ["time", "storage", "varName"],
 html: function(isEvent, data) {
 	return `
 	<div style="float: left; width: 95%; padding-top: 9px;">
-		<p>Feito por XinXyla: Converter segundos em anos, dias, horas, minutos e segundos.</p>
+		<p>Convert seconds into years, days, hours, minutes and seconds.</p>
 	</div>
 	<br><br>
 	<div style="float: left; width: 70%; padding-top: 8px;">
-		Converter segundos:
-		<input id="time" class="round" type="text" placeholder="1522672056 ou use variáveis">
+		Convert seconds:
+		<input id="time" class="round" type="text" placeholder="1522672056 or use variables">
 	</div>
 	<div style="float: left; width: 35%; padding-top: 8px;">
-		Resultado em:<br>
+		Result in:<br>
 		<select id="storage" class="round" onchange="glob.variableChange(this, 'varNameContainer')">
 		${data.variables[0]}
 		</select>
 	</div>
 	<div id="varNameContainer" style="float: right; display: none; width: 60%; padding-top: 8px;">
-		Nome da Variável:<br>
+		Variable name:<br>
 		<input id="varName" class="round" type="text">
 	</div><br><br>
 	<div style=" float: left; width: 88%; padding-top: 8px;">
@@ -64,8 +64,8 @@ action: function(cache) {
 	let result;
 
 	if (isNaN(time)) {
-		result.toString() = "Data invalida";
-		console.log('Por favor insira um número');
+		result.toString() = "Invalid date";
+		console.log('Please enter a number');
 	}
 	else {
 
@@ -81,11 +81,11 @@ action: function(cache) {
 		h = h % 24;
 
 
-		result = (a > 1 ? ''+ a + ' anos ' : '') + (a == 1 ? ''+ a + ' ano ' : '') + (mes > 1 ? ''+ mes + ' meses ' : '') + (mes == 1 ? ''+ mes + ' mês ' : '') + (d > 1 ? d + ' dias ' : '') + (d == 1 ? ''+ d + ' dia ' : '') + (h > 1 ? h + ' horas ' : '') + (h == 1 ? ''+ h + ' hora ' : '') + (m > 0 ? m + ' min ' : '') + (s > 0 ? s + ' seg ' : '');
+		result = (a > 1 ? ''+ a + ' years ' : '') + (a == 1 ? ''+ a + ' year ' : '') + (mes > 1 ? ''+ mes + ' months ' : '') + (mes == 1 ? ''+ mes + ' month ' : '') + (d > 1 ? d + ' days ' : '') + (d == 1 ? ''+ d + ' day ' : '') + (h > 1 ? h + ' hours ' : '') + (h == 1 ? ''+ h + ' hour ' : '') + (m > 0 ? m + ' min ' : '') + (s > 0 ? s + ' sec ' : '');
 
 	}
 	
-	if (result.toString() === "Data invalida") result = undefined;
+	if (result.toString() === "Invalid date") result = undefined;
 
     // Storage.
 	if(result !== undefined) {

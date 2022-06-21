@@ -2,8 +2,8 @@ module.exports = {
   name: 'Replace Text',
   section: 'Other Stuff',
   meta: {
-    version: '2.1.4',
-    preciseCheck: false,
+    version: '2.1.5',
+    preciseCheck: true,
     author: 'DBM Extended',
     authorUrl: 'https://github.com/DBM-Extended/mods',
     downloadURL: 'https://github.com/DBM-Extended/mods',

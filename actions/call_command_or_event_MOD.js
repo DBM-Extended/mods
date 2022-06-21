@@ -2,11 +2,11 @@ module.exports = {
   name: 'Call Command/Event',
   section: 'Other Stuff',
   meta: {
-    version: '2.1.4',
-    preciseCheck: false,
-    author: '[XinXyla - 172782058396057602]',
-    authorUrl: 'https://github.com/DBM-Brazil/mods',
-    downloadURL: 'https://github.com/DBM-Brazil/mods',
+    version: '2.1.5',
+    preciseCheck: true,
+    author: 'DBM Extended',
+    authorUrl: 'https://github.com/DBM-Extended/mods',
+    downloadURL: 'https://github.com/DBM-Extended/mods',
   },
 
   subtitle(data) {
@@ -28,33 +28,33 @@ module.exports = {
   html() {
     return `
 <div style="float: left; width: 85%; padding-top: 20px;">
-<span class="dbminputlabel">Tipo de fonte</span><br>
+<span class="dbminputlabel">Source Type</span><br>
   <select id="sourcetype" class="round" onchange="glob.onChange1(this)">
-    <option value="0" selected>Escolha da lista</option>
-    <option value="1">Inserir o ID do comando/evento</option>
-    <option value="2">Inserir o nome do comando/evento</option>
+    <option value="0" selected>Choose from the list</option>
+    <option value="1">Enter the command/event ID</option>
+    <option value="2">Enter the name of the command/event</option>
   </select>
 </div>
 <div id="info1"; style="float: left; width: 85%; padding-top: 20px; display: none;">
-<span class="dbminputlabel">Comando/Evento</span><br>
+<span class="dbminputlabel">Command/Event</span><br>
   <select id="source" class="round">
     <optgroup id="commands" label="Commands"></optgroup>
     <optgroup id="events" label="Events"></optgroup>
   </select>
 </div>
 <div id="info2" style="float: left; width: 85%; padding-top: 20px;">
-<span class="dbminputlabel">ID do comando/evento</span><br>
+<span class="dbminputlabel">Command/Event ID</span><br>
   <input id="source2" class="round" type="text" placeholder="">
 </div>
 <div id="info3" style="float: left; width: 85%; padding-top: 20px;">
-<span class="dbminputlabel">Nome do comando/evento</span><br>
+<span class="dbminputlabel">Command/Event Name</span><br>
   <input id="source3" class="round" type="text" placeholder="">
 </div>
 <div style="float: left; width: 85%; padding-top: 20px;">
-<span class="dbminputlabel">Tipo de chamada</span><br>
+<span class="dbminputlabel">Call type</span><br>
   <select id="type" class="round">
-  <option value="true" selected>Aguarde a conclusão</option>
-  <option value="false">Executar simultaneamente</option>
+  <option value="true" selected>Wait for completion</option>
+  <option value="false">Run simultaneously</option>
   </select>
 </div>`;
   },
@@ -120,7 +120,7 @@ module.exports = {
     } else {
       id = data.source;
     }
-    if (!id) return console.log('Insira um ID de comando/evento!');
+    if (!id) return console.log('Enter a Command/Event ID!');
 
     let name;
     if (parseInt(data.sourcetype, 10) === 2) {
@@ -128,7 +128,7 @@ module.exports = {
     } else {
       name = data.source;
     }
-    if (!name) return console.log('Insira um nome de um comando/evento!');
+    if (!name) return console.log('Enter a Command/Event name!');
 
 
     let actions;
