@@ -2,7 +2,7 @@ module.exports = {
 name: "Converter segundos em A/D/H/M/S",
 section: "Other Stuff",
 meta: {
-    version: '2.1.4',
+    version: '2.1.5',
     preciseCheck: false,
     author: '[XinXyla - 172782058396057602]',
 	short_description: "Converter segundos em anos, meses, dias, horas, minutos e segundos.",

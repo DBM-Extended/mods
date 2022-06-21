@@ -4,7 +4,7 @@ module.exports = {
   name: "Store Role Info",
   section: "Role Control",
   meta: {
-    version: '2.1.4',
+    version: '2.1.5',
     preciseCheck: false,
     author: '[XinXyla - 172782058396057602]',
     authorUrl: 'https://github.com/DBM-Brazil/mods',
