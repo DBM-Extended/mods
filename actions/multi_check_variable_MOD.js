@@ -40,7 +40,7 @@ module.exports = {
     preciseCheck: true,
     author: 'DBM Extended',
     authorUrl: 'https://github.com/DBM-Extended/mods',
-    downloadURL: 'https://github.com/DBM-Extended/mods/tree/main/actions/anchor_create_MOD.js',
+    downloadURL: 'https://github.com/DBM-Extended/mods',
   },
   
   //---------------------------------------------------------------------
