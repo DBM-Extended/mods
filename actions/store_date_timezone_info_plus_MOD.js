@@ -217,7 +217,7 @@ module.exports = {
           }
 
           if (result === "Invalid date") {
-             return console.log('Invalid Date! Check that your date is valid in "Store Date Info Plus". A Date usually looks like the one stored in a server's "Creation Date" (variables work)');
+             return console.log('Invalid Date! Check that your date is valid in "Store Date Info Plus". A Date usually looks like the one stored in a server\'s "Creation Date" (variables work)');
           }
     
           if (result !== undefined) {

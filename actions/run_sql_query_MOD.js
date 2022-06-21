@@ -436,15 +436,12 @@ module.exports = {
               console.log('If not using the Path textbox in the mod, this is how to get special values.')
               console.log(`Example \${${output}("${varName}")} to \${${output}("${varName}")[0]["${
                       Object.keys(results[0])[0]
-                    }"]}`)
-                    `Example Run Script ${output}("${varName}")["${
+                    }"]}`,);
+              console.log(`Example Run Script ${output}("${varName}")["${
                       Object.keys(results[0])[0]
-                    }"] or a place without \${}.\r\n`,
-                  );
-                  console.log(
-                    'Append the path to the end after the key or use the Parse From Stored JSON mod,\nin order to get the value you want',
-                  );
-                  console.log(`Example \${${output}("${varName}")[key].path} or use the json path box in the mod UI.`);
+                    }"] or a place without \${}.\r\n`,);
+              console.log('Append the path to the end after the key or use the Parse From Stored JSON mod,\nin order to get the value you want',);
+              console.log(`Example \${${output}("${varName}")[key].path} or use the json path box in the mod UI.`);
                 }
             const out = jsonOut || results
             this.storeValue(stringifyOutput ? JSON.stringify(out) : out, storage, varName, cache)
