@@ -22,6 +22,7 @@ console.log('-'.repeat(50));
 let totalShards = 'auto';
 let startup = './bot.js';
 let timeout = 30000;
+let mode = 'worker';
 
 function getArgs() {
   const args = {};
