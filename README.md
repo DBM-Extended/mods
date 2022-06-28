@@ -75,12 +75,9 @@ All the developers who made different Mods, Packages, Tools & APIs. Specially
 - [DBM Enhanced](https://github.com/AshTheDeveloper/DBM-Enhanced)
 - [DBM Canvas](https://github.com/LeonZ2019/dbm-canvas)
 - [DBM JMods](https://github.com/ContentJeka/JMODS)
-- [DBM Gotowka](https://github.com/Gotowka/autorskieakcje)
 - [DBM Mody](https://github.com/Gotowka/dbmmody)
-- [DBM Poland](https://github.com/DiscordBotsPoland/beta-mods)
 - [DBM Brazil](https://github.com/DBM-Brazil/mods)
 - [DBM BlackFire](https://github.com/BLACKFIRE228/Mods)
-- [DBM Gotowka Slash](https://github.com/Gotowka/poradniki)
 - [DBM FirebaseV2](https://github.com/Snullerr/Firebase-V2)
 
 ## Disclaimers
