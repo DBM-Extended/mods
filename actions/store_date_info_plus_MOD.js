@@ -12,14 +12,27 @@ module.exports = {
       },
    
     subtitle: function(data) {
-        const info = ['Day of the week', 'Day (number)', 'Day of the year', 'Week of the year', 'Month of the year', 'Month (number)', 'Year', 'Hour', 'Minutes', 'Seconds', 'Milliseconds', 'Time zone', 'Unix Timestamp']
+        const info = [
+		'Day of the Week', 
+		'Day (Number)', 
+		'Day of the Year', 
+		'Week of the Year', 
+		'Month of the Year', 
+		'Month (Number)', 
+		'Year', 
+		'Hour', 
+		'Minutes', 
+		'Seconds', 
+		'Milliseconds', 
+		'Timezone', 
+		'Unix Timestamp',
+		'Full Time']
         const storage = ['', 'Temporary Variable', 'Server Variable', 'Global Variable']
         return `${data.modeStorage === "0" ? '"' + info[data.info] + '"' : data.buildInput === "" ? '"Not Configured"' : '"' + data.buildInput + '"'} of a date ~ ${storage[data.storage]}`;
     },
     
  
     short_description: "Stores something from a date more completely!",
-    depends_on_mods: ["WrexMODS"],
     
     variableStorage: function (data, varType) {
         const type = parseInt(data.storage);
@@ -32,32 +45,35 @@ module.exports = {
     
         html: function(isEvent, data) {
         return `
+        <div style="position:absolute;bottom:0px;border: 1px solid #222;background:#000;color:#999;padding:3px;right:0px;z-index:999999">Version 0.3</div>
+    <div style="position:absolute;bottom:0px;border: 1px solid #222;background:#000;color:#999;padding:3px;left:0px;z-index:999999">DBM Extended</div>
 
         <div style="float: left; width: 62%;margin:0px 4px;">
-        <span class="dbminputlabel">Data de origem:</span><br>
+        <span class="dbminputlabel">Date of origin</span><br>
             <input id="sourceDate" class="round" type="text" placeholder="Ex: Sun Oct 26 2019 10:38:01 GMT+0200">
         </div>
         <div style="float: right; width: 35%">
-        <span class="dbminputlabel">Date language (initials):</span><br>
-           <input id="dateLanguage" class="round" placeholder='O padrão é "en" (Inglês)'>
+        <span class="dbminputlabel">Date language (initials)</span><br>
+           <input id="dateLanguage" class="round" placeholder='The default is "en" (English)'>
         </div><br><br><br>
         <div style="float: left; width: 35%; margin:0px 4px">
-        <span class="dbminputlabel">Mode:</span><br>
+        <span class="dbminputlabel">Mode</span><br>
             <select id="modeStorage" class="round" onchange="glob.onChangeMode(this)">
                 <option value="0" selected>Choose</option>
-                <option value="1">Build</option>
+                <option value="1">Custom</option>
             </select>
         </div>
         <div id="selectMode" style="display: none; float: right; width: 62%">
-        <span class="dbminputlabel">Information:</span><br>
-				<option value="0" selected>Weekday</option>
+        <span class="dbminputlabel">Information</span><br>
+            <select id="info" class="round">
+				<option value="0" selected>Day of the Week</option>
                 <option value="1">Day [number]</option>
                 <option value="2">Day of the year [number]</option>
                 <option value="3">Week of the year [number]</option>
                 <option value="4">Month of the year</option>
                 <option value="5">Month [number]</option>
                 <option value="6">Year</option>
-                <option value="7">Time</option>
+                <option value="7">Hour</option>
                 <option value="8">Minutes</option>
                 <option value="9">Seconds</option>
                 <option value="10">Milliseconds</option>
@@ -67,17 +83,17 @@ module.exports = {
             </select>
         </div>
         <div id="buildMode" style="display: none; float: right; width: 62%">
-        <span class="dbminputlabel">Build (<span class="wrexlink" data-url="https://momentjs.com/docs/#/displaying/format/">Document</span>):</span><br>
-            <input id="buildInput" class="round" placeholder="Ex: DD/MM/YYYY [to] HH:mm:ss">
+        <span class="dbminputlabel">Build (<span class="wrexlink" data-url="https://momentjs.com/docs/#/displaying/format/">Document</span>)</span><br>
+            <input id="buildInput" class="round" placeholder="Ex: DD/MM/YYYY [at] HH:mm:ss">
         </div><br><br><br>
         <div style="float: left; width: 35%;margin:0px 4px">
-        <span class="dbminputlabel">Store in:</span><br>
+        <span class="dbminputlabel">Store in</span><br>
             <select id="storage" class="round">
                 ${data.variables[1]}
             </select>
         </div>
         <div id="varNameContainer" style="float: right; width: 62%">
-        <span class="dbminputlabel">Variable name:</span><br>
+        <span class="dbminputlabel">Variable name</span><br>
             <input id="varName" class="round" type="text">
         </div><br><br><br>
         <div id="noteContainer" style="display: none; padding-top: 16px">
@@ -147,7 +163,7 @@ module.exports = {
     
     action: function(cache) {
         const data = cache.actions[cache.index];
-        const moment = this.getWrexMods().require("moment");
+        const moment = require("moment");
         const dateLanguage = this.evalMessage(data.dateLanguage, cache);
         const date = moment(Date.parse(this.evalMessage(data.sourceDate, cache)), "", dateLanguage === "" ? "en" : dateLanguage);
         const buildInput = this.evalMessage(data.buildInput, cache);
