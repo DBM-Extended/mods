@@ -19,8 +19,8 @@
   <a title="Release" href="https://github.com/DBM-Extended/mods/releases" target="_blank">
     <img src="https://img.shields.io/github/release/DBM-Extended/mods.svg?style=flat-square" alt="Latest Release" />
   </a>
-  <a title="License" href="https://github.com/DBM-Extended/mods/blob/master/LICENSE.md" target="_blank">
-    <img src="https://img.shields.io/github/license/DBM-Extended/mods.svg?style=flat-square" alt="License" />
+  <a title="Visits" href="https://github.com/DBM-Extended/mods/blob/master/LICENSE.md" target="_blank">
+    <img src="http://hits.dwyl.com/DBM-Extended/mods.svg" />
   </a></br>
 <a href="https://discord.gg/shiba"><img src="https://img.shields.io/discord/624217127540359188?color=5865F2&label=Discord&logo=discord&logoColor=white&style=for-the-badge" alt="Support Server"></a>
 <a href="https://store.steampowered.com/app/682130/Discord_Bot_Maker/">
@@ -62,7 +62,6 @@ This repository is not meant to be downloaded or cloned. Please follow the insta
 
 </div>
 ⭐️ Starring & Sharing the project is also appreciated. Thanks! ❤️
-
 
 ## Contribution
 I will be open to any contribution. If you have any idea, please let me know. Please follow this steps to [Contribute](https://github.com/DBM-Extended/mods/blob/main/CONTRIBUTING.md)
