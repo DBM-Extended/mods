@@ -1,78 +1,78 @@
 module.exports = {
 
-  name: "Store Server Info",
+  name: "Store Server Info MOD",
   section: "Server Control",
   meta: {
     version: '2.1.5',
     preciseCheck: true,
-    author: 'DBM Extended',
-    authorUrl: 'https://github.com/DBM-Extended/mods',
-    downloadURL: 'https://github.com/DBM-Extended/mods',
+    author: 'DBM Mods',
+    authorUrl: 'https://github.com/dbm-network/mods',
+    downloadURL: 'https://github.com/dbm-network/mods',
     },
 
   subtitle(data, presets) {
     const info = [
-      "Server (Object)",
-      "server ID",
+      "Server Object",
+      "Server ID",
       "Server Name",
-      "Server name acronym",
+      "Server Name Acronym",
       "Server Preferred Language",
-      "Server icon URL",
+      "Server Icon URL",
       "Server Verification Level",
-      "Server default channel",
-      "Server AFK channel",
-      "Server system channel",
-      "Server default role",
-      "Server Owner (Object)",
-      "Server Bot",
-      "Server Channel List",
-      "Server's Position List",
+      "Server Default Channel",
+      "Server AFK Channel",
+      "Server System Channel",
+      "Server Default Role",
+      "Server Owner Object",
+      "Server Bot Member",
+      "Server Channels List",
+      "Server Roles List",
       "Server Members List",
-      "Server emoji list",
+      "Server Emojis List",
       "Server Member Count",
-      "Server created on",
-      "Server timeout AFK",
-      "Server available",
+      "Server Created At",
+      "Server AFK Timeout",
+      "Server Available",
       "Server Large",
-      "Server connected on",
-      "Server Channel count",
-      "Server emoji count",
-      "Server embed enabled",
-      "Server busy member count",
-      "Server online member count",
-      "Server offline member count",
-      "Server idle member count",
-      "Server bot count",
-      "List of Server Channel IDs",
-      "List of Server Positions IDs",
-      "List of Server Member IDs",
+      "Server Joined At",
+      "Server Channels Count",
+      "Server Emojis Count",
+      "Server Embed Enabled",
+      "Server Do Not Disturb Members Count",
+      "Server Online Members Count",
+      "Server Offline Members Count",
+      "Server Idle Members Count",
+      "Server Bot Count",
+      "Server Channels IDs List",
+      "Server Roles IDs List",
+      "Server Members IDs List",
       "",
       "Server Human Count",
       "",
-      "Server Position Count",
-      "Server Text Channel Count",
-      "Server Voice Channel Count",
-      "Server Checked",
-      "Server Banned List",
-      "Server Invitation List",
-      "Server explicit content filter",
-      "Server boost count",
-      "Server boost level",
-      "Server banner URL",
-      "Server resource list",
+      "Server Roles Count",
+      "Server Text Channels Count",
+      "Server Voice Channels Count",
+      "Server Verified",
+      "Server Bans List",
+      "Server Invites List",
+      "Server Explicit Content Filter",
+      "Server Boosts Count",
+      "Server Boost Tier",
+      "Server Banner URL",
+      "Server Features List",
       "Server Owner ID",
-      "Server Vanity Server URL code",
-      "Server widget channel ID",
-      "Server AFK channel ID",
-      "Enable server progress bar",
+      "Server Vanity URL Code",
+      "Server Widget Channel ID",
+      "Server AFK Channel ID",
+      "Server Progress Bar Enable",
       "Server Description",
-      "Partner Server",
+      "Server Partnered",
       "Server Rule Channel",
-      "Server rule channel ID",
-      "Server widget channel",
-      "Server system channel ID",
-      "Server NSFW level",
-      "Server MFA/2FA level",
+      "Server Rule Channel ID",
+      "Server Widget Channel",
+      "Server System Channel ID",
+      "Server NSFW Level",
+      "Server MFA/2FA Level",
       "Server Timestamp",
       "Template URL",
       "Template Code",
@@ -285,106 +285,109 @@ module.exports = {
 
   html(isEvent, data) {
     return `
-<server-input dropdownLabel="Server" selectId="server" variableContainerId="varNameContainer" variableInputId="varName"></server-input>
+    <div style="position:absolute;bottom:0px;border: 1px solid #222;background:#000;color:#999;padding:3px;right:0px;z-index:999999">Version 1.0</div>
+    <div style="position:absolute;bottom:0px;border: 1px solid #222;background:#000;color:#999;padding:3px;left:0px;z-index:999999">DBM Extended</div>
+
+<server-input dropdownLabel="Servidor" selectId="server" variableContainerId="varNameContainer" variableInputId="varName"></server-input>
 
 <br><br><br>
 
 <div>
 	<div style="padding-top: 8px; width: 100%;">
-		<span class="dbminputlabel">Information</span><br>
+		<span class="dbminputlabel">Source Info</span><br>
 		<select id="info" class="round">
-      <optgroup label="General Server Information">
-      <option value="0">Server (Object)</options>
+      <optgroup label="Server General Info">
+      <option value="0">Server Object</options>
       <option value="1">Server ID</options>
-      <option value="2">Server name</options>
-      <option value="3">Server name</options>
-      <option value="53">Server description</options>
-      <option value="5">URL of the server icon</options>
-      <option value="7">Server's default channel</options>
-      <option value="58">Server system channel ID</options>
-      <option value="9">Server system channel</options>
-      <option value="21">Large server</options>
-      <option value="43">Server explicit content filter</options>
-      <option value="10">Server default role</options>
-      <option value="12">Server bot</options>
-      <option value="20">Server available</options>
+      <option value="2">Server Name</options>
+      <option value="3">Server Name Acronym</options>
+      <option value="53">Server Description</options>
+      <option value="5">Server Icon URL</options>
+      <option value="7">Server Default Channel</options>
+      <option value="58">Server System Channel ID</options>
+      <option value="9">Server System Channel</options>
+      <option value="21">Server Large</options>
+      <option value="43">Server Explicit Content Filter</options>
+      <option value="10">Server Default Role</options>
+      <option value="12">Server Bot Member</options>
+      <option value="20">Server Available</options>
       </optgroup>
-      <optgroup label="Server AFK information">
-      <option value="8">Server AFK channel</options>
-      <option value="51">Server AFK channel ID</options>
-      <option value="19">Server AFK timeout</options>
+      <optgroup label="Server AFK Info">
+      <option value="8">Server AFK Channel</options>
+      <option value="51">Server AFK Channel ID</options>
+      <option value="19">Server AFK Timeout</options>
       </optgroup>
-      <optgroup label="Server boost information">
-      <option value="44">Server boost count</options>
-      <option value="45">Server boost level</options>
+      <optgroup label="Server Boost Info">
+      <option value="44">Server Boosts Count</options>
+      <option value="45">Server Boost Tier</options>
       </optgroup>
-      <optgroup label="Server counts">
-      <option value="17">Server member count</options>
+      <optgroup label="Server Counts">
+      <option value="17">Server Member Count</options>
       <option value="35">Server Human Count</options>
-      <option value="30">Server bot count</options>
-      <option value="24">Server emoji count</options>
-      <option value="37">Server Job count</options>
-      <option value="23">Server channel count</options>
-      <option value="38">Server text channel count</options>
-      <option value="39">Server voice channel count</options>
-      <option value="70">Total members on voice channels</options>
+      <option value="30">Server Bot Count</options>
+      <option value="24">Server Emojis Count</options>
+      <option value="37">Server Roles Count</options>
+      <option value="23">Server Channels Count</options>
+      <option value="38">Server Text Channels Count</options>
+      <option value="39">Server Voice Channels Count</options>
+      <option value="70">Server Members On Voice Channels Count</options>
       </optgroup>
-      <optgroup label="Server community information"">
-      <option value="54">Partnered server</options>
-      <option value="55">Server rules channel</options>
-      <option value="56">Server rule channel ID</options>
-      <option value="4">Preferred server language</options>
-      <option value="40">Server checked</options>
-      <option value="52">Premium Server progress bar enabled</options>
-      <option value="46">URL of the server banner</options>
-      <option value="47">Server resource list</options>
-      <option value="49">Server custom URL code</options>
-      <option value="57">Server widget channel</options>
-      <option value="50">Server widget channel ID</options>
-      <option value="25">Server embedding enabled</options>
+      <optgroup label="Server Community Info"">
+      <option value="54">Server Partnered</options>
+      <option value="55">Server Rule Channel</options>
+      <option value="56">Server Rule Channel ID</options>
+      <option value="4">Server Preferred Language</options>
+      <option value="40">Server Verified</options>
+      <option value="52">Server Premium Progress Bar Enabled</options>
+      <option value="46">Server Banner URL</options>
+      <option value="47">Server Features List</options>
+      <option value="49">Server Vanity URL Code</options>
+      <option value="57">Server Widget Channel</options>
+      <option value="50">Server Widget Channel ID</options>
+      <option value="25">Server Embed Enabled</options>
       </optgroup>
-      <optgroup label="Server date information">
-      <option value="61">Server timestamp</options>
-      <option value="18">Server created on</options>
-      <option value="22">Server connected on</options>
+      <optgroup label="Server Dates Info">
+      <option value="61">Server Timestamp</options>
+      <option value="18">Server Created At</options>
+      <option value="22">Server Joined At</options>
       </optgroup>
-      <optgroup label="Server levels">
-      <option value="59">Server NSFW level</options>
-      <option value="6">Server verification level</options>
-      <option value="60">Server MFA/2FA level</options>
+      <optgroup label="Server Levels">
+      <option value="59">Server NSFW Level</options>
+      <option value="6">Server Verification Level</options>
+      <option value="60">Server MFA/2FA Level</options>
       </optgroup>
-      <optgroup label="Server List Information">
-      <option value="15">Server member list</options>
-      <option value="33">List of server member IDs</options>
-      <option value="13">List of server channels</options>
-      <option value="31">List of server channel IDs</options>
-      <option value="16">List of server emojis</options>
-      <option value="14">Server Positions list</options>
-      <option value="32">List of Server Role IDs</options>
-      <option value="41">Server Banned List</options>
-      <option value="42">Server invite list</options>
-      <option value="71">List of members by ID present on voice channels</options>
-      <option value="72">List of members present on voice channels</options>
+      <optgroup label="Server List Info">
+      <option value="15">Server Members List</options>
+      <option value="33">Server Members IDs List</options>
+      <option value="13">Server Channels List</options>
+      <option value="31">Server Channels IDs List</options>
+      <option value="16">Server Emojis List</options>
+      <option value="14">Server Roles List</options>
+      <option value="32">Server Roles IDs List</options>
+      <option value="41">Server Bans List</options>
+      <option value="42">Server Invites List</options>
+	  <option value="72">Server Members On Voice Channels List</options>
+      <option value="71">Server Members On Voice Channels IDs List</options>
       </optgroup>
-      <optgroup label="Server Owner Information">
+      <optgroup label="Server Owner Info">
       <option value="48">Server Owner ID</options>
-      <option value="11">Server Owner (Object)</options>
+      <option value="11">Server Owner Object</options>
       </optgroup>
       <optgroup label="Server Status Count">
-      <option value="27">Server online member count</options>
-      <option value="29">Server inactive member count</options>
-      <option value="26">Server busy member count</options>
-      <option value="28">Server offline member count</options>
+      <option value="27">Server Online Members Count</options>
+      <option value="29">Server Idle Members Count</options>
+      <option value="26">Server Do Not Disturb Members Count</options>
+      <option value="28">Server Offline Members Count</options>
       </optgroup>
       <optgroup label="Server Template">
-      <option value="62">URL of Template</options>
-      <option value="63">Template code</options>
+      <option value="62">Template URL</options>
+      <option value="63">Template Code</options>
       <option value="64">Template Name</options>
-      <option value="65">Description of the Template</options>
-      <option value="66">Times the Template has been used</options>
-      <option value="67">Template creator ID</options>
-      <option value="68">Timestamp of the Template creation</options>
-      <option value="69">Template update timestamp</options>
+      <option value="65">Template Description</options>
+      <option value="66">Template Use Count</options>
+      <option value="67">Template Creator ID</options>
+      <option value="68">Template Creation Timestamp</options>
+      <option value="69">Template Update Timestamp</options>
       </optgroup>
 		</select>
 	</div>
@@ -392,7 +395,7 @@ module.exports = {
 
 <br>
 
-<store-in-variable dropdownLabel="Store in" selectId="storage" variableContainerId="varNameContainer2" variableInputId="varName2"></store-in-variable>`;
+<store-in-variable dropdownLabel="Store In" selectId="storage" variableContainerId="varNameContainer2" variableInputId="varName2"></store-in-variable>`;
   },
 
    init() {},
