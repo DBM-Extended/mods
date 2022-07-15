@@ -102,7 +102,11 @@ module.exports = {
         dataType = "Server ID";
         break;
       case 2:
+	    dataType = "Text";
+        break;
       case 3:
+	    dataType = "Text";
+        break;
       case 4:
         dataType = "Text";
         break;
@@ -113,7 +117,11 @@ module.exports = {
         dataType = "Text";
         break;
       case 7:
+	    dataType = "Channel";
+        break;
       case 8:
+        dataType = "Channel";
+        break;
       case 9:
         dataType = "Channel";
         break;
@@ -148,6 +156,8 @@ module.exports = {
         dataType = "Number";
         break;
       case 20:
+        dataType = "Boolean";
+        break;
       case 21:
         dataType = "Boolean";
         break;
@@ -155,6 +165,8 @@ module.exports = {
         dataType = "Date";
         break;
       case 23:
+	    dataType = "Number";
+        break;
       case 24:
         dataType = "Number";
         break;
@@ -162,14 +174,26 @@ module.exports = {
         dataType = "Boolean";
         break;
       case 26:
+        dataType = "Number";
+        break;
       case 27:
+        dataType = "Number";
+        break;
       case 28:
+        dataType = "Number";
+        break;
       case 29:
+        dataType = "Number";
+        break;
       case 30:
         dataType = "Number";
         break;
       case 31:
+        dataType = "IDs List";
+        break;
       case 32:
+        dataType = "IDs List";
+        break;
       case 33:
         dataType = "IDs List";
         break;
@@ -177,7 +201,11 @@ module.exports = {
         dataType = "Number";
         break;
       case 37:
+        dataType = "Number";
+        break;
       case 38:
+        dataType = "Number";
+        break;
       case 39:
         dataType = "Number";
         break;
@@ -194,6 +222,8 @@ module.exports = {
         dataType = "Text";
         break;
       case 44:
+        dataType = "Number";
+        break;
       case 45:
         dataType = "Number";
         break;
@@ -204,10 +234,14 @@ module.exports = {
         dataType = "Server Features List";
         break;
       case 48:
+	    dataType = "Server Member ID";
+        break;
       case 49:
         dataType = "Text";
         break;
       case 50:
+        dataType = "Channel ID";
+        break;
       case 51:
         dataType = "Channel ID";
         break;
@@ -233,46 +267,47 @@ module.exports = {
         dataType = "Channel ID";
         break;
       case 59:
+        dataType = "Text";
+        break;
       case 60:
         dataType = "Text";
         break;
       case 61:
         dataType = "Timestamp";
         break;
-        case 62:
-          dataType = "URL";
-          break;
-          case 63:
-            dataType = "Code";
-            break;
-            case 64:
-              dataType = "Text";
-              break;
-              case 65:
-                dataType = "Text";
-                break;
-                case 66:
-                  dataType = "Number";
-                  break;
-                  case 67:
-                    dataType = "ID User";
-                    break;
-                    case 68:
-                      dataType = "Timestamp";
-                      break;
-                      case 69:
-                        dataType = "Timestamp";
-                        break;
-                        case 70:
-                          dataType = "Number";
-                          break;
-                          case 71:
-                            dataType = "List";
-                            break;
-                            case 72:
-                              dataType = "List";
-                              break;
-
+      case 62:
+        dataType = "URL";
+        break;
+      case 63:
+        dataType = "Code";
+        break;
+      case 64:
+        dataType = "Text";
+        break;
+      case 65:
+        dataType = "Text";
+        break;
+      case 66:
+        dataType = "Number";
+        break;
+      case 67:
+        dataType = "ID User";
+        break;
+      case 68:
+        dataType = "Timestamp";
+        break;
+      case 69:
+        dataType = "Timestamp";
+        break;
+      case 70:
+        dataType = "Number";
+        break;
+      case 71:
+        dataType = "List";
+        break;
+      case 72:
+        dataType = "List";
+        break;
     }
     return [data.varName2, dataType];
   },
@@ -285,7 +320,7 @@ module.exports = {
 
   html(isEvent, data) {
     return `
-    <div style="position:absolute;bottom:0px;border: 1px solid #222;background:#000;color:#999;padding:3px;right:0px;z-index:999999">Version 1.0</div>
+    <div style="position:absolute;bottom:0px;border: 1px solid #222;background:#000;color:#999;padding:3px;right:0px;z-index:999999">Version 1.1</div>
     <div style="position:absolute;bottom:0px;border: 1px solid #222;background:#000;color:#999;padding:3px;left:0px;z-index:999999">DBM Extended</div>
 
 <server-input dropdownLabel="Servidor" selectId="server" variableContainerId="varNameContainer" variableInputId="varName"></server-input>
