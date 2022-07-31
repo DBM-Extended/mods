@@ -39,7 +39,15 @@ module.exports = {
     if (data.dontSend) {
       return `Store Data: ${text}`;
     }
-    return `${presets.getSendReplyTargetText(data.channel, data.varName)}: ${text}`;
+    if (data.descriptioncolor == undefined) {
+      data.descriptioncolor = "#ffffff"
+    }
+    if (data.storagewebhook > "0") {
+      return `Send via Webhook: ${data.varwebhook}`;
+    }
+    return data.description
+    ? `<font color="${data.descriptioncolor}">${data.description}</font>`
+    : `<font color="${data.descriptioncolor}">${presets.getSendReplyTargetText(data.channel, data.varName)}: ${text}</font>`
   },
 
   //---------------------------------------------------------------------
@@ -64,14 +72,14 @@ module.exports = {
   // This will make it so the patch version (0.0.X) is not checked.
   //---------------------------------------------------------------------
 
-   meta: {
+  meta: { 
     version: '2.1.5',
     preciseCheck: true,
     author: 'DBM Extended',
     authorUrl: 'https://github.com/DBM-Extended/mods',
     downloadURL: 'https://github.com/DBM-Extended/mods',
-    },
-	
+  },
+
   //---------------------------------------------------------------------
   // Action Fields
   //
@@ -99,6 +107,12 @@ module.exports = {
     "varName2",
     "iffalse",
     "iffalseVal",
+    "descriptioncolor",
+    "description",
+    "storagewebhook",
+    "varwebhook",
+    "webhookname",
+    "webhookavatar",
   ],
 
   //---------------------------------------------------------------------
@@ -114,10 +128,20 @@ module.exports = {
 
   html(isEvent, data) {
     return `
-<send-reply-target-input selectId="channel" variableInputId="varName"></send-reply-target-input>
+    <div style="position:absolute;bottom:0px;border: 1px solid #222;background:#000;color:#999;padding:3px;right:0px;z-index:999999">Version 1.1</div>
+    <div style="position:absolute;bottom:0px;border: 1px solid #222;background:#000;color:#999;padding:3px;left:0px;z-index:999999">DBM-Extended</div>
 
+    <div style="width:100%" id="xin2"><send-reply-target-input dropdownLabel="Send to" selectId="channel" variableInputId="varName"></send-reply-target-input>
+    <br><br><br>
+</div><div id="xin3"><div style="float: left; width: 35%">
+<span class="dbminputlabel">Send to</span><br>
+<select class="round">
+<option value="0" selected>Webhook</option>
+</select>
+</div>
 <br><br><br>
-
+</div>
+<div style="width:100%">
 <tab-system style="margin-top: 20px;">
 
 
@@ -145,8 +169,19 @@ module.exports = {
                   <br>
 
                   <span class="dbminputlabel">Color</span><br>
-                  <input id="color" class="round" type="text" placeholder="Leave blank for default...">
+                  <table style="width:100%"><tr><td><input id="color" name="actionxinxyla" class="round" type="text" placeholder="Leave blank for default..."><td>
+                  <td style="width:40px;text-align:center;padding:4px"><a id="btr1" style="cursor:pointer" onclick="(function(){
+                    document.getElementById('color').type = 'color'
+                    document.getElementById('btr1').style.display = 'none';
+                    document.getElementById('btr2').style.display = 'block';
+                    })()"><button class="tiny compact ui icon button">Color</button></a><a id="btr2" style="cursor:pointer;display:none" onclick="(function(){
+                      document.getElementById('color').type = 'text';
+                      document.getElementById('btr1').style.display = 'block';
+                      document.getElementById('btr2').style.display = 'none';
+                      })()"><button class="tiny compact ui icon button">Message</button></a><td></tr></table>
                 </div>
+                
+                
 
                 <div style="float: right; width: calc(50% - 12px);">
                   <span class="dbminputlabel">URL</span><br>
@@ -247,9 +282,9 @@ module.exports = {
     </div>
   </tab>
 
-
   <tab label="Buttons" icon="clone">
-    <div style="padding: 8px;">
+  <div style="padding: 16px;text-align:center"id="xin4n">Webhook does not support Buttons</div>
+    <div style="padding: 8px;" id="xin4">
 
       <dialog-list id="buttons" fields='["name", "type", "id", "row", "url", "emoji", "disabled", "mode", "time", "actions"]' dialogTitle="Button Info" dialogWidth="600" dialogHeight="700" listLabel="Buttons" listStyle="height: calc(100vh - 350px);" itemName="Button" itemCols="4" itemHeight="40px;" itemTextFunction="data.name" itemStyle="text-align: center; line-height: 40px;">
         <div style="padding: 16px;">
@@ -318,10 +353,11 @@ module.exports = {
   </tab>
 
 
-  <tab label="Selects" icon="list alternate">
-    <div style="padding: 8px;">
+  <tab label="Menus" icon="list alternate">
+  <div style="padding: 16px;text-align:center"id="xin5n">Webhook does not support Menus</div>
+    <div style="padding: 8px;" id="xin5">
 
-      <dialog-list id="selectMenus" fields='["placeholder", "id", "tempVarName", "row", "min", "max", "mode", "time", "options", "actions"]' dialogTitle="Select Menu Info" dialogWidth="800" dialogHeight="700" listLabel="Select Menus" listStyle="height: calc(100vh - 350px);" itemName="Select Menu" itemCols="1" itemHeight="40px;" itemTextFunction="data.placeholder + '<br>' + data.options" itemStyle="text-align: left; line-height: 40px;">
+      <dialog-list id="selectMenus" fields='["placeholder", "id", "tempVarName", "row", "min", "max", "mode", "time", "options", "actions"]' dialogTitle="Select Menu Info" dialogWidth="800" dialogHeight="700" listLabel="Menus" listStyle="height: calc(100vh - 350px);" itemName="Select Menu" itemCols="1" itemHeight="40px;" itemTextFunction="data.placeholder + '<br>' + data.options" itemStyle="text-align: left; line-height: 40px;">
         <div style="padding: 16px;">
           <div style="width: calc(33% - 16px); float: left; margin-right: 16px;">
             <span class="dbminputlabel">Placeholder</span>
@@ -425,12 +461,89 @@ module.exports = {
   <tab label="Files" icon="file image">
     <div style="padding: 8px;">
 
-      <dialog-list id="attachments" fields='["url", "name", "spoiler"]' dialogTitle="Attachment Info" dialogWidth="400" dialogHeight="280" listLabel="Files" listStyle="height: calc(100vh - 350px);" itemName="File" itemCols="1" itemHeight="30px;" itemTextFunction="data.url" itemStyle="text-align: left; line-height: 30px;">
-        <div style="padding: 16px;">
+      <dialog-list id="attachments" fields='["type", "url", "canvasvar", "canvasnome", "compress", "name", "spoiler"]' dialogTitle="Attachment Info" dialogWidth="400" dialogHeight="480" listLabel="Files" listStyle="height: calc(100vh - 350px);" itemName="File" itemCols="1" itemHeight="30px;" itemTextFunction="glob.formatItem(data)" itemStyle="text-align: left; line-height: 30px;">
+        <div style="padding: 16px;" onmouseover="(function(){
+
+          var aselect = document.getElementById('type');
+            var avalue = aselect.options[aselect.selectedIndex].value
+        
+          if (avalue == 0) {
+              document.getElementById('xinxyla1').style.display = 'none';
+              document.getElementById('xinxyla2').style.display = 'block';
+              document.getElementById('xinxyla3').style.display = 'block';
+        }
+        if (avalue == 1) {
+          document.getElementById('xinxyla2').style.display = 'none';
+          document.getElementById('xinxyla1').style.display = 'block';
+          document.getElementById('xinxyla3').style.display = 'block';
+    }   
+    
+    if (avalue == 2) {
+      document.getElementById('xinxyla2').style.display = 'none';
+      document.getElementById('xinxyla1').style.display = 'block';
+      document.getElementById('xinxyla3').style.display = 'none';
+    } 
+
+        
+        })()">
+
+        <span class="dbminputlabel">Attachment Type</span>
+        <select id="type" class="round" onchange="(function(){
+
+          var aselect = document.getElementById('type');
+            var avalue = aselect.options[aselect.selectedIndex].value
+        
+            if (avalue == 0) {
+              document.getElementById('xinxyla1').style.display = 'none';
+              document.getElementById('xinxyla2').style.display = 'block';
+              document.getElementById('xinxyla3').style.display = 'block';
+        }
+        if (avalue == 1) {
+          document.getElementById('xinxyla2').style.display = 'none';
+          document.getElementById('xinxyla1').style.display = 'block';
+          document.getElementById('xinxyla3').style.display = 'block';
+    }   
+    
+    if (avalue == 2) {
+      document.getElementById('xinxyla2').style.display = 'none';
+      document.getElementById('xinxyla1').style.display = 'block';
+      document.getElementById('xinxyla3').style.display = 'none';
+    }      
+        
+        })()">>
+          <option value="0">Local/Web URL</option>
+          <option value="1">Canvas</option>
+          <option value="2">DBM Images</option>
+        </select>
+        <br><div id="xinxyla2">
           <span class="dbminputlabel">Attachment Local/Web URL</span>
           <input id="url" class="round" type="text" value="resources/">
 
-          <br>
+          <br></div>
+          <div id="xinxyla1">
+          <span class="dbminputlabel">Variable Type</span><br>
+    <select id="canvasvar" class="round">
+      ${data.variables[1]}
+    </select>
+<br>
+          <span class="dbminputlabel">Variable Name</span>
+          <input id="canvasname" class="round" type="text" list="variableList">
+<br>
+<div id="xinxyla3">
+          <span class="dbminputlabel">Compression Level</span><br>
+          <select id="compress" class="round">
+            <option value="0">1</option>
+            <option value="1">2</option>
+            <option value="2">3</option>
+            <option value="3">4</option>
+            <option value="4">5</option>
+            <option value="5">6</option>
+            <option value="6">7</option>
+            <option value="7">8</option>
+            <option value="8">9</option>
+            <option value="9" selected>10</option>
+          </select>
+          <br></div></div>
 
           <span class="dbminputlabel">Attachment Name</span>
           <input id="name" class="round" type="text" placeholder="Leave blank for default...">
@@ -447,7 +560,8 @@ module.exports = {
 
 
   <tab label="Settings" icon="cogs">
-    <div style="padding: 8px;height:250px;overflow:auto">
+    <div style="padding: 8px;height:250px;overflow-y: scroll;overflow-x: hidden;width:100%">
+    <div id="xincheck">
       <dbm-checkbox style="float: left;" id="reply" label="Reply to Interaction if Possible" checked></dbm-checkbox>
 
       <dbm-checkbox style="float: right;" id="ephemeral" label="Make Reply Private (Ephemeral)"></dbm-checkbox>
@@ -463,25 +577,49 @@ module.exports = {
       </div>
 
       <br>
-      <hr class="subtlebar" style="margin-top: 4px; margin-bottom: 4px;">
-
+      <hr class="subtlebar" style="margin-top: 4px; margin-bottom: 4px">
+      </div>
       <br>
-
-      <div style="padding-bottom: 12px;">
+      <div style="width:96%;display:block">
+      <div style="padding-bottom: 12px;" id="xin1">
         <retrieve-from-variable allowNone dropdownLabel="Message/Options to Edit" selectId="editMessage" variableInputId="editMessageVarName" variableContainerId="editMessageVarNameContainer">
           <option value="intUpdate">Interaction Update</option>
         </retrieve-from-variable>
+      
+
+      <br><br><br></div>
+
+   
+    <div>
+      <div style="float: left; width: 35%">
+      <span class="dbminputlabel">Send as Webhook</span><br>
+      <select id="storagewebhook" class="round" onchange="glob.onComparisonChanged2(this)">
+      <option value="0" selected>No</option>
+      <option value="1">Temp Variable</option>
+      <option value="2">Server Variable</option>
+      <option value="3">Global Variable</option>
+    </select>
+    </div>
+    <div id="webhookdiv" style="display: none; float: right; width: 60%;"><span id="ifName" class="dbminputlabel">Variable Name</span><br><input list="variableList" id="varwebhook" class="round" name="actionxinxyla" type="text"></div>
+    <div id="webhookdiv2" style="display: none;padding-top: 12px;">
+    <br><br><br>
+    <span class="dbminputlabel">Webhook Name</span><br>
+    <input id="webhookname" class="round" type="text" style="width:100%" placeholder="Optional">
+    <br>
+    <span class="dbminputlabel">Webhook avatar image URL</span><br>
+    <input id="webhookavatar" class="round" type="text" style="width:100%" placeholder="Optional"><br>
+    <hr class="subtlebar" style="margin-top: 4px; margin-bottom: -54px">
+    </div>
+      <br><br><br>
+      <div style="padding-top: 12px">
+        <store-in-variable allowNone dropdownLabel="Store in" selectId="storage" variableInputId="varName2" variableContainerId="varNameContainer2"></store-in-variable>
       </div>
 
       <br><br><br>
-
-      <div style="padding-bottom: 12px;">
-        <store-in-variable allowNone selectId="storage" variableInputId="varName2" variableContainerId="varNameContainer2"></store-in-variable>
-      </div>
-
-      <br><br><br>
+      <hr class="subtlebar" style="margin-top: 4px; margin-bottom: 4px">
+      <br>
       <div>
-      <div style="float: left; width: 35%;">
+      <div style="float: left; width: 35%">
       <span class="dbminputlabel">If Message Delivery Fails</span><br>
       <select id="iffalse" class="round" onchange="glob.onComparisonChanged(this)">
       <option value="0">Continue Actions</option>
@@ -491,11 +629,21 @@ module.exports = {
       <option value="4">Go to Action Anchor</option>
     </select>
     </div>
-    <div id="iffalseContainer" style="display: none; float: right; width: 60%;"><span id="ifName" class="dbminputlabel">For</span><br><input id="iffalseVal" class="round" type="text"></div>
+    <div id="iffalseContainer" style="display: none; float: right; width: 60%;"><span id="ifName" class="dbminputlabel">For</span><br><input id="iffalseVal" class="round" name="actionxinxyla" type="text"></div>
       <br><br><br>
+
+      <div style="padding-bottom: 12px;padding-top: 12px">
+      <table style="width:100%;"><tr>
+      <td><span class="dbminputlabel">Action Description</span><br><input type="text" class="round" id="description" placeholder="Leave empty to remove"></td>
+      <td style="padding:0px 0px 0px 10px;width:55px"><span class="dbminputlabel">Color</span><br><input type="color" value="#ffffff" class="round" id="descriptioncolor"></td>
+      </tr></table>
+      </div>
+
+      </div>
+
     </div>
   </tab>
-</tab-system>`;
+</tab-system></div>`;
   },
 
   //---------------------------------------------------------------------
@@ -516,7 +664,69 @@ module.exports = {
       } else {
         document.getElementById("iffalseContainer").style.display = "none";
       }}
+
       glob.onComparisonChanged(document.getElementById("iffalse"));
+
+
+      glob.onComparisonChanged2 = function (event) {
+        if (event.value > "0") {
+          document.getElementById("webhookdiv").style.display = null;
+          document.getElementById("webhookdiv2").style.display = null;
+          document.getElementById("xincheck").style.display = "none";
+          document.getElementById("xin1").style.display = "none";
+          document.getElementById("xin2").style.display = "none";
+          document.getElementById("xin3").style.display = "block";
+          document.getElementById("xin4").style.display = "none";
+          document.getElementById("xin5").style.display = "none";
+          document.getElementById("xin4n").style.display = null;
+          document.getElementById("xin5n").style.display = null;
+          const myInput = document.querySelector("#reply")
+          myInput.value = false
+          const myInput2 = document.querySelector("#dontSend")
+          myInput2.value = false
+          const myInput3 = document.querySelector("#ephemeral")
+          myInput3.value = false
+          const myInput4 = document.querySelector("#tts")
+          myInput4.value = false
+          const myInput5 = document.querySelector("#overwrite")
+          myInput5.value = false
+          const myInput6 = document.querySelector("#editMessage")
+          myInput6.value = 0
+          const myInput7 = document.querySelector("#channel")
+          myInput7.value = 0
+        } else {
+          document.getElementById("webhookdiv").style.display = "none";
+          document.getElementById("webhookdiv2").style.display = "none";
+          document.getElementById("xincheck").style.display = null;
+          document.getElementById("xin1").style.display = null;
+          document.getElementById("xin2").style.display = "block";
+          document.getElementById("xin3").style.display = "none";
+          document.getElementById("xin4").style.display = null;
+          document.getElementById("xin5").style.display = null;
+          document.getElementById("xin4n").style.display = "none";
+          document.getElementById("xin5n").style.display = "none";
+        }}
+  
+        glob.onComparisonChanged2(document.getElementById("storagewebhook"));
+
+
+      glob.formatItem = function (data) {
+        let result = '<div style="display: inline-block; width: 200px; padding-left: 8px;">';
+        const comp = data.type;
+        switch (comp) {
+          case "0":
+            result += "Attachment: " + data.url;
+            break;
+            case "1":
+              result += "Canvas: " +data.canvasname;
+              break;
+              case "2":
+                result += "DBM Images: " +data.canvasname;
+                break;
+        }
+        result += "</div>";
+        return result;
+      };
 
   },
   //---------------------------------------------------------------------
@@ -590,10 +800,19 @@ module.exports = {
   //---------------------------------------------------------------------
 
   async action(cache) {
+    
     const data = cache.actions[cache.index];
 
     const channel = parseInt(data.channel, 10);
     const message = data.message;
+    const storagewebhook = parseInt(data.storagewebhook)
+    const webhookname = this.evalMessage(data.webhookname, cache)
+    const webhookavatar = this.evalMessage(data.webhookavatar, cache)
+    if (storagewebhook > 0){
+    varwebhook = this.evalMessage(data.varwebhook, cache)
+    Mods = this.getMods()
+    webhook = Mods.getWebhook(storagewebhook, varwebhook, cache)
+  }
     if (data.channel === undefined || message === undefined) {
       return;
     }
@@ -752,6 +971,13 @@ module.exports = {
       messageOptions.components = newComponents;
     }
 
+    if(storagewebhook > 0){
+    if(webhookname !== ""){
+    messageOptions.username = webhookname}
+    if(webhookavatar !== ""){
+      messageOptions.avatarURL = await webhookavatar}
+    }
+
     if (data.tts) {
       messageOptions.tts = true;
     }
@@ -762,6 +988,50 @@ module.exports = {
         messageOptions.files = [];
       }
       for (let i = 0; i < data.attachments.length; i++) {
+        
+        if(data.attachments[i].type == "1"){
+          const { DiscordJS } = this.getDBM();
+          const Canvas = require('canvas')
+          const attachment = data.attachments[i];
+          const varnamer = this.evalMessage(attachment?.canvasname, cache);
+          const varid = this.evalMessage(attachment?.canvasvar, cache);
+          const imagedata = this.getVariable(varid, varnamer, cache)
+          if (!imagedata) {
+            this.callNextAction(cache)
+            return
+          }
+          const image = new Canvas.Image()
+          image.src = imagedata
+          const canvas = Canvas.createCanvas(image.width, image.height)
+          const ctx = canvas.getContext('2d')
+          ctx.drawImage(image, 0, 0, image.width, image.height)
+          const buffer = canvas.toBuffer('image/png', { compressionLevel: data.attachments[i].compress })
+          const spoiler = !!attachment?.spoiler;
+          const name = attachment?.name || (spoiler ? Util.basename("image.png") : undefined);
+          const msgAttachment = new MessageAttachment(buffer, name);
+          if (spoiler) {
+            msgAttachment.setSpoiler(true);
+          }
+          messageOptions.files.push(msgAttachment);
+
+        }
+        if(data.attachments[i].type == "2"){
+          const { Images } = this.getDBM();
+          const attachment = data.attachments[i];
+          const varnamer = this.evalMessage(attachment?.canvasname, cache);
+          const varid = this.evalMessage(attachment?.canvasvar, cache);
+          const imagedata = this.getVariable(varid, varnamer, cache)
+          const spoiler = !!attachment?.spoiler;
+          const name = attachment?.name || (spoiler ? Util.basename("image.png") : undefined);
+          const buffer = await Images.createBuffer(imagedata)
+          const msgAttachment = new MessageAttachment(buffer, name);
+          if (spoiler) {
+            msgAttachment.setSpoiler(true);
+          }
+          messageOptions.files.push(msgAttachment);
+
+        } 
+        if(data.attachments[i].type == "0" || data.attachments[i].type == undefined){
         const attachment = data.attachments[i];
         const url = this.evalMessage(attachment?.url, cache);
         if (url) {
@@ -772,7 +1042,7 @@ module.exports = {
             msgAttachment.setSpoiler(true);
           }
           messageOptions.files.push(msgAttachment);
-        }
+        }}
       }
     }
 
@@ -874,16 +1144,29 @@ module.exports = {
       promise.then(onComplete).catch((err) => this.displayError(data, cache, err));
     }
 
+    
     else if (target?.send) {
-      target
+
+      if(storagewebhook > 0){
+        webhook      
         .send(messageOptions)
         .then(onComplete)
         .catch((err) => this.displayError(data, cache, err) || this.executeResults(false, data, cache));
+      } else {
+        target
+        .send(messageOptions)
+        .then(onComplete)
+        .catch((err) => this.displayError(data, cache, err) || this.executeResults(false, data, cache));
+      }
+        
     }
 
-    else {
+
+
+        else {
       this.callNextAction(cache);
     }
+
   },
 
   //---------------------------------------------------------------------

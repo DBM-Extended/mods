@@ -1,5 +1,5 @@
 module.exports = {
-  name: 'Create Server Template',
+  name: 'Create Server Template MOD',
   section: 'Server Control',
     meta: {
       version: '2.1.5',
@@ -23,18 +23,20 @@ module.exports = {
 
   html (isEvent, data) {
     return `
+    <div style="position:absolute;bottom:0px;border: 1px solid #222;background:#000;color:#999;padding:3px;right:0px;z-index:999999">Version 0.2</div>
+    <div style="position:absolute;bottom:0px;border: 1px solid #222;background:#000;color:#999;padding:3px;left:0px;z-index:999999">DBM-Extended</div>
 <div>
-<server-input dropdownLabel="Server" selectId="server" variableContainerId="varNameContainer" variableInputId="varName"></server-input>
+<server-input dropdownLabel="Servidor" selectId="server" variableContainerId="varNameContainer" variableInputId="varName"></server-input>
 <br><br><br>
 <div style="float: left; width: 100%;">
-<span class="dbminputlabel">Model Name</span><br>
+<span class="dbminputlabel">Template Name</span><br>
 <input id="templatename" class="round" type="text">
 </div>
 <br><br><br>
 <div style="padding-top: 3px;">
 <span class="dbminputlabel">Description</span><br>
-		  <textarea id="templatedescricao" name="templatedescricao" rows="3" placeholder="Enter text here..." style="width: 99%; font-family: monospace; white-space: nowrap;"></textarea>
-      Máximo de 120 caracteres
+		  <textarea id="templatedescricao" name="templatedescricao" rows="3" placeholder="Insert text here..." style="width: 99%; font-family: monospace; white-space: nowrap;"></textarea>
+      Maximum 120 characters
 	  </div>
     <br>
 <div style="padding-top: 8px;">
@@ -62,7 +64,7 @@ module.exports = {
     const templatename = this.evalMessage(data.templatename, cache)
     const templatedescricao = this.evalMessage(data.templatedescricao, cache)
     result = targetServer.createTemplate(templatename, templatedescricao).catch((err) => {
-      console.log('There is already a template on the Server')
+      console.log('A template already exists on the server')
       console.error(err)
     })
 
