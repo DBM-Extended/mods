@@ -1,5 +1,5 @@
 module.exports = {
-  name: 'Canvas Image Filter MOD',
+  name: 'Canvas Image Filter',
   section: 'Image Editing',
   meta: {
     version: '2.1.5',

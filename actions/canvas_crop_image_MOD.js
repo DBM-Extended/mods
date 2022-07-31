@@ -1,5 +1,5 @@
 module.exports = {
-  name: 'Canvas Crop Image MOD',
+  name: 'Canvas Crop Image',
   section: 'Image Editing',
   meta: {
     version: '2.1.5',

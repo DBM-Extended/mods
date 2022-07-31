@@ -1,5 +1,5 @@
 module.exports = {
-  name: 'Canvas Draw MOD',
+  name: 'Canvas Draw',
   section: 'Image Editing',
   meta: {
     version: '2.1.5',

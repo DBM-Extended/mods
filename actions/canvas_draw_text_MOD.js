@@ -1,6 +1,6 @@
 module.exports = {
 
-name: "Canvas Draw Text on Image MOD",
+name: "Canvas Draw Text on Image",
 section: "Image Editing",
 meta: {
     version: '2.1.5',

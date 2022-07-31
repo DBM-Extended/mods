@@ -1,5 +1,5 @@
 module.exports = {
-  name: 'Canvas Create Background MOD',
+  name: 'Canvas Create Background',
   section: 'Image Editing',
   meta: {
     version: '2.1.5',

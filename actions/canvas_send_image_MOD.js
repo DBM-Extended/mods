@@ -1,5 +1,5 @@
 module.exports = {
-  name: 'Canvas Send Image MOD',
+  name: 'Canvas Send Image',
   section: 'Image Editing',
   meta: {
     version: '2.1.5',

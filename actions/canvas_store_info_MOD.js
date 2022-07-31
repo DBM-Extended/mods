@@ -1,5 +1,5 @@
 module.exports = {
-  name: "Canvas Store Info MOD",
+  name: "Canvas Store Info",
   section: 'Other Stuff',
   meta: {
     version: '2.1.5',

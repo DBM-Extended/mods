@@ -1,5 +1,5 @@
 module.exports = {
-  name: 'Canvas Edit Image Border MOD',
+  name: 'Canvas Edit Image Border',
   section: 'Image Editing',
   meta: {
     version: '2.1.5',

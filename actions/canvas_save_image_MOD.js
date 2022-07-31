@@ -1,5 +1,5 @@
 module.exports = {
-  name: 'Canvas Save Image MOD',
+  name: 'Canvas Save Image',
   section: 'Image Editing',
   meta: {
     version: '2.1.5',

@@ -1,5 +1,5 @@
 module.exports = {
-  name: 'Canvas Draw Image on Image MOD',
+  name: 'Canvas Draw Image on Image',
   section: 'Image Editing',
   meta: {
     version: '2.1.5',

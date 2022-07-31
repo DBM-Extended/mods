@@ -1,5 +1,5 @@
 module.exports = {
-  name: 'Canvas Generate Progress Bar MOD',
+  name: 'Canvas Generate Progress Bar',
   section: 'Image Editing',
   meta: {
     version: '2.1.5',
