@@ -1,11 +1,11 @@
 /******************************************************
  * Discord Bot Maker Bot
- * Version 2.1.5
+ * Version 2.1.6
  * Robert Borghese
  ******************************************************/
 
 const DBM = {};
-DBM.version = "2.1.5";
+ DBM.version = "2.1.6";
 
 const DiscordJS = (DBM.DiscordJS = require("discord.js"));
 
@@ -23,7 +23,34 @@ const noop = () => void 0;
 //#region Output Messages
 // Gathered all the output messages in single place for easier translation.
 //---------------------------------------------------------------------
-
+ const Discord = require('discord.js')
+ const { Player } = require('discord-player')
+ const { Client, Intents } = require('discord.js')
+ const client = new Client({ intents: [
+   Intents.FLAGS.GUILDS,
+   Intents.FLAGS.GUILD_MESSAGES,
+   Intents.FLAGS.GUILD_MEMBERS,
+   Intents.FLAGS.GUILD_INVITES,
+   Intents.FLAGS.GUILD_BANS,
+   Intents.FLAGS.GUILD_INVITES,
+   Intents.FLAGS.GUILD_EMOJIS_AND_STICKERS,
+   Intents.FLAGS.GUILD_VOICE_STATES,
+   Intents.FLAGS.GUILD_MESSAGE_REACTIONS
+ ], partials: [
+   "MESSAGE",
+   "CHANNEL",
+   "GUILD_MEMBER",
+   "REACTION"
+ ]});
+ const msplayer = new Player(client, {
+ ytdlOptions: {
+     quality: "highestaudio",
+     highWaterMark: 1 << 25
+ }
+ })
+ module.exports.musicplayer = msplayer
+ module.exports.dbp = '2.0.0'
+ 
 const MsgType = {
   MISSING_ACTION: 0,
   DATA_PARSING_ERROR: 1,
@@ -143,7 +170,7 @@ function PrintError(type) {
     case MsgType.DUPLICATE_BUTTON_ID: {
       warn(
         format(
-          'Button interaction with unique id "%s" already exists!\nThis duplicate will be ignored.\n',
+          'Button interaction with unique id "%s" already exists!\nThis duplicate will be ignored.\nReport this on the discord https://discord.gg/shiba on the support channel alongside this button id: "%s"',
           arguments[1],
         ),
       );
@@ -904,6 +931,32 @@ Bot.onInteraction = function (interaction) {
     }
     if (!Actions.checkTemporaryInteractionResponses(interaction)) {
       if (interaction.isButton()) {
+        if (interaction.customId === 'snake_up') return;
+        if (interaction.customId === 'snake_left') return;
+        if (interaction.customId === 'snake_right') return;
+        if (interaction.customId === 'snake_down') return;
+        if (interaction.customId === 'snake_stop') return;
+        if (interaction.customId === 'r_rps') return;
+        if (interaction.customId === 'p_rps') return;
+        if (interaction.customId === 's_rps') return;
+        if (interaction.customId === 'accept') return;
+        if (interaction.customId === 'reject') return;
+        if (interaction.customId === '2048_up') return;
+        if (interaction.customId === '2048_left') return;
+        if (interaction.customId === '2048_right') return;
+        if (interaction.customId === '2048_down') return;
+        if (interaction.customId === '1_connect4') return;
+        if (interaction.customId === '2_connect4') return;
+        if (interaction.customId === '3_connect4') return;
+        if (interaction.customId === '4_connect4') return;
+        if (interaction.customId === '5_connect4') return;
+        if (interaction.customId === '6_connect4') return;
+        if (interaction.customId === '7_connect4') return;
+        for (let i = 1; i < 4; i++) {
+          if (interaction.customId === `a${i}_TicTacToe`) return;
+          if (interaction.customId === `b${i}_TicTacToe`) return;
+          if (interaction.customId === `c${i}_TicTacToe`) return;
+        }
         this.onButtonInteraction(interaction);
       } else if (interaction.isSelectMenu()) {
         this.onSelectMenuInteraction(interaction);

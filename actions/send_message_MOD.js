@@ -32,7 +32,11 @@ module.exports = {
     } else if (data.buttons?.length > 0 || data.selectMenus?.length > 0) {
       text = `${data.buttons.length} Buttons and ${data.selectMenus.length} Select Menus`;
     } else if (data.editMessage && data.editMessage !== "0") {
-      text = `Message Options - ${presets.getVariableText(data.editMessage, data.editMessageVarName)}`;
+      if (data.editMessage === "intUpdate") {
+        text = "Message Options - Edit Interaction"
+      } else {
+        text = `Message Options - ${presets.getVariableText(data.editMessage, data.editMessageVarName)}`;
+      }
     } else {
       text = `Nothing (might cause error)`;
     }
@@ -128,7 +132,7 @@ module.exports = {
 
   html(isEvent, data) {
     return `
-    <div style="position:absolute;bottom:0px;border: 1px solid #222;background:#000;color:#999;padding:3px;right:0px;z-index:999999">Version 1.1</div>
+    <div style="position:absolute;bottom:0px;border: 1px solid #222;background:#000;color:#999;padding:3px;right:0px;z-index:999999">Version 1.3</div>
     <div style="position:absolute;bottom:0px;border: 1px solid #222;background:#000;color:#999;padding:3px;left:0px;z-index:999999">DBM-Extended</div>
 
     <div style="width:100%" id="xin2"><send-reply-target-input dropdownLabel="Send to" selectId="channel" variableInputId="varName"></send-reply-target-input>
@@ -461,7 +465,7 @@ module.exports = {
   <tab label="Files" icon="file image">
     <div style="padding: 8px;">
 
-      <dialog-list id="attachments" fields='["type", "url", "canvasvar", "canvasnome", "compress", "name", "spoiler"]' dialogTitle="Attachment Info" dialogWidth="400" dialogHeight="480" listLabel="Files" listStyle="height: calc(100vh - 350px);" itemName="File" itemCols="1" itemHeight="30px;" itemTextFunction="glob.formatItem(data)" itemStyle="text-align: left; line-height: 30px;">
+      <dialog-list id="attachments" fields='["type", "url", "canvasvar", "canvasname", "compress", "name", "spoiler"]' dialogTitle="Attachment Info" dialogWidth="400" dialogHeight="480" listLabel="Files" listStyle="height: calc(100vh - 350px);" itemName="File" itemCols="1" itemHeight="30px;" itemTextFunction="glob.formatItem(data)" itemStyle="text-align: left; line-height: 30px;">
         <div style="padding: 16px;" onmouseover="(function(){
 
           var aselect = document.getElementById('type');
@@ -663,7 +667,8 @@ module.exports = {
         document.getElementById("iffalseContainer").style.display = null;
       } else {
         document.getElementById("iffalseContainer").style.display = "none";
-      }}
+      }
+    }
 
       glob.onComparisonChanged(document.getElementById("iffalse"));
 
@@ -705,7 +710,8 @@ module.exports = {
           document.getElementById("xin5").style.display = null;
           document.getElementById("xin4n").style.display = "none";
           document.getElementById("xin5n").style.display = "none";
-        }}
+        }
+      }
   
         glob.onComparisonChanged2(document.getElementById("storagewebhook"));
 
@@ -800,7 +806,7 @@ module.exports = {
   //---------------------------------------------------------------------
 
   async action(cache) {
-    
+
     const data = cache.actions[cache.index];
 
     const channel = parseInt(data.channel, 10);
@@ -808,11 +814,11 @@ module.exports = {
     const storagewebhook = parseInt(data.storagewebhook)
     const webhookname = this.evalMessage(data.webhookname, cache)
     const webhookavatar = this.evalMessage(data.webhookavatar, cache)
-    if (storagewebhook > 0){
-    varwebhook = this.evalMessage(data.varwebhook, cache)
-    Mods = this.getMods()
-    webhook = Mods.getWebhook(storagewebhook, varwebhook, cache)
-  }
+    if (storagewebhook > 0) {
+      varwebhook = this.evalMessage(data.varwebhook, cache)
+      Mods = this.getMods()
+      webhook = Mods.getWebhook(storagewebhook, varwebhook, cache)
+    }
     if (data.channel === undefined || message === undefined) {
       return;
     }
@@ -824,7 +830,7 @@ module.exports = {
     const overwrite = data.overwrite;
 
     let isEdit = 0;
-    if(data.editMessage === "intUpdate") {
+    if (data.editMessage === "intUpdate") {
       isEdit = 2;
     } else {
       const editMessage = parseInt(data.editMessage, 10);
@@ -843,8 +849,14 @@ module.exports = {
       }
     }
 
+    let content;
 
-    const content = this.evalMessage(message|| '\u200B', cache);
+    if (data.embeds?.length > 0 || data.attachments?.length > 0 || data.buttons?.length > 0 || data.selectMenus?.length > 0) {
+      content = this.evalMessage(message, cache);
+    } else {
+      content = this.evalMessage(message || "\u200b", cache);
+    }
+
     if (content) {
       if (messageOptions.content && !overwrite) {
         messageOptions.content += content;
@@ -971,11 +983,13 @@ module.exports = {
       messageOptions.components = newComponents;
     }
 
-    if(storagewebhook > 0){
-    if(webhookname !== ""){
-    messageOptions.username = webhookname}
-    if(webhookavatar !== ""){
-      messageOptions.avatarURL = await webhookavatar}
+    if (storagewebhook > 0) {
+      if (webhookname !== "") {
+        messageOptions.username = webhookname
+      }
+      if (webhookavatar !== "") {
+        messageOptions.avatarURL = await webhookavatar
+      }
     }
 
     if (data.tts) {
@@ -988,7 +1002,7 @@ module.exports = {
         messageOptions.files = [];
       }
       for (let i = 0; i < data.attachments.length; i++) {
-        
+
         if(data.attachments[i].type == "1"){
           const { DiscordJS } = this.getDBM();
           const Canvas = require('canvas')
@@ -1030,19 +1044,20 @@ module.exports = {
           }
           messageOptions.files.push(msgAttachment);
 
-        } 
+        }
         if(data.attachments[i].type == "0" || data.attachments[i].type == undefined){
-        const attachment = data.attachments[i];
-        const url = this.evalMessage(attachment?.url, cache);
-        if (url) {
-          const spoiler = !!attachment?.spoiler;
-          const name = attachment?.name || (spoiler ? Util.basename(url) : undefined);
-          const msgAttachment = new MessageAttachment(url, name);
-          if (spoiler) {
-            msgAttachment.setSpoiler(true);
+          const attachment = data.attachments[i];
+          const url = this.evalMessage(attachment?.url, cache);
+          if (url) {
+            const spoiler = !!attachment?.spoiler;
+            const name = attachment?.name || (spoiler ? Util.basename(url) : undefined);
+            const msgAttachment = new MessageAttachment(url, name);
+            if (spoiler) {
+              msgAttachment.setSpoiler(true);
+            }
+            messageOptions.files.push(msgAttachment);
           }
-          messageOptions.files.push(msgAttachment);
-        }}
+        }
       }
     }
 
@@ -1103,12 +1118,12 @@ module.exports = {
 
       if (cache.interaction?.replied && cache.interaction?.editReply) {
         promise = cache.interaction.editReply(messageOptions);
-      } else if(cache?.interaction?.update) {
+      } else if (cache?.interaction?.update) {
         promise = cache.interaction.update(messageOptions);
       } else {
         this.displayError(data, cache, "Send Message -> Message/Options to Edit -> Interaction Update / Could not find interaction to edit");
       }
-      
+
       if (promise) {
         promise
           .then(onComplete)
@@ -1144,26 +1159,26 @@ module.exports = {
       promise.then(onComplete).catch((err) => this.displayError(data, cache, err));
     }
 
-    
+
     else if (target?.send) {
 
-      if(storagewebhook > 0){
-        webhook      
-        .send(messageOptions)
-        .then(onComplete)
-        .catch((err) => this.displayError(data, cache, err) || this.executeResults(false, data, cache));
+      if (storagewebhook > 0) {
+        webhook
+          .send(messageOptions)
+          .then(onComplete)
+          .catch((err) => this.displayError(data, cache, err) || this.executeResults(false, data, cache));
       } else {
         target
-        .send(messageOptions)
-        .then(onComplete)
-        .catch((err) => this.displayError(data, cache, err) || this.executeResults(false, data, cache));
+          .send(messageOptions)
+          .then(onComplete)
+          .catch((err) => this.displayError(data, cache, err) || this.executeResults(false, data, cache));
       }
-        
+
     }
 
 
 
-        else {
+    else {
       this.callNextAction(cache);
     }
 
