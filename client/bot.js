@@ -170,7 +170,7 @@ function PrintError(type) {
     case MsgType.DUPLICATE_BUTTON_ID: {
       warn(
         format(
-          'Button interaction with unique id "%s" already exists!\nThis duplicate will be ignored.\nReport this on the discord https://discord.gg/shiba on the support channel alongside this button id: "%s"',
+          'Button interaction with unique id "%s" already exists!\nThis duplicate will be ignored.\Report this to the right person, alongside this button id: "%s"',
           arguments[1],
         ),
       );
