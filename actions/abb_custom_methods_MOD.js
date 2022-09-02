@@ -5,7 +5,7 @@
 // Stolen from Wrex :troll: ~ Lasse
 //---------------------------------------------------------------------
 // Changelog:
-// 2.1.5 - Lasse
+// 2.1.6 - Lasse
 //   - Use WrexMods instead
 // 1.0.1 - Lasse
 //   - Added getReaction()
@@ -21,7 +21,7 @@ custommethods.API = {};
 
 custommethods.DBM = null;
 
-custommethods.Version = "2.1.5";
+custommethods.Version = "2.1.6";
 
 // Methods:
 
@@ -77,7 +77,7 @@ var customaction = {};
 customaction.name = "custommethods";
 customaction.section = "Deprecated";
 customaction.author = "DBM Mods"; //Init.: Lasse
-customaction.version = "2.1.5"; //Added in 1.8.7 - Changelog at the top!
+customaction.version = "2.1.6"; //Added in 1.8.7 - Changelog at the top!
 customaction.short_description = "Required for some mods. Does nothing";
 
 customaction.html = function() {

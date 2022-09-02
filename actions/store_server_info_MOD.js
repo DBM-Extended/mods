@@ -3,7 +3,7 @@ module.exports = {
   name: "Store Server Info MOD",
   section: "Server Control",
   meta: {
-    version: '2.1.5',
+    version: '2.1.6',
     preciseCheck: true,
     author: 'DBM Mods',
     authorUrl: 'https://github.com/dbm-network/mods',

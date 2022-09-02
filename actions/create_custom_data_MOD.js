@@ -8,7 +8,7 @@ module.exports = {
     'storage'
   ],
 
-  meta: { version: "2.1.5", preciseCheck: true, author: "DBM Extended", authorUrl: "https://github.com/DBM-Extended/mods", downloadURL: "https://github.com/DBM-Extended/mods" },
+  meta: { version: "2.1.6", preciseCheck: true, author: "DBM Extended", authorUrl: "https://github.com/DBM-Extended/mods", downloadURL: "https://github.com/DBM-Extended/mods" },
 
   subtitle(data) {
     if (data.filePath && data.fileName) {

@@ -21,7 +21,7 @@ module.exports = {
     },
 
   
-	meta: { version: "2.1.4", preciseCheck: false, author: "DBM Extended", authorUrl: "https://github.com/DBM-Extended/mods", downloadURL: "https://github.com/DBM-Extended/mods/tree/main/actions/server_ban_count.js" },
+	meta: { version: "2.1.6", preciseCheck: false, author: "DBM Extended", authorUrl: "https://github.com/DBM-Extended/mods", downloadURL: "https://github.com/DBM-Extended/mods/tree/main/actions/server_ban_count.js" },
 
   
     fields: ["PhotoUrl", "storage", "varName"],
