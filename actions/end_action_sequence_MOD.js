@@ -36,7 +36,7 @@ module.exports = {
   //---------------------------------------------------------------------
 
   
-	meta: { version: "2.1.5", preciseCheck: true, author: "DBM Extended", authorUrl: "https://github.com/DBM-Extended/mods", downloadURL: "https://github.com/DBM-Extended/mods/tree/main/actions/end_if_ended.js" },
+	meta: { version: "2.1.6", preciseCheck: true, author: "DBM Extended", authorUrl: "https://github.com/DBM-Extended/mods", downloadURL: "https://github.com/DBM-Extended/mods/tree/main/actions/end_if_ended.js" },
 
   //---------------------------------------------------------------------
   // Action Fields

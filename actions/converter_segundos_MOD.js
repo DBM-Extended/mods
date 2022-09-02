@@ -2,7 +2,7 @@ module.exports = {
 name: "Convert seconds to Y/D/H/M/S",
 section: "Other Stuff",
 meta: {
-    version: '2.1.5',
+    version: '2.1.6',
     preciseCheck: true,
     author: 'DBM Extended',
 	short_description: "Convert seconds to years, months, days, hours, minutes and seconds.",

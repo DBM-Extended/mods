@@ -38,7 +38,7 @@ module.exports = {
 		 author: "Giingu",
 	
 		 // The version of the mod (Defaults to 1.0.0)
-		 version: "2.1.5", //Added in 2.1.5
+		 version: "2.1.6", //Added in 2.1.6
 	
 		 // A short description to show on the mod line for this mod (Must be on a single line)
 		 short_description: "DBMEX Mod Pack Information.",
@@ -106,7 +106,7 @@ module.exports = {
             <embedleftline style="background-color: #2b9696;"></embedleftline>
         <div class="embedinfo">
 	    <span class="embed-auth"><u>Translation information</u><br>Created by <b>DBM Extended</b></span><br>
-	    <span class="embed-desc">You will find the updates <a href="https://github.com/DBM-Extended/mods">here</a><br>Version: 2.1.1 for <br>Mods version: 2.1.5</span>
+	    <span class="embed-desc">You will find the updates <a href="https://github.com/DBM-Extended/mods">here</a><br>Version: 2.1.1 for <br>Mods version: 2.1.6</span>
         </div>
         </div><br>
 	<div style="width: 95%; padding-top: 8px;">
