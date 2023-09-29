@@ -1,11 +1,11 @@
-<a href="https://discord.gg/shiba">
+<a href="https://discord.gg/pochita">
 <p align="center">
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/DBM-Extended/mods/main/logo/DBMExtended_DarkMode.png" width="300">
   <img alt="Shows an illustrated sun in light color mode and a moon with stars in dark color mode." src="https://raw.githubusercontent.com/DBM-Extended/mods/main/logo/DBMExtended_LightMode.png" width="200">
 </picture>
 </p></a> 
-<a href="https://discord.gg/shiba">
+<a href="https://discord.gg/pochita">
 <p align="center">
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/DBM-Extended/mods/e350fb636fd5b9d1afc548f6f79b2e7f3ab6c87f/logo/DBMExtended_LoopDarkMode.svg" width="400" alt="DBM Extended Loop">
@@ -22,12 +22,12 @@
   <a title="Visits" href="https://github.com/DBM-Extended/mods/blob/master/LICENSE.md" target="_blank">
     <img src="http://hits.dwyl.com/DBM-Extended/mods.svg" />
   </a></br>
-<a href="https://discord.gg/shiba"><img src="https://img.shields.io/discord/624217127540359188?color=5865F2&label=Discord&logo=discord&logoColor=white&style=for-the-badge" alt="Support Server"></a>
+<a href="https://discord.gg/pochita"><img src="https://img.shields.io/discord/624217127540359188?color=5865F2&label=Discord&logo=discord&logoColor=white&style=for-the-badge" alt="Support Server"></a>
 <a href="https://store.steampowered.com/app/682130/Discord_Bot_Maker/">
 <img src="https://img.shields.io/badge/steam-%23000000.svg?&style=for-the-badge&logo=steam&logoColor=white&colorB=00adee" /></a>
 </p>
 
-[DBM Extended](https://discord.gg/shiba) is a open source project meant to enhance and extend [Discord Bot Maker](https://store.steampowered.com/app/682130/Discord_Bot_Maker/).
+[DBM Extended](https://discord.gg/pochita) is a open source project meant to enhance and extend [Discord Bot Maker](https://store.steampowered.com/app/682130/Discord_Bot_Maker/).
 
 # Downloads
 
@@ -81,16 +81,16 @@ All the developers who made different Mods, Packages, Tools & APIs. Specially
 
 ## Disclaimers
 <p>
-<a href="https://discord.gg/shiba"><img src="https://forthebadge.com/images/badges/compatibility-club-penguin.svg" alt="forthebadge" height="28px"></a>
-<a href="https://discord.gg/shiba"><img src="https://forthebadge.com/images/badges/built-with-love.svg" alt="forthebadge" height="28px"></a>
-<a href="https://discord.gg/shiba"><img src="https://forthebadge.com/images/badges/as-seen-on-tv.svg" alt="forthebadge" height="28px"></a>
-<a href="https://discord.gg/shiba"><img src="https://forthebadge.com/images/badges/does-not-contain-msg.svg" alt="forthebadge" height="28px"></a>
-<a href="https://discord.gg/shiba"><img src="https://forthebadge.com/images/badges/made-with-crayons.svg" alt="forthebadge" height="28px"></a>
-<a href="https://discord.gg/shiba"><img src="https://forthebadge.com/images/badges/60-percent-of-the-time-works-every-time.svg" alt="forthebadge" height="28px"></a>
-<a href="https://discord.gg/shiba"><img src="https://forthebadge.com/images/badges/powered-by-coders-sweat.svg" alt="forthebadge" height="28px"></a>
-<a href="https://discord.gg/shiba"><img src="https://forthebadge.com/images/badges/works-on-my-machine.svg" alt="forthebadge" height="28px"></a>
-<a href="https://discord.gg/shiba"><img src="https://forthebadge.com/images/badges/0-percent-optimized.svg" alt="forthebadge" height="28px"></a>
-<a href="https://discord.gg/shiba"><img src="https://forthebadge.com/images/badges/it-works-why.svg" alt="forthebadge" height="28px"></a>
+<a href="https://discord.gg/pochita"><img src="https://forthebadge.com/images/badges/compatibility-club-penguin.svg" alt="forthebadge" height="28px"></a>
+<a href="https://discord.gg/pochita"><img src="https://forthebadge.com/images/badges/built-with-love.svg" alt="forthebadge" height="28px"></a>
+<a href="https://discord.gg/pochita"><img src="https://forthebadge.com/images/badges/as-seen-on-tv.svg" alt="forthebadge" height="28px"></a>
+<a href="https://discord.gg/pochita"><img src="https://forthebadge.com/images/badges/does-not-contain-msg.svg" alt="forthebadge" height="28px"></a>
+<a href="https://discord.gg/pochita"><img src="https://forthebadge.com/images/badges/made-with-crayons.svg" alt="forthebadge" height="28px"></a>
+<a href="https://discord.gg/pochita"><img src="https://forthebadge.com/images/badges/60-percent-of-the-time-works-every-time.svg" alt="forthebadge" height="28px"></a>
+<a href="https://discord.gg/pochita"><img src="https://forthebadge.com/images/badges/powered-by-coders-sweat.svg" alt="forthebadge" height="28px"></a>
+<a href="https://discord.gg/pochita"><img src="https://forthebadge.com/images/badges/works-on-my-machine.svg" alt="forthebadge" height="28px"></a>
+<a href="https://discord.gg/pochita"><img src="https://forthebadge.com/images/badges/0-percent-optimized.svg" alt="forthebadge" height="28px"></a>
+<a href="https://discord.gg/pochita"><img src="https://forthebadge.com/images/badges/it-works-why.svg" alt="forthebadge" height="28px"></a>
 </p>
 
 ## License
